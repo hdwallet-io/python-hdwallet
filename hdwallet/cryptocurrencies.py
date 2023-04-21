@@ -2625,10 +2625,10 @@ class FoxdcoinTestnet(Cryptocurrency):
     EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
         "P2PKH": 0x488b21e,
         "P2SH": 0x488b21e,
-        "P2WPKH": 0x488b21e,
-        "P2WPKH_IN_P2SH": 0x488b21e,
-        "P2WSH": 0x488b21e,
-        "P2WSH_IN_P2SH": 0x488b21e
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
     })
     
     MESSAGE_PREFIX = "Foxdcoin Signed Message:\n"
