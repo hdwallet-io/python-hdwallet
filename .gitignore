@@ -4,9 +4,11 @@ make.bat
 Makefile
 
 # Folders stuff
+env/
 experiment/
 .idea/
 .tox/
+.vs/
 
 # Setuptools stuff
 build/

@@ -14,6 +14,8 @@ AC = "AC"
 ATOM = "ATOM"
 # Auroracoin
 AUR = "AUR"
+# Aviancoin
+AVN = "AVN"
 # Axe
 AXE = "AXE"
 # Bata
@@ -96,6 +98,8 @@ NRG = "NRG"
 ETH = "ETH"
 # Europe Coin
 ERC = "ERC"
+# Evrmore
+EVR, EVRTEST = "EVR", "EVRTEST"
 # Exclusive Coin
 EXCL = "EXCL"
 # FIX
@@ -108,6 +112,8 @@ FRST = "FRST"
 FLASH = "FLASH"
 # Flux
 FLUX = "FLUX"
+# Foxdcoin
+FOXD, FOXDTEST = "FOXD", "FOXDTEST"
 # Fuji Coin
 FJC = "FJC"
 # GCR Coin
@@ -217,7 +223,7 @@ RBTC, RBTCTEST = "RBTC", "RBTCTEST"
 # Rapids
 RPD = "RPD"
 # Ravencoin
-RVN = "RVN"
+RVN, RVNTEST = "RVN", "RVNTEST"
 # Reddcoin
 RDD = "RDD"
 # Rubycoin
@@ -296,6 +302,7 @@ __all__ = [
     "AC",
     "ATOM",
     "AUR",
+    "AVN",
     "AXE",
     "BTA",
     "BEET",
@@ -337,12 +344,14 @@ __all__ = [
     "NRG",
     "ETH",
     "ERC",
+    "EVR", "EVRTEST",
     "EXCL",
     "FIX", "FIXTEST",
     "FLUX",
     "FTC",
     "FRST",
     "FLASH",
+    "FOXD", "FOXDTEST",
     "FJC",
     "GCR",
     "GAME",
@@ -397,7 +406,7 @@ __all__ = [
     "QTUM", "QTUMTEST",
     "RBTC", "RBTCTEST",
     "RPD",
-    "RVN",
+    "RVN", "RVNTEST",
     "RDD",
     "RBY",
     "SAFE",
