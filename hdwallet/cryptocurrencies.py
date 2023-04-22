@@ -368,7 +368,7 @@ class AviancoinMainnet(Cryptocurrency):
     PUBLIC_KEY_ADDRESS = 0x3c
     SEGWIT_ADDRESS = SegwitAddress({
         "HRP": "av",
-        "VERSION": 0x29
+        "VERSION": 0x0d
     })
 
     EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
@@ -2208,7 +2208,7 @@ class EvrmoreMainnet(Cryptocurrency):
     PUBLIC_KEY_ADDRESS = 0x21
     SEGWIT_ADDRESS = SegwitAddress({
         "HRP": "ev",
-        "VERSION": 0x18
+        "VERSION": 0x0b
     })
 
     EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
@@ -5046,7 +5046,7 @@ class RavencoinMainnet(Cryptocurrency):
     PUBLIC_KEY_ADDRESS = 0x3c
     SEGWIT_ADDRESS = SegwitAddress({
         "HRP": "rv",
-        "VERSION": 0x15
+        "VERSION": 0x0a
     })
 
     EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
