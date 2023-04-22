@@ -367,26 +367,25 @@ class AviancoinMainnet(Cryptocurrency):
     SCRIPT_ADDRESS = 0x7a
     PUBLIC_KEY_ADDRESS = 0x3c
     SEGWIT_ADDRESS = SegwitAddress({
-        "HRP": None,
-        "VERSION": 0x00
+        "HRP": "av",
+        "VERSION": 0x29
     })
 
     EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
         "P2PKH": 0x488ade4,
         "P2SH": 0x488ade4,
-        "P2WPKH": None,
-        "P2WPKH_IN_P2SH": None,
-        "P2WSH": None,
-        "P2WSH_IN_P2SH": None
+        "P2WPKH": 0x04b2430c,
+        "P2WPKH_IN_P2SH": 0x049d7878,
+        "P2WSH": 0x02aa7a99,
+        "P2WSH_IN_P2SH": 0x0295b005
     })
-
     EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
         "P2PKH": 0x488b21e,
         "P2SH": 0x488b21e,
-        "P2WPKH": None,
-        "P2WPKH_IN_P2SH": None,
-        "P2WSH": None,
-        "P2WSH_IN_P2SH": None
+        "P2WPKH": 0x04b24746,
+        "P2WPKH_IN_P2SH": 0x049d7cb2,
+        "P2WSH": 0x02aa7ed3,
+        "P2WSH_IN_P2SH": 0x0295b43f
     })
     
     MESSAGE_PREFIX = "Aviancoin Signed Message:\n"
@@ -2208,26 +2207,25 @@ class EvrmoreMainnet(Cryptocurrency):
     SCRIPT_ADDRESS = 0x5c
     PUBLIC_KEY_ADDRESS = 0x21
     SEGWIT_ADDRESS = SegwitAddress({
-        "HRP": None,
-        "VERSION": 0x00
+        "HRP": "ev",
+        "VERSION": 0x18
     })
 
     EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
         "P2PKH": 0x488ade4,
         "P2SH": 0x488ade4,
-        "P2WPKH": None,
-        "P2WPKH_IN_P2SH": None,
-        "P2WSH": None,
-        "P2WSH_IN_P2SH": None
+        "P2WPKH": 0x04b2430c,
+        "P2WPKH_IN_P2SH": 0x049d7878,
+        "P2WSH": 0x02aa7a99,
+        "P2WSH_IN_P2SH": 0x0295b005
     })
-
     EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
         "P2PKH": 0x488b21e,
         "P2SH": 0x488b21e,
-        "P2WPKH": None,
-        "P2WPKH_IN_P2SH": None,
-        "P2WSH": None,
-        "P2WSH_IN_P2SH": None
+        "P2WPKH": 0x04b24746,
+        "P2WPKH_IN_P2SH": 0x049d7cb2,
+        "P2WSH": 0x02aa7ed3,
+        "P2WSH_IN_P2SH": 0x0295b43f
     })
     
     MESSAGE_PREFIX = "Evrmore Signed Message:\n"
@@ -2249,26 +2247,25 @@ class EvrmoreTestnet(Cryptocurrency):
     SCRIPT_ADDRESS = 0xc4
     PUBLIC_KEY_ADDRESS = 0x6f
     SEGWIT_ADDRESS = SegwitAddress({
-        "HRP": None,
+        "HRP": "te",
         "VERSION": 0x00
     })
 
     EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
-        "P2PKH": 0x04358394,
-        "P2SH": 0x04358394,
-        "P2WPKH": 0x04358394,
-        "P2WPKH_IN_P2SH": 0x04358394,
-        "P2WSH": 0x04358394,
-        "P2WSH_IN_P2SH": 0x04358394
+        "P2PKH": 0x488ade4,
+        "P2SH": 0x488ade4,
+        "P2WPKH": 0x04b2430c,
+        "P2WPKH_IN_P2SH": 0x049d7878,
+        "P2WSH": 0x02aa7a99,
+        "P2WSH_IN_P2SH": 0x0295b005
     })
-
     EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
-        "P2PKH": 0x043587cf,
-        "P2SH": 0x043587cf,
-        "P2WPKH": 0x043587cf,
-        "P2WPKH_IN_P2SH": 0x043587cf,
-        "P2WSH": 0x043587cf,
-        "P2WSH_IN_P2SH": 0x043587cf
+        "P2PKH": 0x488b21e,
+        "P2SH": 0x488b21e,
+        "P2WPKH": 0x04b24746,
+        "P2WPKH_IN_P2SH": 0x049d7cb2,
+        "P2WSH": 0x02aa7ed3,
+        "P2WSH_IN_P2SH": 0x0295b43f
     })
     
     MESSAGE_PREFIX = "Evrmore Signed Message:\n"
@@ -2568,26 +2565,25 @@ class FoxdcoinMainnet(Cryptocurrency):
     SCRIPT_ADDRESS = 0x1e
     PUBLIC_KEY_ADDRESS = 0x23
     SEGWIT_ADDRESS = SegwitAddress({
-        "HRP": None,
-        "VERSION": 0x00
+        "HRP": "fx",
+        "VERSION": 0x0c
     })
 
     EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
         "P2PKH": 0x488ade4,
         "P2SH": 0x488ade4,
-        "P2WPKH": None,
-        "P2WPKH_IN_P2SH": None,
-        "P2WSH": None,
-        "P2WSH_IN_P2SH": None
+        "P2WPKH": 0x04b2430c,
+        "P2WPKH_IN_P2SH": 0x049d7878,
+        "P2WSH": 0x02aa7a99,
+        "P2WSH_IN_P2SH": 0x0295b005
     })
-
     EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
         "P2PKH": 0x488b21e,
         "P2SH": 0x488b21e,
-        "P2WPKH": None,
-        "P2WPKH_IN_P2SH": None,
-        "P2WSH": None,
-        "P2WSH_IN_P2SH": None
+        "P2WPKH": 0x04b24746,
+        "P2WPKH_IN_P2SH": 0x049d7cb2,
+        "P2WSH": 0x02aa7ed3,
+        "P2WSH_IN_P2SH": 0x0295b43f
     })
 
     MESSAGE_PREFIX = "Foxdcoin Signed Message:\n"
@@ -2609,26 +2605,25 @@ class FoxdcoinTestnet(Cryptocurrency):
     SCRIPT_ADDRESS = 0x5a
     PUBLIC_KEY_ADDRESS = 0x5f
     SEGWIT_ADDRESS = SegwitAddress({
-        "HRP": None,
+        "HRP": "tf",
         "VERSION": 0x00
     })
 
     EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
         "P2PKH": 0x488ade4,
         "P2SH": 0x488ade4,
-        "P2WPKH": 0x488ade4,
-        "P2WPKH_IN_P2SH": 0x488ade4,
-        "P2WSH": 0x488ade4,
-        "P2WSH_IN_P2SH": 0x488ade4
+        "P2WPKH": 0x04b2430c,
+        "P2WPKH_IN_P2SH": 0x049d7878,
+        "P2WSH": 0x02aa7a99,
+        "P2WSH_IN_P2SH": 0x0295b005
     })
-
     EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
         "P2PKH": 0x488b21e,
         "P2SH": 0x488b21e,
-        "P2WPKH": None,
-        "P2WPKH_IN_P2SH": None,
-        "P2WSH": None,
-        "P2WSH_IN_P2SH": None
+        "P2WPKH": 0x04b24746,
+        "P2WPKH_IN_P2SH": 0x049d7cb2,
+        "P2WSH": 0x02aa7ed3,
+        "P2WSH_IN_P2SH": 0x0295b43f
     })
     
     MESSAGE_PREFIX = "Foxdcoin Signed Message:\n"
@@ -5050,25 +5045,25 @@ class RavencoinMainnet(Cryptocurrency):
     SCRIPT_ADDRESS = 0x7a
     PUBLIC_KEY_ADDRESS = 0x3c
     SEGWIT_ADDRESS = SegwitAddress({
-        "HRP": None,
-        "VERSION": 0x00
+        "HRP": "rv",
+        "VERSION": 0x15
     })
 
     EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
         "P2PKH": 0x488ade4,
         "P2SH": 0x488ade4,
-        "P2WPKH": None,
-        "P2WPKH_IN_P2SH": None,
-        "P2WSH": None,
-        "P2WSH_IN_P2SH": None
+        "P2WPKH": 0x04b2430c,
+        "P2WPKH_IN_P2SH": 0x049d7878,
+        "P2WSH": 0x02aa7a99,
+        "P2WSH_IN_P2SH": 0x0295b005
     })
     EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
         "P2PKH": 0x488b21e,
         "P2SH": 0x488b21e,
-        "P2WPKH": None,
-        "P2WPKH_IN_P2SH": None,
-        "P2WSH": None,
-        "P2WSH_IN_P2SH": None
+        "P2WPKH": 0x04b24746,
+        "P2WPKH_IN_P2SH": 0x049d7cb2,
+        "P2WSH": 0x02aa7ed3,
+        "P2WSH_IN_P2SH": 0x0295b43f
     })
 
     MESSAGE_PREFIX = "Raven Signed Message:\n"
@@ -5090,25 +5085,25 @@ class RavencoinTestnet(Cryptocurrency):
     SCRIPT_ADDRESS = 0xc4
     PUBLIC_KEY_ADDRESS = 0x6f
     SEGWIT_ADDRESS = SegwitAddress({
-        "HRP": None,
+        "HRP": "tr",
         "VERSION": 0x00
     })
 
     EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
-        "P2PKH": 0x04358394,
-        "P2SH": 0x04358394,
-        "P2WPKH": 0x04358394,
-        "P2WPKH_IN_P2SH": 0x04358394,
-        "P2WSH": 0x04358394,
-        "P2WSH_IN_P2SH": 0x04358394
+        "P2PKH": 0x488ade4,
+        "P2SH": 0x488ade4,
+        "P2WPKH": 0x04b2430c,
+        "P2WPKH_IN_P2SH": 0x049d7878,
+        "P2WSH": 0x02aa7a99,
+        "P2WSH_IN_P2SH": 0x0295b005
     })
     EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
-        "P2PKH": 0x043587cf,
-        "P2SH": 0x043587cf,
-        "P2WPKH": 0x043587cf,
-        "P2WPKH_IN_P2SH": 0x043587cf,
-        "P2WSH": 0x043587cf,
-        "P2WSH_IN_P2SH": 0x043587cf
+        "P2PKH": 0x488b21e,
+        "P2SH": 0x488b21e,
+        "P2WPKH": 0x04b24746,
+        "P2WPKH_IN_P2SH": 0x049d7cb2,
+        "P2WSH": 0x02aa7ed3,
+        "P2WSH_IN_P2SH": 0x0295b43f
     })
 
 

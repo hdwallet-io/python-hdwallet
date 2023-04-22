@@ -1196,9 +1196,10 @@ class HDWallet:
 
         compressed_public_key = unhexlify(self.compressed())
         public_key_hash = ripemd160(sha256(compressed_public_key).digest())
-        if self._cryptocurrency.SEGWIT_ADDRESS.HRP is None:
+        segwit = self._cryptocurrency.SEGWIT_ADDRESS
+        if segwit.HRP is None:
             return None
-        return ensure_string(encode(self._cryptocurrency.SEGWIT_ADDRESS.HRP, 0, public_key_hash))
+        return ensure_string(encode(segwit.HRP, segwit.VERSION, public_key_hash))
 
     def p2wpkh_in_p2sh_address(self) -> Optional[str]:
         """
@@ -1240,9 +1241,10 @@ class HDWallet:
 
         compressed_public_key = unhexlify("5121" + self.compressed() + "51ae")
         script_hash = sha256(compressed_public_key).digest()
-        if self._cryptocurrency.SEGWIT_ADDRESS.HRP is None:
+        segwit = self._cryptocurrency.SEGWIT_ADDRESS
+        if segwit.HRP is None:
             return None
-        return ensure_string(encode(self._cryptocurrency.SEGWIT_ADDRESS.HRP, 0, script_hash))
+        return ensure_string(encode(segwit.HRP, segwit.VERSION, script_hash))
 
     def p2wsh_in_p2sh_address(self) -> Optional[str]:
         """
