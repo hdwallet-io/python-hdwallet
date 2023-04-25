@@ -2566,7 +2566,7 @@ class FoxdcoinMainnet(Cryptocurrency):
     PUBLIC_KEY_ADDRESS = 0x23
     SEGWIT_ADDRESS = SegwitAddress({
         "HRP": "fx",
-        "VERSION": 0x0c
+        "VERSION": 0x0d
     })
 
     EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
@@ -5045,8 +5045,8 @@ class RavencoinMainnet(Cryptocurrency):
     SCRIPT_ADDRESS = 0x7a
     PUBLIC_KEY_ADDRESS = 0x3c
     SEGWIT_ADDRESS = SegwitAddress({
-        "HRP": "rv",
-        "VERSION": 0x0a
+        "HRP": "ra",
+        "VERSION": 0x0c
     })
 
     EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
