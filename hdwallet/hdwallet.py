@@ -483,7 +483,7 @@ class HDWallet:
 
         if hardened:
             self._path += ("/%d'" % index)
-            self._derive_key_by_index(index + BIP32KEY_HARDEN)
+            return self._derive_key_by_index(index + BIP32KEY_HARDEN)
         else:
             self._path += ("/%d" % index)
             return self._derive_key_by_index(index)
