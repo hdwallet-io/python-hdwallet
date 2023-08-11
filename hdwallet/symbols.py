@@ -300,11 +300,14 @@ ZEC, ZECTEST = "ZEC", "ZECTEST"
 ZEN = "ZEN"
 # zkSync
 ZKS = "ZKS"
+# Linea
+LINEA = "LINEA"
 
 
 __all__ = [
     "ANON",
     "AGM",
+    "LINEA",
     "ARB1",
     "ZKS",
     "XAX",
