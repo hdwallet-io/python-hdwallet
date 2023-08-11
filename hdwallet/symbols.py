@@ -28,6 +28,8 @@ BELA = "BELA"
 BTDX = "BTDX"
 # Bit Send
 BSD = "BSD"
+# BNB Smart Chain
+BSC = "BSC"
 # Bitcoin Cash
 BCH = "BCH"
 # Bitcoin Gold

@@ -2153,6 +2153,46 @@ class EthereumMainnet(Cryptocurrency):
     WIF_SECRET_KEY = 0x80
 
 
+class BinanceSmartChainMainnet(Cryptocurrency):
+
+    NAME = "Binance Smart Chain"
+    SYMBOL = "BSC"
+    NETWORK = "mainnet"
+    SOURCE_CODE = "https://github.com/bnb-chain/bsc"
+    COIN_TYPE = CoinType({
+        "INDEX": 9006,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0x05
+    PUBLIC_KEY_ADDRESS = 0x00
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": "bc",
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x0488ade4,
+        "P2SH": 0x0488ade4,
+        "P2WPKH": 0x04b2430c,
+        "P2WPKH_IN_P2SH": 0x049d7878,
+        "P2WSH": 0x02aa7a99,
+        "P2WSH_IN_P2SH": 0x0295b005
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x0488b21e,
+        "P2SH": 0x0488b21e,
+        "P2WPKH": 0x04b24746,
+        "P2WPKH_IN_P2SH": 0x049d7cb2,
+        "P2WSH": 0x02aa7ed3,
+        "P2WSH_IN_P2SH": 0x0295b43f
+    })
+
+    MESSAGE_PREFIX = None
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0x80
+
+
 class EuropeCoinMainnet(Cryptocurrency):
 
     NAME = "Europe Coin"
