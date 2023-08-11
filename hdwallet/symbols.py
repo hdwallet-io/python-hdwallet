@@ -162,6 +162,8 @@ LTZ = "LTZ"
 LKR = "LKR"
 # Lynx
 LYNX = "LYNX"
+# Polygon
+MATIC = "MATIC"
 # Mazacoin
 MZC = "MZC"
 # Megacoin
@@ -312,6 +314,7 @@ __all__ = [
     "BTDX",
     "BSD",
     "BCH",
+    "BSC",
     "BTG",
     "BTC", "BTCTEST",
     "XBC",
@@ -381,6 +384,7 @@ __all__ = [
     "MEC",
     "MNX",
     "MONA",
+    "MATIC",
     "MONK",
     "XMY",
     "NIX",
