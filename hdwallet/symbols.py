@@ -164,6 +164,8 @@ LKR = "LKR"
 LYNX = "LYNX"
 # Polygon
 MATIC = "MATIC"
+# Arbitrum
+ARB1 = "ARB1"
 # Mazacoin
 MZC = "MZC"
 # Megacoin
@@ -301,6 +303,7 @@ ZEN = "ZEN"
 __all__ = [
     "ANON",
     "AGM",
+    "ARB1",
     "XAX",
     "AYA",
     "AC",
