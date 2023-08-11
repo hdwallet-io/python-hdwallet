@@ -298,12 +298,15 @@ ZCL = "ZCL"
 ZEC, ZECTEST = "ZEC", "ZECTEST"
 # Zencash
 ZEN = "ZEN"
+# zkSync
+ZKS = "ZKS"
 
 
 __all__ = [
     "ANON",
     "AGM",
     "ARB1",
+    "ZKS",
     "XAX",
     "AYA",
     "AC",
