@@ -437,7 +437,7 @@ class HDWallet:
         >>> from hdwallet.symbols import BTC
         >>> hdwallet = HDWallet(symbol=BTC)
         >>> hdwallet.from_xprivate_key(xprivate_key="xprv9s21ZrQH143K3xPGUzpogJeKtRdjHkK6muBJo8v7rEVRzT83xJgNcLpMoJXUf9wJFKfuHR4SGvfgdShh4t9VmjjrE9usBunK3LfNna31LGF")
-        >>> hdwallet.from_path(path="m/44'/0'/'0/0/0")
+        >>> hdwallet.from_path(path="m/44'/0'/0'/0/0")
         <hdwallet.hdwallet.HDWallet object at 0x000001E8BFB98D60>
         """
 
@@ -598,7 +598,7 @@ class HDWallet:
         >>> from hdwallet.symbols import BTC
         >>> hdwallet = HDWallet(symbol=BTC)
         >>> hdwallet.from_entropy(entropy="ee535b143b0d9d1f87546f9df0d06b1a")
-        >>> hdwallet.from_path(path="m/44'/0'/'0/0/0")
+        >>> hdwallet.from_path(path="m/44'/0'/0'/0/0")
         >>> hdwallet.root_xprivate_key()
         "xprv9s21ZrQH143K3xPGUzpogJeKtRdjHkK6muBJo8v7rEVRzT83xJgNcLpMoJXUf9wJFKfuHR4SGvfgdShh4t9VmjjrE9usBunK3LfNna31LGF"
         """
@@ -636,7 +636,7 @@ class HDWallet:
         >>> from hdwallet.symbols import BTC
         >>> hdwallet = HDWallet(symbol=BTC)
         >>> hdwallet.from_entropy(entropy="ee535b143b0d9d1f87546f9df0d06b1a")
-        >>> hdwallet.from_path(path="m/44'/0'/'0/0/0")
+        >>> hdwallet.from_path(path="m/44'/0'/0'/0/0")
         >>> hdwallet.root_xpublic_key()
         "xpub661MyMwAqRbcGSTjb2Mp3Sb4STUDhD2x986ubXKjQa2QsFTCVqzdA98qeZjcncHT1AaZcMSjiP1HJ16jH97q72RwyFfiNhmG8zQ6KBB5PaQ"
         """
@@ -679,7 +679,7 @@ class HDWallet:
         >>> from hdwallet.symbols import BTC
         >>> hdwallet = HDWallet(symbol=BTC)
         >>> hdwallet.from_entropy(entropy="ee535b143b0d9d1f87546f9df0d06b1a")
-        >>> hdwallet.from_path(path="m/44'/0'/'0/0/0")
+        >>> hdwallet.from_path(path="m/44'/0'/0'/0/0")
         >>> hdwallet.xprivate_key()
         "xprvA3BYGWQ9FmhyaNRRXB2f1LphNPnaY9T6gngw4BaTbkFtscSH4RCuJhgWUSKs9S6ciGioHd4TX4UeyUg53MkfN9Xh38xkS1j2Wb9YKsYpJHQ"
         """
@@ -717,7 +717,7 @@ class HDWallet:
         >>> from hdwallet.symbols import BTC
         >>> hdwallet = HDWallet(symbol=BTC)
         >>> hdwallet.from_entropy(entropy="ee535b143b0d9d1f87546f9df0d06b1a")
-        >>> hdwallet.from_path(path="m/44'/0'/'0/0/0")
+        >>> hdwallet.from_path(path="m/44'/0'/0'/0/0")
         >>> hdwallet.xpublic_key()
         "xpub6GAtg1w369GGnrVtdCZfNUmRvRd4wcAx41cXrZz5A5nskQmRbxX9rVzzKiRU4JruirBrfm4KQXNSU7GfqL1tzZWpZYe9Zo4xKGJYohWoQe7"
         """
@@ -750,9 +750,9 @@ class HDWallet:
         >>> from hdwallet.symbols import BTC
         >>> hdwallet = HDWallet(symbol=BTC)
         >>> hdwallet.from_xprivate_key(xprivate_key="xprv9s21ZrQH143K3xPGUzpogJeKtRdjHkK6muBJo8v7rEVRzT83xJgNcLpMoJXUf9wJFKfuHR4SGvfgdShh4t9VmjjrE9usBunK3LfNna31LGF")
-        >>> hdwallet.from_path(path="m/44'/0'/'0/0/0")
+        >>> hdwallet.from_path(path="m/44'/0'/0'/0/0")
         >>> hdwallet.path()
-        "m/44'/0'/'0/0/0"
+        "m/44'/0'/0'/0/0"
         >>> hdwallet.clean_derivation()
         <hdwallet.hdwallet.HDWallet object at 0x000001E8BFB98D60>
         >>> hdwallet.path()
