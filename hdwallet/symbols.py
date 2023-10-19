@@ -28,6 +28,8 @@ BELA = "BELA"
 BTDX = "BTDX"
 # Bit Send
 BSD = "BSD"
+# BNB Smart Chain
+BSC = "BSC"
 # Bitcoin Cash
 BCH = "BCH"
 # Bitcoin Gold
@@ -160,6 +162,10 @@ LTZ = "LTZ"
 LKR = "LKR"
 # Lynx
 LYNX = "LYNX"
+# Polygon
+MATIC = "MATIC"
+# Arbitrum
+ARB1 = "ARB1"
 # Mazacoin
 MZC = "MZC"
 # Megacoin
@@ -292,11 +298,18 @@ ZCL = "ZCL"
 ZEC, ZECTEST = "ZEC", "ZECTEST"
 # Zencash
 ZEN = "ZEN"
+# zkSync
+ZKS = "ZKS"
+# Linea
+LINEA = "LINEA"
 
 
 __all__ = [
     "ANON",
     "AGM",
+    "LINEA",
+    "ARB1",
+    "ZKS",
     "XAX",
     "AYA",
     "AC",
@@ -310,6 +323,7 @@ __all__ = [
     "BTDX",
     "BSD",
     "BCH",
+    "BSC",
     "BTG",
     "BTC", "BTCTEST",
     "XBC",
@@ -379,6 +393,7 @@ __all__ = [
     "MEC",
     "MNX",
     "MONA",
+    "MATIC",
     "MONK",
     "XMY",
     "NIX",
