@@ -67,7 +67,7 @@ class Derivation:
 
         >>> from hdwallet.derivations import Derivation
         >>> derivation = Derivation()
-        >>> derivation.from_path(path="m/44'/0'/'0/0/0")
+        >>> derivation.from_path(path="m/44'/0'/0'/0/0")
         <hdwallet.derivation.Derivation object at 0x000001E8BFB98D60>
         """
 
@@ -123,9 +123,9 @@ class Derivation:
 
         >>> from hdwallet.derivations import Derivation
         >>> derivation = Derivation()
-        >>> derivation.from_path(path="m/44'/0'/'0/0/0")
+        >>> derivation.from_path(path="m/44'/0'/0'/0/0")
         >>> str(derivation)
-        "m/44'/0'/'0/0/0"
+        "m/44'/0'/0'/0/0"
         >>> derivation.clean_derivation()
         <hdwallet.wallet.HDWallet object at 0x000001E8BFB98D60>
         >>> str(derivation)
