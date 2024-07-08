@@ -1880,7 +1880,7 @@ class DogecoinTestnet(Cryptocurrency):
     NETWORK = "testnet"
     SOURCE_CODE = "https://github.com/dogecoin/dogecoin"
     COIN_TYPE = CoinType({
-        "INDEX": 3,
+        "INDEX": 1,
         "HARDENED": True
     })
 
@@ -6316,7 +6316,7 @@ class ViacoinTestnet(Cryptocurrency):
     NETWORK = "testnet"
     SOURCE_CODE = "https://github.com/viacoin/viacore-viacoin"
     COIN_TYPE = CoinType({
-        "INDEX": 14,
+        "INDEX": 1,
         "HARDENED": True
     })
 
