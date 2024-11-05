@@ -20,3 +20,5 @@ __pycache__/
 
 # py.test stuff
 .pytest_cache/
+*~
+.#*
