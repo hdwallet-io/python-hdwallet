@@ -11,16 +11,27 @@ project_urls = {
 }
 
 # README.md
-with open("README.md", "r", encoding="utf-8") as readme:
+with open( "README.md", "r", encoding="utf-8") as readme:
     long_description: str = readme.read()
-
-# requirements.txt
-with open("requirements.txt", "r") as _requirements:
-    requirements: list = list(map(str.strip, _requirements.read().split("\n")))
+with open( "requirements.txt" ) as r:
+    install_requires: list = list( r.readlines() )
+with open( "requirements-tests.txt" ) as rt:
+    tests_require: list	= list( rt.readlines() )
+extras_require: dict		= {
+    option: list(
+        # Remove whitespace, elide blank lines and comments
+        ''.join( r.split() )
+        for r in open( f"requirements-{option}.txt" ).readlines()
+        if r.strip() and not r.strip().startswith( '#' )
+    )
+    for option in ('cli', 'tests', 'docs')
+}
+with open( "hdwallet/version.py" ) as vpy:
+    exec( vpy.read() )
 
 setup(
     name="hdwallet",
-    version="v2.2.1",
+    version=__version__,
     description="Python-based library for the implementation of a hierarchical deterministic wallet "
                 "generator for more than 140+ multiple cryptocurrencies.",
     long_description=long_description,
@@ -38,24 +49,9 @@ setup(
     },
     python_requires=">=3.6,<4",
     packages=find_packages(),
-    install_requires=requirements,
-    extras_require={
-        "cli": [
-            "click>=8.1.3,<9",
-            "click-aliases>=1.0.1,<2",
-            "tabulate>=0.9.0,<1"
-        ],
-        "tests": [
-            "pytest>=7.2.0,<8",
-            "pytest-cov>=4.0.0,<5",
-            "tox==3.28.0"
-        ],
-        "docs": [
-            "sphinx>=5.3.0,<6",
-            "furo==2022.12.7",
-            "sphinx-click>=4.4.0,<5"
-        ]
-    },
+    install_requires=install_requires,
+    extras_require=extras_require,
+    tests_require=tests_require,
     classifiers=[
         "Development Status :: 5 - Production/Stable",
         "License :: OSI Approved :: ISC License (ISCL)",
@@ -64,6 +60,8 @@ setup(
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
+        "Programming Language :: Python :: 3.13",
         "Topic :: Software Development :: Libraries :: Python Modules"
     ]
 )
