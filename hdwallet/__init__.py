@@ -10,7 +10,10 @@ from .hdwallet import (
 )
 
 # HDWallet Information's
-__version__: str = "v2.2.1"
+from .version import (
+    __version__,
+    __version_info__
+)
 __license__: str = "MIT"
 __author__: str = "Meheret Tesfaye Batu"
 __email__: str = "meherett.batu@gmail.com"
@@ -19,6 +22,7 @@ __description__: str = "Python-based library for the implementation of a hierarc
 
 __all__: list = [
     "__version__",
+    "__version_info__",
     "__license__",
     "__author__",
     "__email__",
