@@ -1,5 +1,15 @@
 # Hierarchical Deterministic Wallet
 
+> Note: This hdwallet-slip39 package is a temporary upgrade shim for the great hdwallet package
+> https://pypi.org/project/hdwallet/.
+
+> Use it only until the upstream hdwallet package merges support for BSC, Nix, etc in :
+> https://github.com/meherett/python-hdwallet/pull/1020
+
+> Until then, substitute "hdwallet-slip39" for "hdwallet" in your "pip install" or requirements.txt
+> Both supply the hdwallet package, eg. "import hdwallet".  Specify version >= 2.3 to ensure you are
+> using this shim.
+
 [![Build Status](https://app.travis-ci.com/meherett/python-hdwallet.svg?branch=master)](https://app.travis-ci.com/meherett/python-hdwallet)
 [![PyPI Version](https://img.shields.io/pypi/v/hdwallet.svg?color=blue)](https://pypi.org/project/hdwallet)
 [![Documentation Status](https://readthedocs.org/projects/hdwallet/badge/?version=master)](https://hdwallet.readthedocs.io)

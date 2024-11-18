@@ -12,6 +12,8 @@ VENV_NAME	= $(GHUB_NAME)-$(VERSION)-$(PY3_V)
 VENV		= $(VENV_DIR)/$(VENV_NAME)
 VENV_OPTS	=
 
+NIX_OPTS	?= # --pure
+
 .PHONY:			all test build build-check wheel install-dev install clean FORCE
 
 all:			build
@@ -27,7 +29,7 @@ unit-%:
 	$(PY3TEST) -k $*
 
 nix-%:
-	nix-shell --pure --run "make $*"
+	nix-shell $(NIX_OPTS) --run "make $*"
 
 build:			clean wheel
 
