@@ -1,0 +1,162 @@
+name: Build and Package HDWallet
+
+on:
+  pull_request:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Ensure Dist Directory Exists
+        run: |
+          mkdir -p dist
+          echo "Dist directory ensured."
+
+      # - name: Install OpenSSL (macOS)
+      #   if: matrix.os == 'macos-15' || matrix.os == 'macos-latest'
+      #   run: |
+      #     brew install openssl
+      #     $(brew --prefix openssl)/bin/openssl version
+      #     sudo mkdir -p /usr/local/include /usr/local/lib
+      #     sudo ln -sf $(brew --prefix openssl)/include/openssl /usr/local/include/openssl
+      #     sudo ln -sf $(brew --prefix openssl)/lib/libcrypto.dylib /usr/local/lib/libcrypto.dylib
+      #     sudo ln -sf $(brew --prefix openssl)/lib/libssl.dylib /usr/local/lib/libssl.dylib
+      #     echo "LDFLAGS=-L$(brew --prefix openssl)/lib" >> $GITHUB_ENV
+      #     echo "CPPFLAGS=-I$(brew --prefix openssl)/include" >> $GITHUB_ENV
+      #     echo "PKG_CONFIG_PATH=$(brew --prefix openssl)/lib/pkgconfig" >> $GITHUB_ENV
+      #     echo "PATH=$(brew --prefix openssl)/bin:$PATH" >> $GITHUB_ENV
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt cx_Freeze
+
+      # - name: Build macOS App for Intel
+      #   if: matrix.os == 'macos-15'
+      #   run: |
+      #     echo "Starting Intel build using x86_64 architecture..."
+      #     arch -x86_64 python setup.py bdist_dmg || exit 1
+          
+      #     echo "Checking for .dmg and .app files after Intel build:"
+      #     find . -name "*.dmg" || echo "No .dmg file found after Intel build"
+      #     find . -name "*.app" || echo "No .app file found after Intel build"
+
+      #     # Move .dmg files
+      #     if find build -name "*.dmg" 1> /dev/null 2>&1; then
+      #       mkdir -p dist
+      #       mv build/*.dmg dist/
+      #     elif find dist -name "*.dmg" 1> /dev/null 2>&1; then
+      #       mv dist/*.dmg dist/
+      #     else
+      #       echo "No .dmg file found for Intel build"
+      #       exit 1
+      #     fi
+
+      #     # Move .app files if they exist
+      #     if find build -name "*.app" 1> /dev/null 2>&1; then
+      #       mkdir -p dist
+      #       mv build/*.app dist/
+      #     elif find dist -name "*.app" 1> /dev/null 2>&1; then
+      #       mv dist/*.app dist/
+      #     else
+      #       echo "No .app file found for Intel build, skipping."
+      #     fi
+
+      #     echo "Intel build completed successfully. Contents of dist directory:"
+      #     ls -R dist || echo "dist directory does not exist"
+
+
+      # - name: Build macOS App for ARM64
+      #   if: matrix.os == 'macos-latest'
+      #   run: |
+      #     echo "Starting ARM64 build using arm64 architecture..."
+      #     arch -arm64 python setup.py bdist_dmg || exit 1
+
+      #     echo "Checking for .dmg and .app files after ARM64 build:"
+      #     find . -name "*.dmg" || echo "No .dmg file found after ARM64 build"
+      #     find . -name "*.app" || echo "No .app file found after ARM64 build"
+
+      #     # Move .dmg files
+      #     if find build -name "*.dmg" 1> /dev/null 2>&1; then
+      #       mkdir -p dist
+      #       mv build/*.dmg dist/
+      #     else
+      #       echo "No .dmg file found for ARM64 build"
+      #       exit 1
+      #     fi
+
+      #     # Move .app files if they exist
+      #     if find build -name "*.app" 1> /dev/null 2>&1; then
+      #       mkdir -p dist
+      #       mv build/*.app dist/
+      #     else
+      #       echo "No .app file found for ARM64 build, skipping."
+      #     fi
+
+      #     echo "ARM64 build completed successfully. Contents of dist directory:"
+      #     ls -R dist || echo "dist directory does not exist"
+
+
+      - name: Build .deb Package for Ubuntu
+        if: startsWith(matrix.os, 'ubuntu-latest')
+        run: |
+          python build_deb.py
+          if ls dist/*.deb 1> /dev/null 2>&1; then
+            echo "Deb package created successfully"
+          else
+            echo "No .deb file found in dist directory"
+          fi
+
+      - name: Build Windows Executable
+        if: matrix.os == 'windows-latest'
+        run: |
+          python setup.py build
+          python setup.py bdist_msi
+          if (Test-Path dist/*.msi) {
+            Write-Output "MSI package created successfully"
+          } else {
+            Write-Output "No MSI package found in dist directory"
+          }
+
+      - name: Upload Ubuntu .deb Package
+        if: startsWith(matrix.os, 'ubuntu-latest')
+        uses: actions/upload-artifact@v4
+        with:
+          name: ubuntu-deb-package
+          path: dist/*
+
+      - name: Upload Windows Executables
+        if: matrix.os == 'windows-latest'
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-executables
+          path: dist/*
+
+      # - name: Upload Intel Build Artifacts
+      #   if: matrix.os == 'macos-15'
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: macos-intel-artifacts
+      #     path: dist/*
+
+      # - name: Upload ARM64 Build Artifacts
+      #   if: matrix.os == 'macos-latest'
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: macos-arm64-artifacts
+      #     path: dist/*

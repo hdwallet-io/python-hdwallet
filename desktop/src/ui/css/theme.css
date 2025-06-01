@@ -1,0 +1,668 @@
+/* /////////////////////////////////////////////
+Main Window*/
+QMainWindow {
+    background-color: #1E1E1E;
+}
+
+QWidget {
+    color: white;
+    font: 10pt "Tahoma";
+    letter-spacing: 1px;
+    background-color: rgb(16, 21, 27);
+    border: none;
+    border-radius: 0;
+}
+
+QWidget:disabled{
+    color: rgba(255, 255, 255, 0.5);
+    background-color: rgb(16, 21, 27);
+}
+
+QWidget:focus { 
+    outline: none; 
+}
+
+QFrame{
+    font: 10pt "Tahoma";
+    letter-spacing: 1px;
+    background-color: rgb(16, 21, 27);
+}
+
+QFrame:disabled{
+    color: rgba(255, 255, 255, 0.5);
+    background-color: transparent;
+}
+
+
+/* /////////////////////////////////////////////////////////////////////////////////////////////////
+QMenu */
+QMenu {
+    background-color: rgb(16, 21, 27); 
+    color: white; 
+    border: 1px solid rgba(128, 128, 128, 0.25); 
+    padding: 5px;  
+    border-radius: 4px;  
+}
+
+QMenu::item {
+    background-color: transparent;  
+    padding: 5px 15px;  
+    color: white;
+    qproperty-icon: none;  
+}
+
+QMenu::item:selected {
+    background:  rgb(25, 30, 36);  
+    color: #83b9ff; 
+    border-radius: 3px;  
+}
+
+QMenu::item:hover {
+    background-color: rgb(25, 30, 36);
+    color: #83b9ff;
+    border-radius: 3px; 
+}
+
+QMenu::item:disabled {  
+    background-color: transparent; 
+    color: rgba(255, 255, 255, 0.5);
+}
+
+QMenu::item:disabled:selected {
+    color: rgba(255, 255, 255, 0.5);  
+    background-color: transparent; 
+}
+
+QMenu::separator {
+    height: 1px;
+    background-color: rgba(128, 128, 128, 0.25);  
+    margin: 5px 0;  
+}
+
+QMenu:disabled {
+    color: rgba(255, 255, 255, 0.5);  
+}
+
+/* /////////////////////////////////////////////////////////////////////////////////////////////////
+CheckBox */
+
+#derivationTabButtonsContainerQFrame QPushButton{
+    border-radius: 0;
+}
+
+QCheckBox {
+    color: white;
+    /*font: 10pt "Jersey M54";*/
+    letter-spacing: 1px;
+}
+
+QCheckBox::indicator {
+    background: rgb(25, 30, 36);
+    border-radius: 2px;
+    width: 16px;
+    height: 16px;
+}
+
+QCheckBox::indicator:hover {
+    background: rgba(25, 30, 36, 100);
+}
+
+QCheckBox::indicator:checked {
+    /*background: rgb(25, 30, 36);*/
+    background: 2px solid #83b9ff;
+    /*background-image: url(:/png/images/png/cil-check-alt.png);*/
+    /*background-position: center;*/
+    /*background-repeat: no-reperat;*/
+    /*border: 2px solid #83b9ff;*/
+}
+
+/* /////////////////////////////////////////////////////////////////////////////////////////////////
+QLabel */
+
+QLabel {
+    font: 10pt "HDWallet";
+    font-weight: lighter;
+    letter-spacing: 1px;
+    color: rgb(255, 255, 255);
+    background-color: transparent;
+    text-transform: uppercase;
+}
+
+/* /////////////////////////////////////////////////////////////////////////////////////////////////
+QPushButton */
+
+QPushButton {
+    font: 10pt "HDWallet";
+    font-weight: lighter;
+    letter-spacing: 1px;
+    background-color: rgb(25, 30, 36);
+    border-radius: 5px;
+    color: rgb(255, 255, 255);
+    padding: 5px 10px;
+    height: 25px;
+    outline: none;
+    text-transform: uppercase;
+}
+
+QPushButton:hover {
+    background-color: rgba(25, 30, 36, 100);
+}
+
+#donationsCharityCopyCustomQFrame:pressed,
+#donationsCopyCustomQFrame:pressed,
+QPushButton:pressed {
+    background-color: rgb(25, 30, 36);
+}
+
+QPushButton:disabled{
+    background-color: rgba(25, 30, 36, 0.5);
+}
+
+/* /////////////////////////////////////////////////////////////////////////////////////////////////
+ComboBox */
+
+QComboBox {
+    background-color: rgb(25, 30, 36);
+    border-radius: 5px;
+    color: rgb(255, 255, 255);
+    padding: 5px 10px;
+    height: 25px;
+    border: 1px solid transparent;
+}
+
+QComboBox:disabled{
+    background-color: rgba(25, 30, 36, 0.5);
+}
+
+QComboBox::drop-down {
+    subcontrol-origin: padding;
+    subcontrol-position: top right;
+    width: 30px;
+    border-left-width: 3px;
+    border-left-style: solid;
+    background-image: url(:/png/images/png/cil-arrow-bottom.png);
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+QComboBox::drop-down:hover {
+    background-color: transparent;
+}
+
+QComboBox::drop-down:checked {
+     background-image: url(:/png/images/png/cil-arrow-top.png);
+}
+
+QComboBox QAbstractItemView  {
+    color: white;
+    border: none;
+    padding: 10px;
+    background-color: rgb(25, 30, 36);
+    outline: none;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.5);
+}
+
+QComboBox QAbstractItemView::item {
+    padding: 5px;
+    width: fit-content;
+}
+
+QComboBox QAbstractItemView::item:hover {
+    outline: none;
+}
+
+QComboBox QAbstractItemView::item:selected {
+    color: white;
+    background-color: rgb(16, 21, 27);
+    selection-background-color: white;
+    outline: none;
+}
+
+
+/* /////////////////////////////////////////////////////////////////////////////////////////////////
+LineEdit */
+
+QLineEdit {
+    /*font: 11pt "Segoe UI";*/
+    background-color: rgb(25, 30, 36);
+    border-radius: 5px;
+    color: rgb(255, 255, 255);
+    padding: 5px 10px;
+    height: 25px;
+    selection-color: #000000;
+    selection-background-color: #83b9ff;
+}
+
+QLineEdit:hover {
+    background-color: rgba(25, 30, 36, 100);
+}
+
+QLineEdit:focus {
+    background-color: rgb(25, 30, 36);
+}
+
+QLineEdit::disabled {
+    background-color: rgba(25, 30, 36, 0.5);
+}
+
+QPlainTextEdit {
+    background-color: #000000;
+    border-color: rgb(25, 30, 36);
+    border-radius: 5px;
+    color: rgb(255, 255, 255);
+    padding: 0px 10px;
+    height: 25px;
+    selection-color: #000000;
+    selection-background-color: #83b9ff;
+}
+
+/* /////////////////////////////////////////////////////////////////////////////////////////////////
+Tab Bar */
+
+QTabBar {
+    font: 10pt "HDWallet";
+    font-weight: lighter;
+    letter-spacing: 1px;
+}
+
+QTabBar, QTabBar::tab {
+    border: none;
+}
+
+QTabBar::tab {
+    color: #ffffff;
+    border: 0px;
+}
+
+QTabBar::tab:bottom,
+QTabBar::tab:top {
+    padding: 0 16px;
+    height: 28px;
+}
+
+QTabBar::tab:left,
+QTabBar::tab:right {
+    padding: 16px 0;
+    width: 28px;
+}
+
+QTabBar::tab:top:selected,
+QTabBar::tab:top:hover {
+    color: #83b9ff;
+    border-bottom: 2px solid #83b9ff;
+}
+
+QTabBar::tab:bottom:selected,
+QTabBar::tab:bottom:hover {
+    color: #83b9ff;
+    border-top: 2px solid #83b9ff;
+}
+
+QTabBar::tab:right:selected,
+QTabBar::tab:right:hover {
+    color: #83b9ff;
+    border-left: 2px solid #83b9ff;
+}
+
+QTabBar::tab:left:selected,
+QTabBar::tab:left:hover {
+    color: #83b9ff;
+    border-right: 2px solid #83b9ff;
+}
+
+QTabBar QToolButton:hover,
+QTabBar QToolButton {
+    border: 0px;
+    background-color: #232629;
+    background: #232629;
+}
+
+QTabBar:disabled {
+    color: rgba(255, 255, 255, 0.5);
+    background-color:  transparent;
+    border: none;
+}
+
+QTabBar::tab:disabled {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+QTabBar, QTabBar::tab,
+QTabBar::tab:hover,
+QTabBar::tab:focus {
+    border: none;
+}
+
+/* /////////////////////////////////////////////////////////////////////////////////////////////////
+Scroll Bar */
+
+QScrollBar {
+    border: none;
+}
+
+/* For horizontal scrollbar */
+QScrollBar:horizontal {
+    border: none;
+    background: #83b9ff;
+    height: 8px;
+    margin: 0px 21px 0 21px;
+    border-radius: 0px;
+}
+
+QScrollBar::handle:horizontal {
+     background: #83b9ff;
+     min-width: 25px;
+     border-radius: 4px
+}
+
+QScrollBar::add-line:horizontal {
+     border: none;
+     background: [[ QScrollbar-addbar-horizontal-background-color ]];
+     width: 20px;
+     border-top-right-radius: 4px;
+     border-bottom-right-radius: 4px;
+     subcontrol-position: right;
+     subcontrol-origin: margin;
+}
+
+QScrollBar::sub-line:horizontal {
+     border: none;
+     background: [[ QScrollbar-subline-horizontal-background-color ]];
+     width: 20px;
+     border-top-left-radius: 4px;
+     border-bottom-left-radius: 4px;
+     subcontrol-position: left;
+     subcontrol-origin: margin;
+}
+
+QScrollBar::up-arrow:horizontal,
+QScrollBar::down-arrow:horizontal {
+     background: none;
+}
+
+QScrollBar::add-page:horizontal,
+QScrollBar::sub-page:horizontal
+{
+     background: none;
+}
+
+/* For vertical scrollbar */
+QScrollBar:vertical {
+    border: none;
+    background: rgb(16, 21, 27);
+    width: 8px;
+    border-radius: 4px;
+}
+
+ QScrollBar::handle:vertical {
+     background: #83b9ff;
+     min-height: 55px;
+     border-radius: 4px;
+ }
+
+ QScrollBar::add-line:vertical {
+     border: none;
+     background: green;
+     height: 20px;
+     border-bottom-left-radius: 4px;
+     border-bottom-right-radius: 4px;
+     subcontrol-position: bottom;
+     subcontrol-origin: margin;
+ }
+
+ QScrollBar::sub-line:vertical {
+     border: none;
+     height: 20px;
+     border-top-left-radius: 0px;
+     border-top-right-radius: 0px;
+     subcontrol-position: top;
+     subcontrol-origin: margin;
+ }
+
+ QScrollBar::up-arrow:vertical,
+ QScrollBar::down-arrow:vertical {
+     background: transparent;
+ }
+
+QScrollBar::add-page:vertical,
+QScrollBar::sub-page:vertical{
+    background: rgb(16, 21, 27);
+}
+
+/* /////////////////////////////////////////////////////////////////////////////////////////////////
+GroupBox */
+
+QGroupBox {
+    border: 1px solid rgba(128, 128, 128, 0.25);
+    border-radius: 4px;
+    margin-top: 1ex;
+    font: 11pt "HDWallet";
+    text-transform: uppercase;
+}
+
+QGroupBox::title {
+    subcontrol-origin: margin;
+    left: 15px;
+    padding: 0 3px 0 3px;
+    background-color: rgb(16, 21, 27);
+}
+
+QGroupBox:disabled{
+    color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(16, 21, 27, 0.5);
+}
+
+QGroupBox:disabled QTabBar::tab:disabled,
+QGroupBox:disabled QTabBar::tab:top:disabled,
+QGroupBox:disabled QTabWidget QWidget:disabled,
+QTabBar::tab:top:selected QGroupBox:disabled {
+    color: rgba(255, 255, 255, 0.5);
+    background-color: rgb(16, 21, 27);
+    border-top: 2px solid rgb(16, 21, 27);
+}
+
+QGroupBox::title:disabled{
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* /////////////////////////////////////////////////////////////////////////////////////////////////
+Radio Button */
+QRadioButton{
+    padding: 5px 10px;
+}
+
+QRadioButton::indicator {
+/*    border: 3px solid rgb(25, 30, 36);*/
+    width: 16px;
+    height: 16px;
+    border-radius: 7px;
+    background: rgb(25, 30, 36);
+}
+
+QRadioButton::indicator:checked {
+    background: #83b9ff;
+}
+
+#outputWidgetTopContainerQWidget{
+    background-color: rgba(0, 0, 0, 0)
+}
+
+#outputWidgetTopContainerQFrame{
+    background-color: rgba(0, 0, 0, 0.5);
+ }
+
+#outputTerminalQWidget,
+#outputQFrame{
+    background-color: rgb(0, 0, 0);
+}
+
+#outputTerminalActionQWidget{
+    background-color: transparent;
+ }
+
+#saveTerminalQFrame,
+#expandAndCollapseTerminalQFrame,
+#clearTerminalQFrame{
+    background-color: transparent;
+}
+
+#expandAndCollapseTerminalQFrame QPushButton {
+    background-color: transparent;
+}
+
+
+
+#outputTerminalQLineEdit{
+    background-color: rgba(25, 30, 36, 0.5);
+}
+
+
+
+#outputTerminalQPlainTextEdit{
+    border-radius: 0;
+}
+
+#donationsCharityQPushButton,
+#donationsCoreTeamQPushButton,
+#generateAndDumpTabContainerQFrame QPushButton,
+#derivationTabButtonsContainerQFrame QPushButton{
+    background-color: transparent;
+    border-bottom: 3px solid transparent;
+    padding-bottom: 0;
+    border-radius: 0;
+}
+
+#generateAndDumpTabContainerQFrame QPushButton{
+    padding-top: 0;
+}
+
+#donationsCharityQPushButton:hover,
+#donationsCoreTeamQPushButton:hover,
+#generateAndDumpTabContainerQFrame QPushButton:hover,
+#derivationTabButtonsContainerQFrame QPushButton:hover{
+    background-color: transparent;
+    border-bottom: 3px solid #83b9ff;
+}
+
+#donationsCharityQPushButton[Active="true"],
+#donationsCoreTeamQPushButton[Active="true"],
+#generateAndDumpTabContainerQFrame QPushButton[Active="true"],
+#derivationTabButtonsContainerQFrame QPushButton[Active="true"]{
+    border-bottom: 3px solid #83b9ff;
+}
+
+#generateAndDumpTabContainerQFrame QPushButton[Active="true"]:disabled,
+#derivationTabButtonsContainerQFrame QPushButton[Active="true"]:disabled
+{
+    border-bottom: none;
+}
+
+#expandAndCollapseTerminalQFrame,
+#clearTerminalQFrame{
+    background-color: transparent;
+}
+
+#donationsQLabel{
+    color: white;
+    font: 12pt "HDWallet";
+    letter-spacing: 1px;
+    background-color: rgb(16, 21, 27);
+    border: none;
+    border-radius: 0;
+}
+
+#donationsCryptocurrencyQLabel{
+    color: white;
+    font: 12pt "HDWallet";
+    letter-spacing: 1px;
+    background-color: rgb(16, 21, 27);
+    border: none;
+    border-radius: 0;
+}
+
+
+#donationsCaptionQLabel,
+#donationsAddressQLabel{
+    color: white;
+    font: 10pt "Tahoma";
+    letter-spacing: 1px;
+    background-color: rgb(16, 21, 27);
+    border: none;
+    border-radius: 0;
+    text-transform: none;
+}
+
+#donationsCharityAddressQLabel,
+#donationsAddressQLabel{
+    background-color:  rgb(25, 30, 36);
+    border-radius: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+#modalQFrame{
+    border-radius: 5px;
+}
+
+#donationCharityQRCodeContainerQFrame,
+#donationQRCodeContainerQFrame{
+    background-color: rgb(25, 30, 36);
+    border-radius: 5px;
+}
+
+#toastQFrame{
+    background-color: rgb(25, 30, 36);
+    border-radius: 2px;
+}
+
+#toastQFrame QLabel{
+    font: 10pt "Tahoma";
+}
+
+#closeModalButtonQFrame QPushButton{
+    background-color: transparent;
+}
+
+#closeModalButtonQFrame QPushButton:hover{
+    background-color: #e22828;
+}
+
+#electrumV1FromWIFBIP38PassphraseQCheckBox,
+#cardanoFromXPublicKeyStrictQCheckBox,
+#cardanoFromXPrivateKeyStrictQCheckBox,
+#bipFromWIFBIP38PassphraseQCheckBox,
+#bipFromXPrivateKeyStrictQCheckBox,
+#bipFromXPublicKeyStrictQCheckBox{
+    height: 40px;
+}
+
+#generatedAddressQRCodeQLabel{
+    border-radius: 5px;
+}
+
+.hdwError {
+    border: 1px solid rgba(255,96,96,0.5);
+}
+
+.hdwWarning{
+    border: 1px solid rgba(255, 221, 0,0.5);
+}
+
+
+#donationsCharityCaptionContainerQFrame QLabel,
+#donationsCoreTeamCaptionContainerQFrame QLabel{
+    font: 10pt "Tahoma";
+    letter-spacing: 1px;
+    background-color: rgb(16, 21, 27);
+    text-transform: none;
+}
+#linksContainerQFrame QLabel{
+    font: 10pt "Tahoma";
+    letter-spacing: 1px;
+    text-transform: none;
+}
+
+#websiteQLabel:hover{
+    border-bottom: 1px solid grey;
+    border-radius: 0;
+}

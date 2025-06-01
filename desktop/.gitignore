@@ -1,0 +1,24 @@
+# Files stuff
+.DS_Store
+.coverage
+make.bat
+Makefile
+
+# Folders stuff
+experiment/
+.venv/
+venv/
+.idea/
+.tox/
+.vs/
+
+# Setuptools stuff
+build/
+dist/
+hdwallet.egg-info/
+
+# Python stuff
+__pycache__/
+
+# py.test stuff
+.pytest_cache/
