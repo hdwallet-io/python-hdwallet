@@ -1,9 +1,3 @@
-<div align="right">
-    <a target="_blank" href="https://hdwallet.online"><img height="25" alt="Desktop" src="https://raw.githubusercontent.com/hdwallet-io/python-hdwallet/refs/heads/master/docs/static/svg/online-badge.svg"></a>
-    <a target="_blank" href="https://github.com/hdwallet-io/hdwallet-desktop"><img height="25" alt="Desktop" src="https://raw.githubusercontent.com/hdwallet-io/python-hdwallet/refs/heads/master/docs/static/svg/desktop-badge.svg"></a>
-    <img align="left" height="100" alt="HDWallet" src="https://raw.githubusercontent.com/hdwallet-io/python-hdwallet/refs/heads/master/docs/static/svg/hdwallet-logo.svg">
-</div><br><br><br>
-
 # Hierarchical Deterministic (HD) Wallet
 
 [![Build Status](https://img.shields.io/github/actions/workflow/status/hdwallet-io/python-hdwallet/build.yml)](https://github.com/hdwallet-io/python-hdwallet/actions/workflows/build.yml)
@@ -15,11 +9,6 @@
 
 Python-based library for the implementation of a Hierarchical Deterministic (HD) Wallet generator supporting more than 200 cryptocurrencies.
 It allows the handling of multiple coins, multiple accounts, external and internal chains per account, and millions of addresses per chain.
-
-## Clients
-
-**Online Version** (not-recommended): [https://hdwallet.online](https://hdwallet.online) <br>
-**Offline Version** (recommended): [hdwallet-desktop](https://github.com/hdwallet-io/hdwallet-desktop/releases)
 
 > The library is designed to be flexible and scalable, making it ideal for developers who need to integrate multi-currency wallet functionalities into their applications. 
 > It supports standard protocols for compatibility with other wallets and services, offering features like secure seed creation, efficient key management, and easy account handling.
