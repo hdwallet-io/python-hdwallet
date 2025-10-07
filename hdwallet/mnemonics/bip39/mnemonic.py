@@ -5,10 +5,8 @@
 # file COPYING or https://opensource.org/license/mit
 
 from typing import (
-    Union, Dict, List, Optional
+    Union, Dict, List, Mapping, Optional
 )
-
-import unicodedata
 
 from ...entropies import (
     IEntropy, BIP39Entropy, BIP39_ENTROPY_STRENGTHS
@@ -79,29 +77,29 @@ class BIP39Mnemonic(IMnemonic):
     +-----------------------+----------------------+
     | Name                  | Value                |
     +=======================+======================+
-    | CHINESE_SIMPLIFIED    | chinese-simplified   |
-    +-----------------------+----------------------+
-    | CHINESE_TRADITIONAL   | chinese-traditional  |
-    +-----------------------+----------------------+
-    | CZECH                 | czech                |
-    +-----------------------+----------------------+
     | ENGLISH               | english              |
     +-----------------------+----------------------+
     | FRENCH                | french               |
     +-----------------------+----------------------+
+    | SPANISH               | spanish              |
+    +-----------------------+----------------------+
     | ITALIAN               | italian              |
-    +-----------------------+----------------------+
-    | JAPANESE              | japanese             |
-    +-----------------------+----------------------+
-    | KOREAN                | korean               |
-    +-----------------------+----------------------+
-    | PORTUGUESE            | portuguese           |
     +-----------------------+----------------------+
     | RUSSIAN               | russian              |
     +-----------------------+----------------------+
-    | SPANISH               | spanish              |
+    | PORTUGUESE            | portuguese           |
+    +-----------------------+----------------------+
+    | CZECH                 | czech                |
     +-----------------------+----------------------+
     | TURKISH               | turkish              |
+    +-----------------------+----------------------+
+    | KOREAN                | korean               |
+    +-----------------------+----------------------+
+    | CHINESE_SIMPLIFIED    | chinese-simplified   |
+    +-----------------------+----------------------+
+    | CHINESE_TRADITIONAL   | chinese-traditional  |
+    +-----------------------+----------------------+
+    | JAPANESE              | japanese             |
     +-----------------------+----------------------+
     """
 
@@ -122,32 +120,32 @@ class BIP39Mnemonic(IMnemonic):
         BIP39_MNEMONIC_WORDS.TWENTY_FOUR: BIP39_ENTROPY_STRENGTHS.TWO_HUNDRED_FIFTY_SIX
     }
     languages: List[str] = [
-        BIP39_MNEMONIC_LANGUAGES.CHINESE_SIMPLIFIED,
-        BIP39_MNEMONIC_LANGUAGES.CHINESE_TRADITIONAL,
-        BIP39_MNEMONIC_LANGUAGES.CZECH,
         BIP39_MNEMONIC_LANGUAGES.ENGLISH,
         BIP39_MNEMONIC_LANGUAGES.FRENCH,
-        BIP39_MNEMONIC_LANGUAGES.ITALIAN,
-        BIP39_MNEMONIC_LANGUAGES.JAPANESE,
-        BIP39_MNEMONIC_LANGUAGES.KOREAN,
-        BIP39_MNEMONIC_LANGUAGES.PORTUGUESE,
-        BIP39_MNEMONIC_LANGUAGES.RUSSIAN,
         BIP39_MNEMONIC_LANGUAGES.SPANISH,
-        BIP39_MNEMONIC_LANGUAGES.TURKISH
+        BIP39_MNEMONIC_LANGUAGES.ITALIAN,
+        BIP39_MNEMONIC_LANGUAGES.RUSSIAN,
+        BIP39_MNEMONIC_LANGUAGES.PORTUGUESE,
+        BIP39_MNEMONIC_LANGUAGES.CZECH,
+        BIP39_MNEMONIC_LANGUAGES.TURKISH,
+        BIP39_MNEMONIC_LANGUAGES.KOREAN,
+        BIP39_MNEMONIC_LANGUAGES.CHINESE_SIMPLIFIED,
+        BIP39_MNEMONIC_LANGUAGES.CHINESE_TRADITIONAL,
+        BIP39_MNEMONIC_LANGUAGES.JAPANESE,
     ]
     wordlist_path: Dict[str, str] = {
-        BIP39_MNEMONIC_LANGUAGES.CHINESE_SIMPLIFIED: "bip39/wordlist/chinese_simplified.txt",
-        BIP39_MNEMONIC_LANGUAGES.CHINESE_TRADITIONAL: "bip39/wordlist/chinese_traditional.txt",
-        BIP39_MNEMONIC_LANGUAGES.CZECH: "bip39/wordlist/czech.txt",
         BIP39_MNEMONIC_LANGUAGES.ENGLISH: "bip39/wordlist/english.txt",
         BIP39_MNEMONIC_LANGUAGES.FRENCH: "bip39/wordlist/french.txt",
-        BIP39_MNEMONIC_LANGUAGES.ITALIAN: "bip39/wordlist/italian.txt",
-        BIP39_MNEMONIC_LANGUAGES.JAPANESE: "bip39/wordlist/japanese.txt",
-        BIP39_MNEMONIC_LANGUAGES.KOREAN: "bip39/wordlist/korean.txt",
-        BIP39_MNEMONIC_LANGUAGES.PORTUGUESE: "bip39/wordlist/portuguese.txt",
-        BIP39_MNEMONIC_LANGUAGES.RUSSIAN: "bip39/wordlist/russian.txt",
         BIP39_MNEMONIC_LANGUAGES.SPANISH: "bip39/wordlist/spanish.txt",
-        BIP39_MNEMONIC_LANGUAGES.TURKISH: "bip39/wordlist/turkish.txt"
+        BIP39_MNEMONIC_LANGUAGES.ITALIAN: "bip39/wordlist/italian.txt",
+        BIP39_MNEMONIC_LANGUAGES.RUSSIAN: "bip39/wordlist/russian.txt",
+        BIP39_MNEMONIC_LANGUAGES.PORTUGUESE: "bip39/wordlist/portuguese.txt",
+        BIP39_MNEMONIC_LANGUAGES.CZECH: "bip39/wordlist/czech.txt",
+        BIP39_MNEMONIC_LANGUAGES.TURKISH: "bip39/wordlist/turkish.txt",
+        BIP39_MNEMONIC_LANGUAGES.KOREAN: "bip39/wordlist/korean.txt",
+        BIP39_MNEMONIC_LANGUAGES.CHINESE_SIMPLIFIED: "bip39/wordlist/chinese_simplified.txt",
+        BIP39_MNEMONIC_LANGUAGES.CHINESE_TRADITIONAL: "bip39/wordlist/chinese_traditional.txt",
+        BIP39_MNEMONIC_LANGUAGES.JAPANESE: "bip39/wordlist/japanese.txt",
     }
 
     @classmethod
@@ -210,6 +208,8 @@ class BIP39Mnemonic(IMnemonic):
 
         This method converts a given entropy value into a mnemonic phrase according to the specified language.
 
+        It is NFC normalized for presentation, and must be NFKD normalized before conversion to a BIP-39 seed.
+
         :param entropy: The entropy to encode into a mnemonic phrase.
         :type entropy: Union[str, bytes]
         :param language: The language for the mnemonic phrase.
@@ -219,7 +219,7 @@ class BIP39Mnemonic(IMnemonic):
         :rtype: str
         """
 
-        entropy: bytes = get_bytes(entropy)
+        entropy: bytes = get_bytes(entropy, unhexlify=True)
         if not BIP39Entropy.is_valid_bytes_strength(len(entropy)):
             raise EntropyError(
                 "Wrong entropy strength", expected=BIP39Entropy.strengths, got=(len(entropy) * 8)
@@ -230,7 +230,7 @@ class BIP39Mnemonic(IMnemonic):
         mnemonic_bin: str = entropy_binary_string + entropy_hash_binary_string[:len(entropy) // 4]
 
         mnemonic: List[str] = []
-        words_list: List[str] = cls.normalize(cls.get_words_list_by_language(language=language))
+        words_list: List[str] = cls.get_words_list_by_language(language=language)  # Already NFC normalized
         if len(words_list) != cls.words_list_number:
             raise Error(
                 "Invalid number of loaded words list", expected=cls.words_list_number, got=len(words_list)
@@ -241,11 +241,17 @@ class BIP39Mnemonic(IMnemonic):
             word_index: int = binary_string_to_integer(word_bin)
             mnemonic.append(words_list[word_index])
 
-        return " ".join(cls.normalize(mnemonic))
+        # Words from wordlist are normalized NFC for display
+        return " ".join(mnemonic)
 
     @classmethod
     def decode(
-        cls, mnemonic: str, checksum: bool = False, words_list: Optional[List[str]] = None, words_list_with_index: Optional[dict] = None
+        cls,
+        mnemonic: str,
+        language: Optional[str] = None,
+        checksum: bool = False,
+        words_list: Optional[List[str]] = None,
+        words_list_with_index: Optional[Mapping[str, int]] = None,
     ) -> str:
         """
         Decodes a mnemonic phrase into its corresponding entropy.
@@ -255,6 +261,8 @@ class BIP39Mnemonic(IMnemonic):
 
         :param mnemonic: The mnemonic phrase to decode.
         :type mnemonic: str
+        :param language: The preferred language of the mnemonic phrase
+        :type language: Optional[str]
         :param checksum: Whether to include the checksum in the returned entropy.
         :type checksum: bool
         :param words_list: Optional list of words used to decode the mnemonic. If not provided, the method will use the default word list for the language detected.
@@ -270,19 +278,17 @@ class BIP39Mnemonic(IMnemonic):
         if len(words) not in cls.words_list:
             raise MnemonicError("Invalid mnemonic words count", expected=cls.words_list, got=len(words))
 
-        if not words_list or not words_list_with_index:
-            words_list, language = cls.find_language(mnemonic=words)
-            if len(words_list) != cls.words_list_number:
-                raise Error(
-                    "Invalid number of loaded words list", expected=cls.words_list_number, got=len(words_list)
-                )
-            words_list_with_index: dict = {
-                words_list[i]: i for i in range(len(words_list))
-            }
-
-        if len(words_list) != cls.words_list_number:
+        # May optionally provide a word<->index Mapping, or a language + words_list; if neither, the Mnemonic defaults are used.
+        if not words_list_with_index:
+            wordlist_path: Optional[Dict[str, Union[str, List[str]]]] = None
+            if words_list:
+                if not language:
+                    raise Error( "Must provide language with words_list" )
+                wordlist_path = { language: words_list }
+            words_list_with_index, language = cls.find_language(mnemonic=words, language=language, wordlist_path=wordlist_path)
+        if len(words_list_with_index) != cls.words_list_number:
             raise Error(
-                "Invalid number of loaded words list", expected=cls.words_list_number, got=len(words_list)
+                "Invalid number of loaded words list", expected=cls.words_list_number, got=len(words_list_with_index)
             )
 
         mnemonic_bin: str = "".join(map(
@@ -316,50 +322,3 @@ class BIP39Mnemonic(IMnemonic):
                 binary_string_to_bytes(mnemonic_bin, pad_bit_len // 4)
             )
         return bytes_to_string(entropy)
-
-    @classmethod
-    def is_valid(
-        cls,
-        mnemonic: Union[str, List[str]],
-        words_list: Optional[List[str]] = None,
-        words_list_with_index: Optional[dict] = None
-    ) -> bool:
-        """
-        Validates a mnemonic phrase.
-
-        This method checks whether the provided mnemonic phrase is valid by attempting to decode it.
-        If the decoding is successful without raising any errors, the mnemonic is considered valid.
-
-        :param mnemonic: The mnemonic phrase to validate. It can be a string or a list of words.
-        :type mnemonic: Union[str, List[str]]
-        :param words_list: Optional list of words to be used for validation. If not provided, the method will use the default word list.
-        :type words_list: Optional[List[str]]
-        :param words_list_with_index: Optional dictionary mapping words to their indices for validation. If not provided, the method will use the default mapping.
-        :type words_list_with_index: Optional[dict]
-
-        :return: True if the mnemonic phrase is valid, False otherwise.
-        :rtype: bool
-        """
-
-        try:
-            cls.decode(
-                mnemonic=mnemonic, words_list=words_list, words_list_with_index=words_list_with_index
-            )
-            return True
-        except (Error, KeyError):
-            return False
-
-    @classmethod
-    def normalize(cls, mnemonic: Union[str, List[str]]) -> List[str]:
-        """
-        Normalizes the given mnemonic by splitting it into a list of words if it is a string.
-
-        :param mnemonic: The mnemonic value, which can be a single string of words or a list of words.
-        :type mnemonic: Union[str, List[str]]
-
-        :return: A list of words from the mnemonic.
-        :rtype: List[str]
-        """
-
-        mnemonic: list = mnemonic.split() if isinstance(mnemonic, str) else mnemonic
-        return list(map(lambda _: unicodedata.normalize("NFKD", _.lower()), mnemonic))

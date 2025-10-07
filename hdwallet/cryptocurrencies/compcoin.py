@@ -69,4 +69,3 @@ class Compcoin(ICryptocurrency):
         "p2pkh", "p2sh"
     ]
     DEFAULT_SEMANTIC = "p2pkh"
-   

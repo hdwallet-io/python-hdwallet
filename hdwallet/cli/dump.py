@@ -56,7 +56,7 @@ def dump(**kwargs) -> None:
                 semantic = "p2wpkh-in-p2sh"
             elif kwargs.get("hd") in ["BIP84", "BIP141"]:
                 semantic = "p2wpkh"
-                
+
         hdwallet: HDWallet = HDWallet(
             cryptocurrency=cryptocurrency,
             hd=HDS.hd(name=kwargs.get("hd")),
@@ -138,7 +138,7 @@ def dump(**kwargs) -> None:
             if kwargs.get("bip38"):
 
                 bip38: BIP38 = BIP38(
-                  cryptocurrency=BIP38_CRYPTOCURRENCIES[cryptocurrency.NAME], network=kwargs.get("network")
+                    cryptocurrency=BIP38_CRYPTOCURRENCIES[cryptocurrency.NAME], network=kwargs.get("network")
                 )
                 _wif = bip38.decrypt(encrypted_wif=_wif, passphrase=kwargs.get("passphrase"))
 

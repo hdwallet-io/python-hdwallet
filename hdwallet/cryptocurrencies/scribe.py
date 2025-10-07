@@ -29,7 +29,7 @@ class Mainnet(INetwork):
     })
     MESSAGE_PREFIX = None
     WIF_PREFIX = 0x6e
-    
+
 
 class Scribe(ICryptocurrency):
 

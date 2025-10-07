@@ -11,7 +11,6 @@ from typing import (
 import unicodedata
 
 from ...crypto import pbkdf2_hmac_sha512
-from ...exceptions import MnemonicError
 from ...utils import bytes_to_string
 from ...mnemonics import (
     IMnemonic, ElectrumV2Mnemonic, ELECTRUM_V2_MNEMONIC_TYPES
@@ -51,6 +50,7 @@ class ElectrumV2Seed(ISeed):
         cls,
         mnemonic: Union[str, IMnemonic],
         passphrase: Optional[str] = None,
+        language: Optional[str] = None,
         mnemonic_type=ELECTRUM_V2_MNEMONIC_TYPES.STANDARD
     ) -> str:
         """
@@ -66,16 +66,13 @@ class ElectrumV2Seed(ISeed):
         :return: The derived seed as a string.
         :rtype: str
         """
-
-        mnemonic = (
-            mnemonic.mnemonic() if isinstance(mnemonic, IMnemonic) else mnemonic
-        )
-        if not ElectrumV2Mnemonic.is_valid(mnemonic=mnemonic, mnemonic_type=mnemonic_type):
-            raise MnemonicError(f"Invalid {cls.name()} mnemonic words")
+        if not isinstance(mnemonic, IMnemonic):
+            mnemonic = ElectrumV2Mnemonic(mnemonic=mnemonic, language=language)
+        assert isinstance(mnemonic, ElectrumV2Mnemonic)
 
         salt: str = unicodedata.normalize("NFKD", (
             (cls.seed_salt_modifier + passphrase) if passphrase else cls.seed_salt_modifier
         ))
         return bytes_to_string(pbkdf2_hmac_sha512(
-            password=mnemonic, salt=salt, iteration_num=cls.seed_pbkdf2_rounds
+            password=unicodedata.normalize("NFKD", mnemonic.mnemonic()), salt=salt, iteration_num=cls.seed_pbkdf2_rounds
         ))

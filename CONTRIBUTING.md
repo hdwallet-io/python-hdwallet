@@ -7,7 +7,28 @@ with the owners of this repository before making a change.
 
 ## Development
 
-To get started, just fork this repo, clone it locally, and run:
+### Using Nix (Recommended)
+
+The easiest way to get a complete development environment is to use Nix. This approach provides the correct Python version and all dependencies automatically.
+
+If you have Nix installed, you can get a full development/runtime environment by running:
+
+```
+make nix-venv
+```
+
+This will activate an interactive shell with the Nix environment and Python virtual environment set up.
+
+To run specific commands in the Nix + venv environment, use the pattern `make nix-venv-target`:
+
+```
+make nix-venv-test        # Run tests in Nix + venv environment
+make nix-venv-install     # Install package in Nix + venv environment
+```
+
+### Manual Setup
+
+Alternatively, you can set up the development environment manually. Fork this repo, clone it locally, and run:
 
 ```
 pip install -e .[cli,tests,docs]

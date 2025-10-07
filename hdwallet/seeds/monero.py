@@ -4,9 +4,8 @@
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or https://opensource.org/license/mit
 
-from typing import Union
+from typing import Optional, Union
 
-from ..exceptions import MnemonicError
 from ..mnemonics import (
     IMnemonic, MoneroMnemonic
 )
@@ -38,7 +37,7 @@ class MoneroSeed(ISeed):
         return "Monero"
 
     @classmethod
-    def from_mnemonic(cls, mnemonic: Union[str, IMnemonic], **kwargs) -> str:
+    def from_mnemonic(cls, mnemonic: Union[str, IMnemonic], language: Optional[str] = None, **kwargs) -> str:
         """
         Converts a mnemonic phrase to its corresponding seed.
 
@@ -48,10 +47,8 @@ class MoneroSeed(ISeed):
         :return: The decoded entropy as a string.
         :rtype: str
         """
-        mnemonic = (
-            mnemonic.mnemonic() if isinstance(mnemonic, IMnemonic) else mnemonic
-        )
-        if not MoneroMnemonic.is_valid(mnemonic=mnemonic):
-            raise MnemonicError(f"Invalid {cls.name()} mnemonic words")
+        if not isinstance(mnemonic, IMnemonic):
+            mnemonic = MoneroMnemonic(mnemonic=mnemonic, language=language)
+        assert isinstance(mnemonic, MoneroMnemonic)
 
-        return MoneroMnemonic.decode(mnemonic=mnemonic)
+        return MoneroMnemonic.decode(mnemonic=mnemonic.mnemonic(), language=mnemonic.language())

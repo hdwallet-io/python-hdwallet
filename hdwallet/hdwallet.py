@@ -715,7 +715,7 @@ class HDWallet:
             self._hd.from_spend_private_key(spend_private_key=spend_private_key)
             return self
         except ValueError as error:
-            raise PrivateKeyError("Invalid spend private key data")
+            raise PrivateKeyError("Invalid spend private key data") from error
 
     def from_watch_only(
         self,

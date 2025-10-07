@@ -70,4 +70,3 @@ class XinFin(ICryptocurrency):
     PARAMS = Params({
         "ADDRESS_PREFIX": "xdc"
     })
-    

@@ -18,7 +18,7 @@ from ..utils import (
 
 
 class IEntropy:
-    
+
     _entropy: str
     _strength: int
 
@@ -148,4 +148,4 @@ class IEntropy:
         """
 
         if self.name() != "Electrum-V2":
-            raise NotImplemented
+            raise NotImplementedError

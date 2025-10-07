@@ -41,7 +41,7 @@ class NestedNamespace(SimpleNamespace):
 class SLIP10_ED25519_CONST:
     """
     ``SLIP10-ED25519`` Constants.
-    
+
     +-------------------------+--------------+
     | Name                    | Value        |
     +=========================+==============+
@@ -61,7 +61,7 @@ class SLIP10_ED25519_CONST:
 class KHOLAW_ED25519_CONST(SLIP10_ED25519_CONST):
     """
     ``KHOLAW-ED25519`` Constants.
-    
+
     +-------------------------+--------------+
     | Name                    | Value        |
     +=========================+==============+
@@ -79,7 +79,7 @@ class KHOLAW_ED25519_CONST(SLIP10_ED25519_CONST):
 class SLIP10_SECP256K1_CONST:
     """
     ``SLIP10-SECP256K1`` Constants.
-    
+
     +-------------------------------------+-------------+
     | Name                                | Value       |
     +=====================================+=============+

@@ -17,21 +17,19 @@ def test_electrum_v2_seeds(data):
     for words in data["seeds"]["Electrum-V2"].keys():
         for mnemonic_type in data["seeds"]["Electrum-V2"][words].keys():
 
-            for lang in data["seeds"]["Electrum-V2"][words][mnemonic_type].keys():
-                assert ElectrumV2Seed.from_mnemonic(
-                    mnemonic= data["seeds"]["Electrum-V2"][words][mnemonic_type][lang]["mnemonic"], mnemonic_type=mnemonic_type
-                ) == data["seeds"]["Electrum-V2"][words][mnemonic_type][lang]["non-passphrase-seed"]
+            for language in data["seeds"]["Electrum-V2"][words][mnemonic_type].keys():
+                mnemonic = data["seeds"]["Electrum-V2"][words][mnemonic_type][language]["mnemonic"]
+                non_passphrase_seed = ElectrumV2Seed.from_mnemonic(
+                    mnemonic=mnemonic,
+                    language=language,
+                    mnemonic_type=mnemonic_type
+                )
+                assert non_passphrase_seed == data["seeds"]["Electrum-V2"][words][mnemonic_type][language]["non-passphrase-seed"]
 
-                for passphrase in data["seeds"]["Electrum-V2"][words][mnemonic_type][lang]["passphrases"].keys():
+                for passphrase in data["seeds"]["Electrum-V2"][words][mnemonic_type][language]["passphrases"].keys():
                     assert ElectrumV2Seed.from_mnemonic(
-                        mnemonic=data["seeds"]["Electrum-V2"][words][mnemonic_type][lang]["mnemonic"],
+                        mnemonic=mnemonic,
                         passphrase=passphrase,
+                        language=language,
                         mnemonic_type=mnemonic_type
-                    ) == data["seeds"]["Electrum-V2"][words][mnemonic_type][lang]["passphrases"][passphrase]
-
-                    assert ElectrumV2Seed.from_mnemonic(
-                        mnemonic=data["seeds"]["Electrum-V2"][words][mnemonic_type][lang]["mnemonic"],
-                        passphrase=passphrase,
-                        mnemonic_type=mnemonic_type
-                    ) == data["seeds"]["Electrum-V2"][words][mnemonic_type][lang]["passphrases"][passphrase]
-
+                    ) == data["seeds"]["Electrum-V2"][words][mnemonic_type][language]["passphrases"][passphrase]

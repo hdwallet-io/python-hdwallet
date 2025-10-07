@@ -29,7 +29,7 @@ class Mainnet(INetwork):
     })
     MESSAGE_PREFIX = "\x18Potcoin Signed Message:\n"
     WIF_PREFIX = 0xb7
-    
+
 
 class Potcoin(ICryptocurrency):
 

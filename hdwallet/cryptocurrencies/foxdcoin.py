@@ -113,4 +113,3 @@ class Foxdcoin(ICryptocurrency):
         "p2pkh", "p2sh", "p2wpkh", "p2wpkh-in-p2sh", "p2wsh", "p2wsh-in-p2sh"
     ]
     DEFAULT_SEMANTIC = "p2pkh"
-

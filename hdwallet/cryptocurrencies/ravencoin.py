@@ -23,7 +23,7 @@ class Mainnet(INetwork):
     WITNESS_VERSIONS = WitnessVersions({
         "P2WPKH": 0x0c,
         "P2WSH": 0x0c
-    })    
+    })
     XPRIVATE_KEY_VERSIONS = XPrivateKeyVersions({
         "P2PKH": 0x488ade4,
         "P2SH": 0x488ade4,

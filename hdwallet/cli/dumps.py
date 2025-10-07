@@ -143,7 +143,7 @@ def dumps(**kwargs) -> None:
             if kwargs.get("bip38"):
 
                 bip38: BIP38 = BIP38(
-                  cryptocurrency=BIP38_CRYPTOCURRENCIES[cryptocurrency.NAME], network=kwargs.get("network")
+                    cryptocurrency=BIP38_CRYPTOCURRENCIES[cryptocurrency.NAME], network=kwargs.get("network")
                 )
                 _wif = bip38.decrypt(encrypted_wif=_wif, passphrase=kwargs.get("passphrase"))
 
@@ -226,7 +226,6 @@ def dumps(**kwargs) -> None:
                     )
                 )
 
-
         hd_name: str = hdwallet._hd.name()
         if kwargs.get("include"):
             _include: str = kwargs.get("include")
@@ -261,7 +260,6 @@ def dumps(**kwargs) -> None:
             _include: str = "at:path,addresses:p-chain,public_key,wif"
         elif hdwallet.cryptocurrency() == "Binance":
             _include: str = "at:path,addresses:chain,public_key,wif"
-
 
         hdwallet_csv = csv.DictWriter(
             sys.stdout, fieldnames=_include.split(","), extrasaction="ignore", delimiter=kwargs.get("delimiter")
@@ -374,7 +372,6 @@ def dumps(**kwargs) -> None:
                 click.echo(json.dumps(
                     hdwallet.dump(exclude={'derivation', *excludes}), indent=4, ensure_ascii=False
                 ))
-
 
             drive(*hdwallet._derivation.derivations())
         else:

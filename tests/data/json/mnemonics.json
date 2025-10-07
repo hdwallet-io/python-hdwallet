@@ -104,7 +104,39 @@
                 "spanish": "zona rama nuca carbón atar artista meta funda avena sonido baile educar ostra ruido juzgar chivo octavo lector brillo ingenio hora yeso sonido helio",
                 "turkish": "zorlu siroz paraşüt defter bavul baca obez kapı beyoğlu tesir bodrum gusül polat tabaka masum doruk peçete mercek coğrafya liyakat kurmay zihinsel tesir köstebek"
             }
-        }
+        },
+        {
+	  "name": "BIP39",
+          "entropy": "98e612eaa0de01e80d1f99be9d52be46",
+	  "words": 12,
+	  "languages": {
+	    "english": "ocean correct rival double theme village crucial veteran salon tunnel question minute"
+	  }
+	},
+        {
+	  "name": "BIP39",
+          "entropy": "a9a70f43a52ea9f60ef7ccd57e37164e",
+	  "words": 12,
+	  "languages": {
+	    "french": "ocean correct rival double theme village crucial veteran salon tunnel question minute"
+	  }
+	},
+        {
+	  "name": "BIP39",
+          "entropy": "a2544a353acc0eac3c294c11775696a9cd1726b244f4211bad237b29e9e23d80",
+	  "words": 24,
+	  "languages": {
+	    "english": "pelican pelican minute intact science figure vague civil badge rival pizza fatal sphere nation simple ozone canal talent emotion wagon ozone valve voyage angle"
+	  }
+	},
+        {
+	  "name": "BIP39",
+          "entropy": "b536a67341dd7ecd3d599317da1eea31be1f45774d81287cdd477f9b03ecbfb8",
+	  "words": 24,
+	  "languages": {
+	    "french": "pelican pelican minute intact science figure vague civil badge rival pizza fatal sphere nation simple ozone canal talent emotion wagon ozone valve voyage angle"
+	  }
+	}
     ],
     "Electrum-V1": [
         {
@@ -285,16 +317,16 @@
             "words": 12,
             "checksum": false,
             "languages": {
-                "chinese-simplified": "宽 事 理 密 道 催 霸 挂 制 妇 出 间",
-                "dutch": "motregen benadeeld atrium geslaagd bizar traktaat zulk sneu badderen robot afspeel best",
                 "english": "mundane aunt answers gang beer thirsty zebra shuffled apricot rest affair awakened",
+                "dutch": "motregen benadeeld atrium geslaagd bizar traktaat zulk sneu badderen robot afspeel best",
                 "french": "moudre avide arcade feuille baver site vrac repli article promener adresser azote",
                 "german": "jäger ansporn amphibie erosion auftritt salat zollhund pedal anbieten muster abteil aorta",
                 "italian": "medaglia arte andare egiziano aviatore specchio zattera rumore annuncio pupazzo affogato aspirina",
                 "japanese": "ずっしり いもたれ いせき けおりもの うけつけ なげる ひかん ていおん いちど だんねつ あぶる いらい",
                 "portuguese": "loquaz atazanar anfora faturista baqueta solver zabumba recusavel apito pecuniario adriatico aturdir",
                 "russian": "октябрь билет ателье иметь бугор уран январь сфера аэропорт сердце аксиома бицепс",
-                "spanish": "hurto apio alteza derrota asa pasión rifa nube ámbar moda acuerdo aprobar"
+                "spanish": "hurto apio alteza derrota asa pasión rifa nube ámbar moda acuerdo aprobar",
+                "chinese-simplified": "宽 事 理 密 道 催 霸 挂 制 妇 出 间"
             }
         },
         {
@@ -303,16 +335,16 @@
             "words": 13,
             "checksum": true,
             "languages": {
-                "chinese-simplified": "纸 呀 刑 斜 足 措 监 联 末 喊 穷 咱 监",
-                "dutch": "leguaan nullijn knaven pablo hekman nylon rein diode napijn tuma tout tulp nylon",
                 "english": "leopard noted jingle pancakes hairy nowhere ravine dauntless nasty today testing tobacco tobacco",
+                "dutch": "leguaan nullijn knaven pablo hekman nylon rein diode napijn tuma tout tulp nylon",
                 "french": "litre norme jardin parler fuser notre poupe cirage muse sombre singe solvant litre",
                 "german": "habicht kaugummi gehweg lausbub fazit keilerei monat brandung jupiter schmied sachbuch schlager schlager",
                 "italian": "insalata muraglia giusto panfilo farmacia musica primario carbone mettere spuntare spagnolo spumante spumante",
                 "japanese": "じかん せつだん さぎょう そむりえ けんにん せつび たれる おどり すぼん なやむ ないせん なめる なやむ",
                 "portuguese": "itrio miau icar noturno fumo migratorio ozonizar coordenativa luxuriante sujo sodomizar suite ozonizar",
                 "russian": "мятый оценка мачта пузырь клятва очищать сбегать гильза орган уцелеть упасть уходить клятва",
-                "spanish": "gen jornada finca llama eficaz joya miembro burbuja imponer pelar parque peine imponer"
+                "spanish": "gen jornada finca llama eficaz joya miembro burbuja imponer pelar parque peine imponer",
+                "chinese-simplified": "纸 呀 刑 斜 足 措 监 联 末 喊 穷 咱 监"
             }
         },
         {
@@ -321,16 +353,16 @@
             "words": 24,
             "checksum": false,
             "languages": {
-                "chinese-simplified": "李 舞 感 炼 熔 黑 能 铜 毒 炮 枝 柬 留 节 违 朗 株 纳 卡 坦 周 意 南 阀",
-                "dutch": "giebelen smoel fabel saksisch vieux hiaat alikruik pixel pieneman riskant tragedie soapbox ionisch eind tosti sediment sulfaat pakzadel peuk rugpijn eurocent boei dagprijs tabak",
                 "english": "gemstone sewage equip runway unknown haystack ahead playful pigment reorder textbook sidekick identity drunk template satin sovereign pastry physics roomy emotion betting cohesive spying",
+                "dutch": "giebelen smoel fabel saksisch vieux hiaat alikruik pixel pieneman riskant tragedie soapbox ionisch eind tosti sediment sulfaat pakzadel peuk rugpijn eurocent boei dagprijs tabak",
                 "french": "fils rendre doute raie tanin galop aigre pieu perte produire sinus respect haie crin sigle ratio rubis partir perdu quitter docteur bidule certes rustre",
                 "german": "erwidern partner druck obdach taktung feldbett afrika lümmel lohn mumie saft person foliant cousin rüstung omelett quote leder locken neugier donner aussage biologe rapsöl",
                 "italian": "emettere rotonda crimine rete tenebre femmina aiutare petrolio pentirsi pugilato sparire sacco forzare cigno sospiro rilevare scuola panorama pendenza recitare corrente babbuino cacciare seme",
                 "japanese": "けさき つるみく きない ちめいど ぬまえび こいぬ あらゆる たいまつばな だいたい たんてい なおす ていこく こつぶ がっしょう どんぶり つうじょう てんき そよかぜ だいじょうぶ ちたい きすう うすい おおよそ てんぷら",
                 "portuguese": "felicidade rasurar ejetar poquer toar gado agito oigale ocre pavoroso software regurgitar guaxinim diatribe slide pueril ruas nublar oceanografo pizzaria ecumenismo begonia chuvoso rural",
                 "russian": "инфекция суровый емкость совет хозяин кодекс амбар ремонт рвать секунда упор счет ледяной держать умолять спать ткань пурга рапорт случай дыра бухта выгодный трибуна",
-                "spanish": "diablo norte cocina muro pleno élite agitar malo macho mitad parte nudo etnia carro parcela náusea olor llegar lustro mozo circo asno bondad óptica"
+                "spanish": "diablo norte cocina muro pleno élite agitar malo macho mitad parte nudo etnia carro parcela náusea olor llegar lustro mozo circo asno bondad óptica",
+                "chinese-simplified": "李 舞 感 炼 熔 黑 能 铜 毒 炮 枝 柬 留 节 违 朗 株 纳 卡 坦 周 意 南 阀"
             }
         },
         {
@@ -339,16 +371,16 @@
             "words": 25,
             "checksum": true,
             "languages": {
-                "chinese-simplified": "往 祥 钢 众 砂 筒 完 阵 挂 勤 爱 氮 黄 斯 辉 起 永 接 腿 喝 教 碳 烯 做 起",
-                "dutch": "faliekant wals isaac erna whirlpool scout eenruiter ponywagen sneu twitteren guido vrekkig gekskap folder zijbeuk atsma omdoen clicheren spiraal valreep drol oudachtig soigneren cruijff sneu",
                 "english": "error value idiom efficient vocal sanity donuts poker shuffled together greater upstairs fuming farming womanly antics obnoxious cafe slackens tsunami dewdrop oyster sifting civilian womanly",
+                "dutch": "faliekant wals isaac erna whirlpool scout eenruiter ponywagen sneu twitteren guido vrekkig gekskap folder zijbeuk atsma omdoen clicheren spiraal valreep drol oudachtig soigneren cruijff sneu",
                 "french": "drame toque haine devoir tutu raser coupure pirate repli sondage foyer texte faune enfermer visite arceau obtenir cabinet rigide stagiaire cocon panda reste cavale cabinet",
                 "german": "dünung traum folklore dezibel verb oktave chipsatz maibaum pedal schrank familie ticken erfüllen einfall wrack ampulle klee beladen polieren sitzbank bugwelle langmut pfa bezahlen familie",
                 "italian": "cronaca tromba fosforo comune vaglio riferire chirurgo pigiama rumore staccare evacuare topolino ebbrezza deposito virgola androide nipote bombola sberla stufa cauzione padella sale buffo cauzione",
                 "japanese": "きねん ねんぶつ こてい きかく はいご ちんもく かがし たえる ていおん ならぶ けろけろ ねほりはほり ぐんて きわめる はんかく いぜん せんげん えすて てすり にっけい おんどけい そなえる ていし おうじ おんどけい",
                 "portuguese": "elmo umero gude druso valvula pterossauros deltoide olvidavel recusavel suntuoso fominha tufo facultativo enzimatico vozes aniversario morubixaba bucolico ridiculo tatuar cupula noel rejuvenescimento ceifeiro druso",
                 "russian": "жажда членство лежать древний шикарный соус двор рифма сфера учитель кибитка цирк излагать замечать эскиз атлас пачка вишневый таможня финал гость пруд сшивать всадник атлас",
-                "spanish": "cofre producto evadir chiste quince nasal capitán manso nube peligro dulce posible dedo cordón rencor altivo lacio barba ocaso pesa calamar linterna nueve bobina nueve"
+                "spanish": "cofre producto evadir chiste quince nasal capitán manso nube peligro dulce posible dedo cordón rencor altivo lacio barba ocaso pesa calamar linterna nueve bobina nueve",
+                "chinese-simplified": "往 祥 钢 众 砂 筒 完 阵 挂 勤 爱 氮 黄 斯 辉 起 永 接 腿 喝 教 碳 烯 做 起"
             }
         }
     ]

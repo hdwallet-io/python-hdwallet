@@ -11,7 +11,6 @@ from typing import (
 import unicodedata
 
 from ..crypto import pbkdf2_hmac_sha512
-from ..exceptions import MnemonicError
 from ..utils import bytes_to_string
 from ..mnemonics import (
     IMnemonic, BIP39Mnemonic
@@ -26,8 +25,13 @@ class BIP39Seed(ISeed):
     phrases and converting them into a binary seed used for hierarchical
     deterministic wallets.
 
+    The supplied passphrase is always used in extending the original entropy
+    (encoded in the BIP-39 mnemonic phrase) into the 512-bit seed used to derive
+    HD wallets.
+
     .. note::
         This class inherits from the ``ISeed`` class, thereby ensuring that all functions are accessible.
+
     """
 
     seed_salt_modifier: str = "mnemonic"
@@ -47,9 +51,17 @@ class BIP39Seed(ISeed):
         return "BIP39"
 
     @classmethod
-    def from_mnemonic(cls, mnemonic: Union[str, IMnemonic], passphrase: Optional[str] = None) -> str:
-        """
-        Converts a mnemonic phrase to its corresponding seed.
+    def from_mnemonic(
+        cls,
+        mnemonic: Union[str, IMnemonic],
+        passphrase: Optional[str] = None,
+        language: Optional[str] = None
+    ) -> str:
+        """Converts a canonical mnemonic phrase to its corresponding seed.  Since a mnemonic string
+        may contain abbreviations, we canonicalize it by round-tripping it through the appropriate
+        IMnemonic type; this raises a MnemonicError exception for invalid mnemonics or languages.
+
+        BIP39 stretches a prefix + (passphrase or "") + normalized mnemonic to produce the 512-bit seed.
 
         :param mnemonic: The mnemonic phrase to be decoded. Can be a string or an instance of `IMnemonic`.
         :type mnemonic: Union[str, IMnemonic]
@@ -59,17 +71,19 @@ class BIP39Seed(ISeed):
 
         :return: The decoded seed as a string.
         :rtype: str
+
         """
+        if not isinstance(mnemonic, IMnemonic):
+            mnemonic = BIP39Mnemonic(mnemonic=mnemonic, language=language)
+        assert isinstance(mnemonic, IMnemonic)
 
-        mnemonic = (
-            mnemonic.mnemonic() if isinstance(mnemonic, IMnemonic) else mnemonic
-        )
-        if not BIP39Mnemonic.is_valid(mnemonic=mnemonic):
-            raise MnemonicError(f"Invalid {cls.name()} mnemonic words")
+        # Normalize mnemonic to NFKD for seed generation as required by BIP-39 specification
+        normalized_mnemonic: str = unicodedata.normalize("NFKD", mnemonic.mnemonic())
 
+        # Salt normalization should use NFKD as per BIP-39 specification
         salt: str = unicodedata.normalize("NFKD", (
             (cls.seed_salt_modifier + passphrase) if passphrase else cls.seed_salt_modifier
         ))
         return bytes_to_string(pbkdf2_hmac_sha512(
-            password=mnemonic, salt=salt, iteration_num=cls.seed_pbkdf2_rounds
+            password=normalized_mnemonic, salt=salt, iteration_num=cls.seed_pbkdf2_rounds
         ))

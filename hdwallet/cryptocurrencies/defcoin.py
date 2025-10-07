@@ -29,7 +29,7 @@ class Mainnet(INetwork):
     })
     MESSAGE_PREFIX = "\x18defcoin Signed Message:\n"
     WIF_PREFIX = 0x9e
-    
+
 
 class Defcoin(ICryptocurrency):
 
