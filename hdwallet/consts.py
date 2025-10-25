@@ -14,9 +14,14 @@ from .utils import bytes_to_integer
 
 
 class NestedNamespace(SimpleNamespace):
+    """Implements a NestedNamespace with support for sub-NestedNamespaces.
 
+    Processes the positional data in order, followed by any kwargs in order.  As a result, the
+    __dict__ order reflects the order of the provided data and **kwargs.
+
+    """
     def __init__(self, data: Union[set, tuple, dict], **kwargs):
-        super().__init__(**kwargs)
+        super().__init__()
         if isinstance(data, set):
             for item in data:
                 self.__setattr__(item, item)
@@ -36,12 +41,16 @@ class NestedNamespace(SimpleNamespace):
                     self.__setattr__(key, NestedNamespace(value))
                 else:
                     self.__setattr__(key, value)
-
+        for key, value in kwargs.items():
+            if isinstance(value, dict):
+                self.__setattr__(key, NestedNamespace(value))
+            else:
+                self.__setattr__(key, value)
 
 class SLIP10_ED25519_CONST:
     """
     ``SLIP10-ED25519`` Constants.
-    
+
     +-------------------------+--------------+
     | Name                    | Value        |
     +=========================+==============+
@@ -61,7 +70,7 @@ class SLIP10_ED25519_CONST:
 class KHOLAW_ED25519_CONST(SLIP10_ED25519_CONST):
     """
     ``KHOLAW-ED25519`` Constants.
-    
+
     +-------------------------+--------------+
     | Name                    | Value        |
     +=========================+==============+
@@ -79,7 +88,7 @@ class KHOLAW_ED25519_CONST(SLIP10_ED25519_CONST):
 class SLIP10_SECP256K1_CONST:
     """
     ``SLIP10-SECP256K1`` Constants.
-    
+
     +-------------------------------------+-------------+
     | Name                                | Value       |
     +=====================================+=============+

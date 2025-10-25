@@ -23,7 +23,7 @@ from .iaddress import IAddress
 
 
 class P2WPKHAddress(IAddress):
-    
+
     hrp: str = Bitcoin.NETWORKS.MAINNET.HRP
     witness_version: int = Bitcoin.NETWORKS.MAINNET.WITNESS_VERSIONS.P2WPKH
 

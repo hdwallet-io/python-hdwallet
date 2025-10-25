@@ -5,18 +5,23 @@ English
 
 BIP39 Languages
 -------------------
-Chinese-Simplified
-Chinese-Traditional
-Czech
 English
 French
-Italian
-Japanese
-Korean
-Portuguese
-Russian
 Spanish
+Italian
+Russian
+Portuguese
+Czech
 Turkish
+Korean
+Chinese-Simplified
+Chinese-Traditional
+Japanese
+
+
+SLIP39 Languages
+------------------
+English
 
 
 Electrum-V1 Languages
@@ -26,23 +31,21 @@ English
 
 Electrum-V2 Languages
 -----------------------
-Chinese-Simplified
 English
-Portuguese
 Spanish
+Portuguese
+Chinese-Simplified
 
 
 Monero Languages
 ------------------
-Chinese-Simplified
-Dutch
 English
 French
-German
-Italian
-Japanese
-Portuguese
-Russian
 Spanish
-
-
+German
+Dutch
+Italian
+Russian
+Portuguese
+Japanese
+Chinese-Simplified

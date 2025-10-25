@@ -7,7 +7,7 @@
 from typing import List
 
 __name__: str = "hdwallet"
-__version__: str = "v3.6.1"
+__version__: str = "v3.7.0"
 __license__: str = "MIT"
 __author__: str = "Meheret Tesfaye Batu"
 __email__: str = "meherett.batu@gmail.com"
@@ -20,7 +20,7 @@ __tracker__: str = f"{__source__}/issues"
 __keywords__: List[str] = [
     "ecc", "kholaw", "slip10", "ed25519", "nist256p1", "secp256k1",  # ECC keywords
     "hd", "bip32", "bip44", "bip49", "bip84", "bip86", "bip141", "monero", "cardano",  # HD keywords
-    "entropy", "mnemonic", "seed", "bip39", "algorand", "electrum",  # Entropy, Mnemonic and Seed keywords
+    "entropy", "mnemonic", "seed", "bip39", "slip39", "algorand", "electrum",  # Entropy, Mnemonic and Seed keywords
     "cryptocurrencies", "bitcoin", "ethereum", "cryptography", "cli", "cip1852"  # Other keywords
 ]
 __websites__: List[str] = [

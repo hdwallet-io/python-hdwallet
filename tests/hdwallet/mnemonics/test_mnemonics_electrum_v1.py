@@ -38,14 +38,14 @@ def test_electrum_v1_mnemonics(data):
             assert ElectrumV1Mnemonic.from_entropy(entropy=__["entropy"], language=language) == __["languages"][language]
             assert ElectrumV1Mnemonic.decode(mnemonic=__["languages"][language]) == __["entropy"]
 
-            mnemonic = ElectrumV1Mnemonic(mnemonic=__["languages"][language])
+            mnemonic = ElectrumV1Mnemonic(mnemonic=__["languages"][language], language=language)
 
             assert mnemonic.name() == __["name"]
             assert mnemonic.language().lower() == language
 
-    with pytest.raises(Exception, match="Invalid mnemonic words"): 
+    with pytest.raises(Exception, match="Invalid Electrum-V1 mnemonic words"): 
         ElectrumV1Mnemonic(
-            mnemonic="flower letter world foil coin poverty romance tongue taste hip cradle follow proud pluck ten improve"
+            mnemonic="flower letter world foil coin poverty romance tongue taste hip cradle follow proud pluck ten improve",
         )
 
     with pytest.raises(MnemonicError, match="Invalid mnemonic words number"):

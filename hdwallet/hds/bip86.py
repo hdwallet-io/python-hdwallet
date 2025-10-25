@@ -24,7 +24,7 @@ class BIP86HD(BIP44HD):
     _derivation: BIP86Derivation
 
     def __init__(
-        self, ecc: Type[IEllipticCurveCryptography], public_key_type: str = PUBLIC_KEY_TYPES.COMPRESSED,  **kwargs
+        self, ecc: Type[IEllipticCurveCryptography], public_key_type: str = PUBLIC_KEY_TYPES.COMPRESSED, **kwargs
     ) -> None:
         """
         Initialize a BIP86HD instance.

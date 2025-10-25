@@ -277,8 +277,13 @@ class HDWallet:
             self._hd = hd(network=self._network.NAME)
 
     def from_entropy(self, entropy: IEntropy) -> "HDWallet":
-        """
-        Initialize the HDWallet from entropy.
+        """Initialize the HDWallet from entropy.
+
+        Supplying SLIP-39 encoded (or some other) entropy can be valid, if the entropy can be
+        converted to the native (first) entropy type of this cryptocurrency; normally, the size
+        would just have to be compatible.
+
+        The entropy is converted to the corresponding Mnemonic type.
 
         :param entropy: The entropy source to generate the mnemonic.
         :type entropy: IEntropy
@@ -295,6 +300,8 @@ class HDWallet:
         +----------------+-----------------------------------------------------------------------------------------------------------+
         | BIP's          | https://github.com/hdwallet-io/python-hdwallet/blob/master/examples/hdwallet/bips/from_entropy.py         |
         +----------------+-----------------------------------------------------------------------------------------------------------+
+        | SLIP-39        | https://github.com/hdwallet-io/python-hdwallet/blob/master/examples/hdwallet/bips/from_entropy_slip39.py  |
+        +----------------+-----------------------------------------------------------------------------------------------------------+
         | Cardano        | https://github.com/hdwallet-io/python-hdwallet/blob/master/examples/hdwallet/cardano/from_entropy.py      |
         +----------------+-----------------------------------------------------------------------------------------------------------+
         | Electrum-V1    | https://github.com/hdwallet-io/python-hdwallet/blob/master/examples/hdwallet/electrum/v1/from_entropy.py  |
@@ -303,10 +310,18 @@ class HDWallet:
         +----------------+-----------------------------------------------------------------------------------------------------------+
         | Monero         | https://github.com/hdwallet-io/python-hdwallet/blob/master/examples/hdwallet/monero/from_entropy.py       |
         +----------------+-----------------------------------------------------------------------------------------------------------+
+
         """
 
         if entropy.name() not in self._cryptocurrency.ENTROPIES.get_entropies():
-            raise Error(f"Invalid entropy class for {self._cryptocurrency.NAME} cryptocurrency")
+            try:
+                entropy = ENTROPIES.entropy(
+                    name=self._cryptocurrency.ENTROPIES.get_entropies()[0]
+                ).__call__(
+                    entropy=entropy.entropy()
+                )
+            except Exception as exc:
+                raise Error(f"Invalid entropy class {entropy.name()} for {self._cryptocurrency.NAME} cryptocurrency") from exc
         self._entropy = entropy
 
         if self._entropy.name() == "Electrum-V2":
@@ -330,6 +345,7 @@ class HDWallet:
                     mnemonic=mnemonic, mnemonic_type=self._mnemonic_type
                 )
             )
+
         return self.from_mnemonic(
             mnemonic=MNEMONICS.mnemonic(
                 name=self._entropy.name()
@@ -339,8 +355,11 @@ class HDWallet:
         )
 
     def from_mnemonic(self, mnemonic: IMnemonic) -> "HDWallet":
-        """
-        Initialize the HDWallet from a mnemonic.
+        """Initialize the HDWallet from a mnemonic.
+
+        Providing a different Mnemonic such as SLIP-39 is fine, so long as the entropy it encodes is
+        compatible with the native Mnemonic type of the cryptocurrency.  Uses the default (first)
+        language of the default Mnemonic type.
 
         :param mnemonic: The mnemonic instance to generate the seed.
         :type mnemonic: IMnemonic
@@ -365,10 +384,20 @@ class HDWallet:
         +----------------+-----------------------------------------------------------------------------------------------------------+
         | Monero         | https://github.com/hdwallet-io/python-hdwallet/blob/master/examples/hdwallet/monero/from_mnemonic.py      |
         +----------------+-----------------------------------------------------------------------------------------------------------+
+
         """
 
         if mnemonic.name() not in self._cryptocurrency.MNEMONICS.get_mnemonics():
-            raise Error(f"Invalid mnemonic class for {self._cryptocurrency.NAME} cryptocurrency")
+            raise Error(f"Invalid mnemonic class {mnemonic.name()} for {self._cryptocurrency.NAME} cryptocurrency")
+            # try:
+            #     mnemonic_cls = MNEMONICS.mnemonic(
+            #         self._cryptocurrency.MNEMONICS.get_mnemonics()[0]
+            #     )
+            #     mnemonic = mnemonic_cls.from_entropy(
+            #         entropy=mnemonic.decode(mnemonic.mnemonic()), language=mnemonic_cls.languages[0]
+            #     )
+            # except Exception as exc:
+            #     raise Error(f"Invalid mnemonic class {mnemonic.name()} for {self._cryptocurrency.NAME} cryptocurrency") from exc
         self._mnemonic = mnemonic
 
         if self._mnemonic.name() == "Electrum-V2":
@@ -441,6 +470,8 @@ class HDWallet:
         +----------------+-----------------------------------------------------------------------------------------------------------+
         | BIP's          | https://github.com/hdwallet-io/python-hdwallet/blob/master/examples/hdwallet/bips/from_seed.py            |
         +----------------+-----------------------------------------------------------------------------------------------------------+
+        | SLIP-39        | https://github.com/hdwallet-io/python-hdwallet/blob/master/examples/hdwallet/bips/from_entropy_slip39.py  |
+        +----------------+-----------------------------------------------------------------------------------------------------------+
         | Cardano        | https://github.com/hdwallet-io/python-hdwallet/blob/master/examples/hdwallet/cardano/from_seed.py         |
         +----------------+-----------------------------------------------------------------------------------------------------------+
         | Electrum-V1    | https://github.com/hdwallet-io/python-hdwallet/blob/master/examples/hdwallet/electrum/v1/from_seed.py     |
@@ -452,7 +483,7 @@ class HDWallet:
         """
 
         if seed.name() not in self._cryptocurrency.SEEDS.get_seeds():
-            raise Error(f"Invalid seed class for {self._cryptocurrency.NAME} cryptocurrency")
+            raise Error(f"Invalid seed class {seed.name()} for {self._cryptocurrency.NAME} cryptocurrency")
         self._seed = seed
 
         self._hd.from_seed(
@@ -715,7 +746,7 @@ class HDWallet:
             self._hd.from_spend_private_key(spend_private_key=spend_private_key)
             return self
         except ValueError as error:
-            raise PrivateKeyError("Invalid spend private key data")
+            raise PrivateKeyError("Invalid spend private key data") from error
 
     def from_watch_only(
         self,

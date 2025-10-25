@@ -18,7 +18,7 @@ class Mainnet(INetwork):
 
     NAME = "mainnet"
     PUBLIC_KEY_ADDRESS_PREFIX = 0x19
-    SCRIPT_ADDRESS_PREFIX = 0x5  
+    SCRIPT_ADDRESS_PREFIX = 0x5
     XPRIVATE_KEY_VERSIONS = XPrivateKeyVersions({
         "P2PKH": 0x488ade4,
         "P2SH": 0x488ade4

@@ -48,7 +48,7 @@ class HDWDerivation(IDerivation):
 
         :param account: The HDW account index or tuple. Defaults to 0.
         :type account: Union[str, int, Tuple[int, int]]
-        :param ecc: The HDW ecc index. 
+        :param ecc: The HDW ecc index.
         :type ecc: Union[str, int, Type[IEllipticCurveCryptography]]
         :param address: The HDW address index or tuple. Defaults to 0.
         :type address: Union[str, int, Tuple[int, int]]
@@ -105,7 +105,7 @@ class HDWDerivation(IDerivation):
 
         if curve not in expected_ecc:
             raise DerivationError(
-            f"Bad {self.name()} ECC index",
+                f"Bad {self.name()} ECC index",
                 expected=expected_ecc, got=curve
             )
 

@@ -24,7 +24,7 @@ from .iaddress import IAddress
 
 
 class P2PKHAddress(IAddress):
-    
+
     public_key_address_prefix: int = Bitcoin.NETWORKS.MAINNET.PUBLIC_KEY_ADDRESS_PREFIX
     alphabet: str = Bitcoin.PARAMS.ALPHABET
 

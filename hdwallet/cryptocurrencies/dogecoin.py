@@ -23,7 +23,7 @@ class Mainnet(INetwork):
     WITNESS_VERSIONS = WitnessVersions({
         "P2WPKH": 0x00,
         "P2WSH": 0x00
-    })    
+    })
     XPRIVATE_KEY_VERSIONS = XPrivateKeyVersions({
         "DOGECOIN": 0x02fac398,
         "P2PKH": 0x0488ade4,

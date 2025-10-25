@@ -7,7 +7,7 @@
 from abc import (
     ABC, abstractmethod
 )
-from typing import Union
+from typing import Optional, Union
 
 import re
 
@@ -52,7 +52,7 @@ class ISeed(ABC):
 
         return isinstance(seed, str) and bool(re.fullmatch(
             r'^[0-9a-fA-F]+$', seed
-        )) and len(seed) == cls.length
+        )) and len(seed) * 4 == cls.length
 
     def seed(self) -> str:
         """
@@ -66,5 +66,16 @@ class ISeed(ABC):
 
     @classmethod
     @abstractmethod
-    def from_mnemonic(cls, mnemonic: Union[str, IMnemonic], **kwargs) -> str:
+    def from_mnemonic(cls, mnemonic: Union[str, IMnemonic], language: Optional[str], **kwargs) -> str:
+        """
+        Retrieves the seed associated with the Mnemonic.
+
+        :param mnemonic: The mnemonic phrase to be decoded. Can be a string or an instance of `IMnemonic`.
+        :type mnemonic: Union[str, IMnemonic]
+        :param language: The preferred language, if known
+        :type language: Optional[str]
+
+        :return: The seed as a string.
+        :rtype: str
+        """
         pass

@@ -18,7 +18,7 @@ class Mainnet(INetwork):
 
     NAME = "mainnet"
     PUBLIC_KEY_ADDRESS_PREFIX = 0x26
-    SCRIPT_ADDRESS_PREFIX = 0x17 
+    SCRIPT_ADDRESS_PREFIX = 0x17
     HRP = "btg"
     WITNESS_VERSIONS = WitnessVersions({
         "P2WPKH": 0x00,

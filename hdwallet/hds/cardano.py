@@ -87,11 +87,11 @@ class CardanoHD(BIP32HD):
                 seed.seed() if isinstance(seed, ISeed) else seed
             )
         except ValueError as error:
-            raise SeedError("Invalid seed data")
+            raise SeedError("Invalid seed data") from error
 
         if self._cardano_type == Cardano.TYPES.BYRON_LEGACY:
             if len(self._seed) != 32:
-                raise Error(f"Invalid seed length", expected=32, got=len(self._seed))
+                raise Error("Invalid seed length", expected=32, got=len(self._seed))
 
             def tweak_master_key_bits(data: bytes) -> bytes:
                 data: bytearray = bytearray(data)
@@ -127,7 +127,7 @@ class CardanoHD(BIP32HD):
             Cardano.TYPES.BYRON_ICARUS, Cardano.TYPES.SHELLEY_ICARUS
         ]:
             if len(self._seed) < 16:
-                raise Error(f"Invalid seed length", expected="< 16", got=len(self._seed))
+                raise Error("Invalid seed length", expected="< 16", got=len(self._seed))
 
             pbkdf2_passphrase, pbkdf2_rounds, pbkdf2_output_length = (
                 (passphrase if passphrase else ""), 4096, 96
@@ -159,7 +159,7 @@ class CardanoHD(BIP32HD):
             Cardano.TYPES.BYRON_LEDGER, Cardano.TYPES.SHELLEY_LEDGER
         ]:
             if len(self._seed) < 16:
-                raise Error(f"Invalid seed length", expected="< 16", got=len(self._seed))
+                raise Error("Invalid seed length", expected="< 16", got=len(self._seed))
 
             hmac_half_length: int = hashlib.sha512().digest_size // 2
 
@@ -232,7 +232,7 @@ class CardanoHD(BIP32HD):
             self._strict = None
             return self
         except ValueError as error:
-            raise PrivateKeyError("Invalid private key data")
+            raise PrivateKeyError("Invalid private key data") from error
 
     def from_public_key(self, public_key: str) -> "CardanoHD":
         """
@@ -254,7 +254,7 @@ class CardanoHD(BIP32HD):
             self._strict = None
             return self
         except ValueError as error:
-            raise PublicKeyError("Invalid public key data")
+            raise PublicKeyError("Invalid public key data") from error
 
     def drive(self, index: int) -> Optional["CardanoHD"]:
         """
@@ -334,7 +334,7 @@ class CardanoHD(BIP32HD):
                         ), endianness="little"
                     )
 
-            z_hmacl, z_hmacr, _hmacl, _hmacr = (
+            z_hmacl, z_hmacr, _hmacl, _hmacr = (  # noqa: F841
                 z_hmac[:hmac_half_length], z_hmac[hmac_half_length:],
                 _hmac[:hmac_half_length], _hmac[hmac_half_length:]
             )
@@ -376,7 +376,7 @@ class CardanoHD(BIP32HD):
                     zl: int = bytes_to_integer(zl[:28], endianness="little")
                     return public_key.point() + ((zl * 8) * ecc.GENERATOR)
 
-            z_hmacl, z_hmacr, _hmacl, _hmacr = (
+            z_hmacl, z_hmacr, _hmacl, _hmacr = (  # noqa: F841
                 z_hmac[:hmac_half_length], z_hmac[hmac_half_length:],
                 _hmac[:hmac_half_length], _hmac[hmac_half_length:]
             )

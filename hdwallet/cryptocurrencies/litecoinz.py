@@ -29,7 +29,7 @@ class Mainnet(INetwork):
     })
     MESSAGE_PREFIX = "\x18LitecoinZ Signed Message:\n"
     WIF_PREFIX = 0x80
-    
+
 
 class LitecoinZ(ICryptocurrency):
 

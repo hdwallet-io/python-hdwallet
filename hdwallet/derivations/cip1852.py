@@ -5,7 +5,7 @@
 # file COPYING or https://opensource.org/license/mit
 
 from typing import (
-    Tuple, Union, Optional, Dict
+    Tuple, Union
 )
 
 from ..utils import (
@@ -84,7 +84,7 @@ class CIP1852Derivation(IDerivation):  # https://github.com/cardano-foundation/C
             f"{index_tuple_to_string(index=self._role)}/"
             f"{index_tuple_to_string(index=self._address)}"
         ))
-        
+
     @classmethod
     def name(cls) -> str:
         """

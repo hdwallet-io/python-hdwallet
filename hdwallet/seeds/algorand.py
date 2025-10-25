@@ -4,9 +4,8 @@
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or https://opensource.org/license/mit
 
-from typing import Union
+from typing import Optional, Union
 
-from ..exceptions import MnemonicError
 from ..mnemonics import (
     IMnemonic, AlgorandMnemonic
 )
@@ -38,7 +37,7 @@ class AlgorandSeed(ISeed):
         return "Algorand"
 
     @classmethod
-    def from_mnemonic(cls, mnemonic: Union[str, IMnemonic], **kwargs) -> str:
+    def from_mnemonic(cls, mnemonic: Union[str, IMnemonic], language: Optional[str] = None, **kwargs) -> str:
         """
         Converts a mnemonic phrase to its corresponding seed.
 
@@ -48,11 +47,8 @@ class AlgorandSeed(ISeed):
         :return: The decoded entropy as a string.
         :rtype: str
         """
+        if not isinstance(mnemonic, IMnemonic):
+            mnemonic = AlgorandMnemonic(mnemonic=mnemonic, language=language)
+        assert isinstance(mnemonic, AlgorandMnemonic)
 
-        mnemonic = (
-            mnemonic.mnemonic() if isinstance(mnemonic, IMnemonic) else mnemonic
-        )
-        if not AlgorandMnemonic.is_valid(mnemonic=mnemonic):
-            raise MnemonicError(f"Invalid {cls.name()} mnemonic words")
-
-        return AlgorandMnemonic.decode(mnemonic=mnemonic)
+        return AlgorandMnemonic.decode(mnemonic=mnemonic.mnemonic(), language=mnemonic.language())
