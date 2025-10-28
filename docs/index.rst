@@ -11,7 +11,7 @@ Hierarchical Deterministic Wallet
    :target: https://pypi.org/project/hdwallet
 
 .. |Documentation Status| image:: https://readthedocs.org/projects/hdwallet/badge/?version=master
-   :target: https://hdwallet.readthedocs.io/en/master/?badge=master
+   :target: https://hdwallet.readthedocs.io/projects/python
 
 .. |PyPI License| image:: https://img.shields.io/pypi/l/hdwallet?color=black
    :target: https://pypi.org/project/hdwallet

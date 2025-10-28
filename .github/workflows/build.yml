@@ -1,6 +1,6 @@
-# This workflow will install Swap package dependencies, run tests and lint with a variety of Python versions.
+# This workflow will install python-hdwallet dependencies, run tests, collect coverage, and submit it to Coveralls.
 
-name: HDWallet
+name: python-hdwallet
 
 on:
   push:
@@ -23,27 +23,28 @@ jobs:
           '3.9', '3.10', '3.11', '3.12', '3.13'
         ]
     steps:
-    - uses: actions/checkout@master
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@master
-      with:
-        python-version: ${{ matrix.python-version }}
-    - name: Install System dependencies
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y libffi-dev libsecp256k1-dev
-    - name: Install Dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -e .[cli,tests]
-    - name: Test with PyTest with Coverage
-      run: |
-        coverage run -m pytest
-        coverage report
-    - name: Submit Coverage to Coveralls
-      if: ${{ matrix.python-version == '3.12' && github.event_name == 'push' && (github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/v')) }}
-      run: |
-        pip install coveralls pyyaml
-        coveralls
-      env:
-        COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+      - name: Checkout repository
+        uses: actions/checkout@master
+      - name: Setup Python ${{ matrix.python-version }}
+        uses: actions/setup-python@master
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install System dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libffi-dev libsecp256k1-dev
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .[cli,tests]
+      - name: Test with PyTest with Coverage
+        run: |
+          coverage run -m pytest
+          coverage report
+      - name: Submit Coverage to Coveralls
+        if: ${{ matrix.python-version == '3.12' && github.event_name == 'push' && (github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/v')) }}
+        run: |
+          pip install coveralls pyyaml
+          coveralls
+        env:
+          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
