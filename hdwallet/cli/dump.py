@@ -56,7 +56,7 @@ def dump(**kwargs) -> None:
                 semantic = "p2wpkh-in-p2sh"
             elif kwargs.get("hd") in ["BIP84", "BIP141"]:
                 semantic = "p2wpkh"
-                
+
         hdwallet: HDWallet = HDWallet(
             cryptocurrency=cryptocurrency,
             hd=HDS.hd(name=kwargs.get("hd")),
@@ -110,11 +110,20 @@ def dump(**kwargs) -> None:
                     f"Wrong seed client, (expected={SEEDS.names()}, got='{kwargs.get('seed_client')}')"
                 ), err=True)
                 sys.exit()
-            hdwallet.from_seed(
-                seed=SEEDS.seed(name=kwargs.get("seed_client")).__call__(
-                    seed=kwargs.get("seed")
+            if kwargs.get("seed_client") == "Cardano" and kwargs.get("cardano_type"):
+                # If a specific cardano_type is specified, we must override the CardanoSeed default
+                hdwallet.from_seed(
+                    seed=SEEDS.seed(name=kwargs.get("seed_client")).__call__(
+                        seed=kwargs.get("seed"),
+                        cardano_type=kwargs.get("cardano_type")
+                    )
                 )
-            )
+            else:
+                hdwallet.from_seed(
+                    seed=SEEDS.seed(name=kwargs.get("seed_client")).__call__(
+                        seed=kwargs.get("seed")
+                    )
+                )
         elif kwargs.get("xprivate_key"):
             hdwallet.from_xprivate_key(
                 xprivate_key=kwargs.get("xprivate_key"),
@@ -138,7 +147,7 @@ def dump(**kwargs) -> None:
             if kwargs.get("bip38"):
 
                 bip38: BIP38 = BIP38(
-                  cryptocurrency=BIP38_CRYPTOCURRENCIES[cryptocurrency.NAME], network=kwargs.get("network")
+                    cryptocurrency=BIP38_CRYPTOCURRENCIES[cryptocurrency.NAME], network=kwargs.get("network")
                 )
                 _wif = bip38.decrypt(encrypted_wif=_wif, passphrase=kwargs.get("passphrase"))
 

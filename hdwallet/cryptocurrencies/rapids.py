@@ -55,9 +55,9 @@ class Rapids(ICryptocurrency):
     MNEMONICS = Mnemonics({
         "BIP39"
     })
-    SEEDS = Seeds({
-        "BIP39"
-    })
+    SEEDS = Seeds((
+        "BIP39", "SLIP39"
+    ))
     HDS = HDs({
         "BIP32", "BIP44"
     })
@@ -71,4 +71,3 @@ class Rapids(ICryptocurrency):
         "p2pkh", "p2sh"
     ]
     DEFAULT_SEMANTIC = "p2pkh"
-

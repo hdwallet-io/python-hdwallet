@@ -23,7 +23,7 @@ from ...consts import (
     PUBLIC_KEY_TYPES, MODES, WIF_TYPES
 )
 from ...exceptions import (
-    Error, DerivationError, AddressError, WIFError
+    Error, DerivationError, AddressError
 )
 from ..bip32 import BIP32HD
 from ..ihd import IHD
@@ -117,7 +117,7 @@ class ElectrumV2HD(IHD):
         self._bip32_hd.from_seed(seed=seed)
         self.__update__()
         return self
-    
+
     def from_derivation(self, derivation: IDerivation) -> "ElectrumV2HD":
         """
         Initialize the instance from a derivation.

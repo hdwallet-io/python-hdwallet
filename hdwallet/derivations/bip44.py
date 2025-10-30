@@ -5,7 +5,7 @@
 # file COPYING or https://opensource.org/license/mit
 
 from typing import (
-    Tuple, Union, Optional, Dict
+    Tuple, Union
 )
 
 from ..utils import (
@@ -97,7 +97,7 @@ class BIP44Derivation(IDerivation):  # https://github.com/bitcoin/bips/blob/mast
     def get_change_value(self, change: Union[str, int], name_only: bool = False):
         if isinstance(change, (list, tuple)):
             raise DerivationError(
-                "Bad change instance", expected ="int | str", got=type(change).__name__
+                "Bad change instance", expected="int | str", got=type(change).__name__
             )
         external_change = [CHANGES.EXTERNAL_CHAIN, 0, '0']
         internal_change = [CHANGES.INTERNAL_CHAIN, 1, '1']

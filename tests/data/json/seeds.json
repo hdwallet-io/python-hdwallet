@@ -500,6 +500,35 @@
             }
         }
     },
+    "SLIP39": {
+        "12": {
+            "english": {
+                "mnemonic": "ffffffffffffffffffffffffffffffff",
+                "non-passphrase-seed": "ffffffffffffffffffffffffffffffff",
+                "passphrases": null
+            },
+            "english": {
+                "mnemonic": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+                "non-passphrase-seed": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+                "passphrases": null
+            },
+            "english": {
+                "mnemonic": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+                "non-passphrase-seed": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+                "passphrases": null
+            },
+	    "english": {
+	      "mnemonic": "edge typical academic academic academic boring radar cluster domestic ticket fumes remove velvet fluff video crazy chest average script universe exhaust remind helpful lamp declare garlic repeat unknown bucket adorn sled adult triumph source divorce premium genre glimpse level listen ancestor wildlife writing document wrist judicial medical detect frost leaves language jerky increase glasses extra alto deploy demand greatest",
+                "non-passphrase-seed": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+                "passphrases": null
+            },
+	    "english": {
+	        "mnemonic": "bracelet cleanup acrobat easy acquire critical exceed agency verify envy story best facility process syndrome discuss health twin ugly spew unknown spider level academic lying large slap venture hairy election legal away negative easel learn item trial miracle hour provide survive pleasure clock acne faint priest loyalty sunlight award forget ambition failure threaten kind dictate lips branch slice space\nbracelet cleanup beard easy acne visitor scroll finger skin trash browser union energy endorse scramble staff sprinkle salt alpha dive sweater pickup cage obtain leader clothes acid dive frozen category desert thorn music western home owner manager apart much hobo march adequate eraser crazy short smith force flame primary phrase sprinkle frost trial crunch fancy piece crunch scroll triumph",
+                "non-passphrase-seed": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+                "passphrases": null
+	    }
+        }
+    },
     "Cardano": {
         "12": {
             "byron-icarus": {
@@ -2434,14 +2463,6 @@
     "Electrum-V2": {
         "12": {
             "standard": {
-                "chinese-simplified": {
-                    "mnemonic": "轧 驻 省 刮 碰 示 拖 黎 典 班 其 抹",
-                    "non-passphrase-seed": "9c5af65ec3d73641f7a691ab41185ca3217d5592a3356547e4d9ff3d4f13b812f0edff3734d271f463935fe25bdd5699882a4594941f210355368bdddb0de607",
-                    "passphrases": {
-                        "hdwallet": "371cc005017bc30ba69d36fb16843c488562e20ed49c203204b94c9120c5a1e38f988eca33474541b4b4aed81f3dc0215b018d29c895f107861e819bfd7620c2",
-                        "ゆしゅつ": "e435d04ca4213f9327e858c97a53c297860fa416ec9b2b4e3df2aebda08fe69e389c102b3c7ece7735e116ffa6b33bf988c4f0b6342637722872fab8f3a6414a"
-                    }
-                },
                 "english": {
                     "mnemonic": "gold engine arch point merge review extend diesel allow negative act night",
                     "non-passphrase-seed": "45bc3118e9de3719d677440ca5a6df51e8528b8660f902a87493e08b019f1cb9755aee31503737e604d13b7cc61346583f36c795ded8a359729d80ee96845873",
@@ -2464,6 +2485,14 @@
                     "passphrases": {
                         "hdwallet": "ec01762b64aa958965872608d5911126648776e9da5e303c68744d16540e5dd0e1ae93ecc739d9c03faea4829e83e1957b2b5692fb865a98fc8f9ffcd29b8a8f",
                         "ゆしゅつ": "7ed4b7c6a21eb6359922eaf7d5a6a1ef284316a0d7873e839570595452060ee5426e6b961d20ea21546525777890b857ddd118efd335d346dc456d677a2cf7bf"
+                    }
+                },
+                "chinese-simplified": {
+                    "mnemonic": "轧 驻 省 刮 碰 示 拖 黎 典 班 其 抹",
+                    "non-passphrase-seed": "9c5af65ec3d73641f7a691ab41185ca3217d5592a3356547e4d9ff3d4f13b812f0edff3734d271f463935fe25bdd5699882a4594941f210355368bdddb0de607",
+                    "passphrases": {
+                        "hdwallet": "371cc005017bc30ba69d36fb16843c488562e20ed49c203204b94c9120c5a1e38f988eca33474541b4b4aed81f3dc0215b018d29c895f107861e819bfd7620c2",
+                        "ゆしゅつ": "e435d04ca4213f9327e858c97a53c297860fa416ec9b2b4e3df2aebda08fe69e389c102b3c7ece7735e116ffa6b33bf988c4f0b6342637722872fab8f3a6414a"
                     }
                 }
             },

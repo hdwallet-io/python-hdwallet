@@ -47,8 +47,8 @@ data = {
 CardanoSeedClass: Type[ISeed] = SEEDS.seed(data["name"])
 
 for seed in data["seeds"]:
-    cardano_seed_class = CardanoSeedClass(seed["seed"])
-    cardano_seed = CardanoSeed(seed["seed"])
+    cardano_seed_class = CardanoSeedClass(seed["seed"], cardano_type=seed['cardano_type'])
+    cardano_seed = CardanoSeed(seed["seed"], cardano_type=seed['cardano_type'])
 
     # Always provide passphrase=None if not present, like TS
     passphrase = seed.get("passphrase", None)

@@ -4,10 +4,11 @@
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or https://opensource.org/license/mit
 
-from typing import Union
+from typing import (
+    List, Optional, Union
+)
 
 from ...crypto import sha256
-from ...exceptions import MnemonicError
 from ...mnemonics import (
     IMnemonic, ElectrumV1Mnemonic
 )
@@ -28,7 +29,7 @@ class ElectrumV1Seed(ISeed):
 
     hash_iteration_number: int = 10 ** 5
 
-    length = 64
+    lengths: List[int] = [64]
 
     @classmethod
     def name(cls) -> str:
@@ -42,7 +43,12 @@ class ElectrumV1Seed(ISeed):
         return "Electrum-V1"
 
     @classmethod
-    def from_mnemonic(cls, mnemonic: Union[str, IMnemonic], **kwargs) -> str:
+    def from_mnemonic(
+        cls,
+        mnemonic: Union[str, IMnemonic],
+        language: Optional[str] = None,
+        **kwargs
+    ) -> str:
         """
         Converts an Electrum V1 mnemonic phrase to its corresponding hashed entropy.
 
@@ -52,14 +58,11 @@ class ElectrumV1Seed(ISeed):
         :return: The hashed entropy as a string.
         :rtype: str
         """
+        if not isinstance(mnemonic, IMnemonic):
+            mnemonic = ElectrumV1Mnemonic(mnemonic=mnemonic, language=language)
+        assert isinstance(mnemonic, ElectrumV1Mnemonic)
 
-        mnemonic = (
-            mnemonic.mnemonic() if isinstance(mnemonic, IMnemonic) else mnemonic
-        )
-        if not ElectrumV1Mnemonic.is_valid(mnemonic=mnemonic):
-            raise MnemonicError(f"Invalid {cls.name()} mnemonic words")
-
-        entropy: str = ElectrumV1Mnemonic.decode(mnemonic)
+        entropy: str = ElectrumV1Mnemonic.decode(mnemonic=mnemonic.mnemonic(), language=mnemonic.language(), **kwargs)
         entropy_hash: bytes = encode(entropy)
         for _ in range(cls.hash_iteration_number):
             entropy_hash = sha256(entropy_hash + encode(entropy))

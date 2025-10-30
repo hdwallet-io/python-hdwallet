@@ -1210,6 +1210,84 @@
                 }
             ]
         },
+        "byron-ledger": {
+            "cryptocurrency": "Cardano",
+            "symbol": "ADA",
+            "network": "mainnet",
+            "coin_type": 1815,
+            "entropy": "b36caf4ad6e4f90b5a46a497f8dbeb6aa10ddfb517eaec1ceb08eb5fdfcc0bc3",
+            "strength": 256,
+            "mnemonic": "recall grace sport punch exhibit mad harbor stand obey short width stem awkward used stairs wool ugly trap season stove worth toward congress jaguar",
+            "passphrase": null,
+            "language": "english",
+            "seed": "c167860ff4b291173e28ba7e886b1b58723c8ccf4455e003b3c56b99516378701454db9b96a7574445d6a519bcf4af1fa770a0ea325151d808949e1a7148a461",
+            "ecc": "Kholaw-Ed25519",
+            "hd": "Cardano",
+            "cardano_type": "byron-ledger",
+            "semantic": "p2pkh",
+            "root_xprivate_key": "xprv3QESAWYc9vDdZaGUCzZVAaBmCAxico5f7sW35WCQFemzjQV5k9NeqFMWYyMdLLyhEKDPWSSZyFLecgMhdiQyE2ReAgfySR2V9bYfjiw2h6GojoRnEnvyAmSF7x7BXNwNZdRriMReX3da9tsRMMS591a",
+            "root_xpublic_key": "xpub661MyMwAqRbcFaX4J1Dep5qKMZxtLWXBZZLKfdADBxwXiaiM5QSz3NMTmbHgHUaFjzs87US9FNqJh9B9v2L46SWrMhdvUDLgFyvKfMoeXYX",
+            "root_private_key": "a08cf85b564ecf3b947d8d4321fb96d70ee7bb760877e371899b14e2ccf88658104b884682b57efd97decbb318a45c05a527b9cc5c2f64f7352935a049ceea60",
+            "root_chain_code": "680d52308194ccef2a18e6812b452a5815fbd7f5babc083856919aaf668fe7e4",
+            "root_public_key": "00c368c07566d1218d6dd2c7d945fe8b627f8eb6900dba953e112184cbd213b993",
+            "strict": true,
+            "derivations": [
+                {
+                    "at": {
+                        "path": "m/1852'/1815'/0'/0/0",
+                        "indexes": [
+                            2147485500,
+                            2147485463,
+                            2147483648,
+                            0,
+                            0
+                        ],
+                        "depth": 5,
+                        "purpose": 1852,
+                        "coin_type": 1815,
+                        "account": 0,
+                        "role": "external-chain",
+                        "address": 0
+                    },
+                    "xprivate_key": "xprv3TKYfq8Acwj13LurBapHCv9dEps7QYpPKxZLmNnJDCEBDLRNicYTj6bHDfZ5uWQ7mQQCF3vqgsgX3ZTrgkMQg9ypnYn8J4CsMXDowrBJ53gLiUYy8jRCn5H35N3zVrexTx9eoF8LaMpT6xyA4qow8sL",
+                    "xpublic_key": "xpub6GQJoKhgd9wFz885guVH5Qn5ZenBvQAddy7DmyVHnEhYebc2AYxzaMho79G8oXUNNtgNw32FwYtXYh4zE7qAjyeCpF9mLsZjK6Nc5zaAchG",
+                    "private_key": "90c9771c3b6d3daaba283b315036cee82a000ccb4a6e6227e1c7b2f2e4f88658d96d9ecb0e9e605ce723779ad0d3388d9abb504b0fd63a5129593709d1394449",
+                    "chain_code": "563f688471af3a2de595a30813bbe676b0bd5aa06e3615895e915e3459bc70d8",
+                    "public_key": "007fe6111e969e68d02f1d1e588c4c8f22584189a2714f9239a28888e645a2ee8a",
+                    "hash": "3c4d110808d5bcd54972ea86add1c77cc77d47d7",
+                    "fingerprint": "3c4d1108",
+                    "parent_fingerprint": "86556a41",
+                    "address": "Ae2tdPwUPEYxN6HXvUwEjLK2CMYXqH5oxtbi3DwxabvUuBkFp6CyHstUXpb"
+                },
+                {
+                    "at": {
+                        "path": "m/1852'/1815'/1'/0/0",
+                        "indexes": [
+                            2147485500,
+                            2147485463,
+                            2147483649,
+                            0,
+                            0
+                        ],
+                        "depth": 5,
+                        "purpose": 1852,
+                        "coin_type": 1815,
+                        "account": 1,
+                        "role": "external-chain",
+                        "address": 0
+                    },
+                    "xprivate_key": "xprv3T2gYJLSzeavxXR7cw6aCkdAMrxXr66p6kk7TuJRBALoLxn2LUdEAisKKUqT9oT4U3C35pR64EiJiTURXXnCWnLYGuka3nGnJJ2RGTA6WTYVBDFxX1v4TosbkVRm2eP8TnnRwHwAQv8DTBXfZr2PuQi",
+                    "xpublic_key": "xpub6FRY7y2QEcx78ubr3KZpK7Xaaqxi7g11Z3H68v8hLn1QTLB9Whm3B1NJtMnyotY6EZZwBa1uw6u1XHGFJGxDr2MTmH8RooYCr46SuhGkZ8c",
+                    "private_key": "b81ee3b3e8e13968c85cfd6e33a444ec3aece4d7686fc31de9e309e0e2f88658e01aeab75ea1bf697ce2dfa9bf3e0aa578b34e09d11678e709a6f37faf597dde",
+                    "chain_code": "7f3e38be94e9504c91e91bf3ce247dace7b4c384c253969c48be6eb304a8454e",
+                    "public_key": "007efddb16c762e60c6f4d3084bda0f5b67dc794d6a58c5b84730df93d4426fdce",
+                    "hash": "72ed3a72afa082404b3841f0ca4a90764f9963fd",
+                    "fingerprint": "72ed3a72",
+                    "parent_fingerprint": "012ac401",
+                    "address": "Ae2tdPwUPEZ9de6gCHgEG71kpA9yHZHKaunzKBUCxAwF8dhZ6oMZDjNpnv4"
+                }
+            ]
+        },
         "byron-legacy": {
             "cryptocurrency": "Cardano",
             "symbol": "ADA",

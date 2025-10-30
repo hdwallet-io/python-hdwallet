@@ -24,8 +24,3 @@ def test_bip39_seeds(data):
                 assert BIP39Seed.from_mnemonic(
                     mnemonic= data["seeds"]["BIP39"][words][lang]["mnemonic"], passphrase=passphrase
                 ) == data["seeds"]["BIP39"][words][lang]["passphrases"][passphrase]
-
-                assert BIP39Seed.from_mnemonic(
-                    mnemonic= data["seeds"]["BIP39"][words][lang]["mnemonic"], passphrase=passphrase
-                ) == data["seeds"]["BIP39"][words][lang]["passphrases"][passphrase]
-

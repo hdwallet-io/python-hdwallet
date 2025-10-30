@@ -27,7 +27,8 @@ def test_byron_legacy_from_seed(data):
         address_type=cryptocurrency.ADDRESS_TYPES.PUBLIC_KEY
     ).from_seed(
         seed=CardanoSeed(
-            seed=data["hdwallet"]["Cardano"]["byron-legacy"]["seed"]
+            seed=data["hdwallet"]["Cardano"]["byron-legacy"]["seed"],
+            cardano_type=data["hdwallet"]["Cardano"]["byron-legacy"]["cardano_type"],
         )
     ).from_derivation(
         derivation=DERIVATIONS.derivation(data["hdwallet"]["Cardano"]["derivation"]["name"])(

@@ -29,7 +29,7 @@ class Mainnet(INetwork):
     })
     MESSAGE_PREFIX = "\x18Potcoin Signed Message:\n"
     WIF_PREFIX = 0xb7
-    
+
 
 class Potcoin(ICryptocurrency):
 
@@ -55,9 +55,9 @@ class Potcoin(ICryptocurrency):
     MNEMONICS = Mnemonics({
         "BIP39"
     })
-    SEEDS = Seeds({
-        "BIP39"
-    })
+    SEEDS = Seeds((
+        "BIP39", "SLIP39"
+    ))
     HDS = HDs({
         "BIP32", "BIP44"
     })

@@ -111,7 +111,7 @@ class Bitcoin(ICryptocurrency):
         "BIP39", {"ELECTRUM_V1": "Electrum-V1"}, {"ELECTRUM_V2": "Electrum-V2"}
     ))
     SEEDS = Seeds((
-        "BIP39", {"ELECTRUM_V1": "Electrum-V1"}, {"ELECTRUM_V2": "Electrum-V2"}
+        "BIP39", {"ELECTRUM_V1": "Electrum-V1"}, {"ELECTRUM_V2": "Electrum-V2"}, "SLIP39"
     ))
     HDS = HDs((
         "BIP32", "BIP44", "BIP49", "BIP84", "BIP86", "BIP141", {"ELECTRUM_V1": "Electrum-V1"}, {"ELECTRUM_V2": "Electrum-V2"}

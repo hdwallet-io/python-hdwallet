@@ -33,6 +33,23 @@
             "strength": 256
         }
     },
+    "SLIP39": {
+        "128": {
+            "name": "SLIP39",
+            "entropy": "ffffffffffffffffffffffffffffffff",
+            "strength": 128
+        },
+        "256": {
+            "name": "SLIP39",
+            "entropy": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+            "strength": 256
+        },
+        "512": {
+            "name": "SLIP39",
+            "entropy": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+            "strength": 512
+        }
+    },
     "Electrum-V1": {
         "128": {
             "name": "Electrum-V1",

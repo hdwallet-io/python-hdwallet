@@ -29,7 +29,7 @@ class Mainnet(INetwork):
     })
     MESSAGE_PREFIX = "\x18LitecoinZ Signed Message:\n"
     WIF_PREFIX = 0x80
-    
+
 
 class LitecoinZ(ICryptocurrency):
 
@@ -55,9 +55,9 @@ class LitecoinZ(ICryptocurrency):
     MNEMONICS = Mnemonics({
         "BIP39"
     })
-    SEEDS = Seeds({
-        "BIP39"
-    })
+    SEEDS = Seeds((
+        "BIP39", "SLIP39"
+    ))
     HDS = HDs({
         "BIP32", "BIP44"
     })

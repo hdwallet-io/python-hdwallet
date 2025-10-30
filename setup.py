@@ -15,7 +15,7 @@ import importlib.util
 # requirements/{name}.txt
 def get_requirements(name: str) -> List[str]:
     with open(f"{name}.txt", "r") as requirements:
-        return list(map(str.strip, requirements.read().split("\n")))
+        return list(filter(None, map(str.strip, requirements.read().split("\n"))))
 
 
 # README.md

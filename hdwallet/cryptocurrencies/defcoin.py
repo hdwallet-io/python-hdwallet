@@ -29,7 +29,7 @@ class Mainnet(INetwork):
     })
     MESSAGE_PREFIX = "\x18defcoin Signed Message:\n"
     WIF_PREFIX = 0x9e
-    
+
 
 class Defcoin(ICryptocurrency):
 
@@ -54,9 +54,9 @@ class Defcoin(ICryptocurrency):
     MNEMONICS = Mnemonics({
         "BIP39"
     })
-    SEEDS = Seeds({
-        "BIP39"
-    })
+    SEEDS = Seeds((
+        "BIP39", "SLIP39"
+    ))
     HDS = HDs({
         "BIP32", "BIP44"
     })

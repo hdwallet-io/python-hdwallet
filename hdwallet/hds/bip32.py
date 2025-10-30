@@ -66,7 +66,7 @@ class BIP32HD(IHD):
     _root_index: int = 0
     _depth: int = 0
     _index: int = 0
-    
+
     def __init__(
         self, ecc: Type[IEllipticCurveCryptography], public_key_type: str = PUBLIC_KEY_TYPES.COMPRESSED, **kwargs
     ) -> None:
@@ -141,10 +141,10 @@ class BIP32HD(IHD):
                 seed.seed() if isinstance(seed, ISeed) else seed
             )
         except ValueError as error:
-            raise SeedError("Invalid seed data")
+            raise SeedError("Invalid seed data") from error
 
         if len(self._seed) < 16:
-            raise Error(f"Invalid seed length", expected="< 16", got=len(self._seed))
+            raise Error("Invalid seed length", expected="< 16", got=len(self._seed))
 
         hmac_half_length: int = hashlib.sha512().digest_size // 2
 
@@ -338,7 +338,7 @@ class BIP32HD(IHD):
             self._strict = None
             return self
         except ValueError as error:
-            raise PrivateKeyError("Invalid private key data")
+            raise PrivateKeyError("Invalid private key data") from error
 
     def from_public_key(self, public_key: str) -> "BIP32HD":
         """
@@ -356,7 +356,7 @@ class BIP32HD(IHD):
             self._strict = None
             return self
         except ValueError as error:
-            raise PublicKeyError("Invalid public key data")
+            raise PublicKeyError("Invalid public key data") from error
 
     def from_derivation(self, derivation: IDerivation) -> "BIP32HD":
         """

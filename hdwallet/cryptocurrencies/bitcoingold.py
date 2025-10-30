@@ -18,7 +18,7 @@ class Mainnet(INetwork):
 
     NAME = "mainnet"
     PUBLIC_KEY_ADDRESS_PREFIX = 0x26
-    SCRIPT_ADDRESS_PREFIX = 0x17 
+    SCRIPT_ADDRESS_PREFIX = 0x17
     HRP = "btg"
     WITNESS_VERSIONS = WitnessVersions({
         "P2WPKH": 0x00,
@@ -68,9 +68,9 @@ class BitcoinGold(ICryptocurrency):
     MNEMONICS = Mnemonics({
         "BIP39"
     })
-    SEEDS = Seeds({
-        "BIP39"
-    })
+    SEEDS = Seeds((
+        "BIP39", "SLIP39"
+    ))
     HDS = HDs({
         "BIP32", "BIP44"
     })

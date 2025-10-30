@@ -12,10 +12,15 @@ experiment/
 # Setuptools stuff
 build/
 dist/
-hdwallet.egg-info/
+hdwallet*.egg-info/
 
 # Python stuff
 __pycache__/
 
 # py.test stuff
 .pytest_cache/
+
+# NixOS stuff
+flake.lock
+CLAUDE.md
+.claude

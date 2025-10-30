@@ -27,7 +27,8 @@ def test_byron_icarus_from_seed(data):
         address_type=cryptocurrency.ADDRESS_TYPES.PUBLIC_KEY
     ).from_seed(
         seed=CardanoSeed(
-            seed=data["hdwallet"]["Cardano"]["byron-icarus"]["seed"]
+            seed=data["hdwallet"]["Cardano"]["byron-icarus"]["seed"],
+            cardano_type=data["hdwallet"]["Cardano"]["byron-icarus"]["cardano_type"]
         )
     ).from_derivation(
         derivation=DERIVATIONS.derivation(data["hdwallet"]["Cardano"]["derivation"]["name"])(

@@ -1,5 +1,18 @@
 # Changelog
 
+## [v3.7.0](https://github.com/hdwallet-io/python-hdwallet/tree/v3.7.0) (2025-08-20)
+
+[Full Changelog](https://github.com/hdwallet-io/python-hdwallet/compare/v3.6.1...v3.7.0)
+
+**New Additions:**
+
+- Add: SLIP-39 mnemonic and seed support with multi-language wordlist handling
+- Add: Raw entropy support for SLIP-39 seeds
+
+**Enhancements:**
+
+- Improve: SLIP-39 mnemonic implementation and multi-mnemonic handling
+
 ## [v3.6.1](https://github.com/hdwallet-io/python-hdwallet/tree/v3.6.1) (2025-08-04)
 
 [Full Changelog](https://github.com/hdwallet-io/python-hdwallet/compare/v3.6.0...v3.6.1)

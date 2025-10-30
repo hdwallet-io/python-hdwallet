@@ -202,7 +202,7 @@ class BIP141HD(BIP32HD):
         """
 
         return super(BIP141HD, self).xpublic_key(
-            version=(self._xpublic_key_version if version is None else version) , encoded=encoded
+            version=(self._xpublic_key_version if version is None else version), encoded=encoded
         )
 
     def address(

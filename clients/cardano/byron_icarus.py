@@ -38,7 +38,7 @@ cardano_hd: CardanoHD = CardanoHD(
 seed: str = CardanoSeed.from_mnemonic(
     mnemonic=bip39_mnemonic, cardano_type=Cardano.TYPES.BYRON_ICARUS
 )
-cardano_seed: CardanoSeed = CardanoSeed(seed=seed)
+cardano_seed: CardanoSeed = CardanoSeed(seed=seed, cardano_type=Cardano.TYPES.BYRON_ICARUS)
 
 # Update Byron-Icarus Cardano HD root keys from seed
 cardano_hd.from_seed(
