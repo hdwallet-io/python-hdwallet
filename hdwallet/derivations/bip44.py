@@ -5,7 +5,7 @@
 # file COPYING or https://opensource.org/license/mit
 
 from typing import (
-    Tuple, Union
+    List, Tuple, Optional, Union
 )
 
 from ..utils import (
@@ -51,7 +51,9 @@ class BIP44Derivation(IDerivation):  # https://github.com/bitcoin/bips/blob/mast
         coin_type: Union[str, int] = Bitcoin.COIN_TYPE,
         account: Union[str, int, Tuple[int, int]] = 0,
         change: Union[str, int] = CHANGES.EXTERNAL_CHAIN,
-        address: Union[str, int, Tuple[int, int]] = 0
+        address: Union[str, int, Tuple[int, int]] = 0,
+        path: Optional[str] = None,
+        indexes: Optional[List[int]] = None,
     ) -> None:
         """
         Initialize a BIP44 derivation path with specified parameters.
@@ -64,10 +66,31 @@ class BIP44Derivation(IDerivation):  # https://github.com/bitcoin/bips/blob/mast
         :type change: Union[str, int]
         :param address: The BIP44 address index or tuple. Defaults to 0.
         :type address: Union[str, int, Tuple[int, int]]
+        :param path: Optional derivation path string.
+        :type path: Optional[str]
+        :param indexes: Optional list of derivation indexes.
+        :type indexes: Optional[List[int]]
 
         :return: None
         """
-        super(BIP44Derivation, self).__init__()
+        super(BIP44Derivation, self).__init__(path=path, indexes=indexes)
+        if len(self._indexes) >= 1:
+            if self._derivations[0] != self._purpose:
+                raise DerivationError(
+                    "Incorrect derivation path Purpose", expected=self._purpose, got=self._derivations[0]
+                )
+        if len(self._indexes) >= 2:
+            coin_type = self._derivations[1][0]
+        if len(self._indexes) >= 3:
+            account = self._derivations[2][0]
+        if len(self._indexes) >= 4:
+            change = self._derivations[3][0]
+        if len(self._indexes) >= 5:
+            address = self._derivations[4][0]
+        if len(self._indexes) > 5:
+            raise DerivationError(
+                "Incorrect number of derivation path segments", expected="<= 5", got=len(self._indexes)
+            )
 
         self._coin_type = normalize_index(index=coin_type, hardened=True)
         self._account = normalize_index(index=account, hardened=True)

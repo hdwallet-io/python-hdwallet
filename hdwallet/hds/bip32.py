@@ -411,14 +411,13 @@ class BIP32HD(IHD):
                 self._root_private_key, self._root_chain_code, (integer_to_bytes(0x00) * 4)
             )
             self._public_key = self._private_key.public_key()
-            self._derivation.clean()
-            self._depth = 0
         elif self._root_public_key:
             self._public_key, self._chain_code, self._parent_fingerprint = (
                 self._root_public_key, self._root_chain_code, (integer_to_bytes(0x00) * 4)
             )
+        if self._derivation:
             self._derivation.clean()
-            self._depth = 0
+        self._depth = 0
         return self
 
     def drive(self, index: int) -> Optional["BIP32HD"]:

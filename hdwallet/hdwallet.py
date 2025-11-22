@@ -618,6 +618,16 @@ class HDWallet:
         )
         return self
 
+    def from_path(self, path: Optional[str]) -> "HDWallet":
+        """
+        Use the existing derivation, but from the provided path.
+        """
+        return self.from_derivation(
+            self._derivation.__class__(
+                path=path
+            )
+        )
+
     def from_derivation(self, derivation: IDerivation) -> "HDWallet":
         """
         Initialize the HDWallet from a derivation object.
@@ -657,7 +667,8 @@ class HDWallet:
         """
 
         self._hd.clean_derivation()
-        self._derivation.clean()
+        if self._derivation:
+            self._derivation.clean()
         return self
 
     def from_private_key(self, private_key: str) -> "HDWallet":
