@@ -8,7 +8,7 @@ from hdwallet.utils import (
     bytes_to_string, get_bytes
 )
 from hdwallet.cryptocurrencies import (
-    Bitcoin, Cosmos, Filecoin, Avalanche, Ergo, OKTChain, Harmony, Zilliqa, Injective
+    Bitcoin, BitcoinCash, Cosmos, Filecoin, Avalanche, Ergo, OKTChain, Harmony, Zilliqa, Injective
 )
 from hdwallet.addresses import (
     P2PKHAddress,
@@ -18,6 +18,7 @@ from hdwallet.addresses import (
     P2WPKHInP2SHAddress,
     P2WSHAddress,
     P2WSHInP2SHAddress,
+    BitcoinCashAddress,
     EthereumAddress,
     CosmosAddress,
     XinFinAddress,
@@ -35,7 +36,7 @@ from hdwallet.addresses import (
 )
 
 private_key: IPrivateKey = SLIP10Secp256k1PrivateKey.from_bytes(get_bytes(
-    "be3851aa7822b92deb2f34655e41a40fd510f6cf9aa2a4f0c4d7a4bc81f0ad74"
+    "0000000000000000000000000000000000000000000000000000000000000001"
 ))
 public_key: IPublicKey = private_key.public_key()
 
@@ -115,6 +116,15 @@ p2wsh_in_p2sh_address_hash: str = P2WSHInP2SHAddress.decode(
     script_address_prefix=Bitcoin.NETWORKS.MAINNET.SCRIPT_ADDRESS_PREFIX,
 )
 print("P2WSH-In-P2SH Address:", p2wsh_in_p2sh_address, p2wsh_in_p2sh_address_hash)
+
+bitcoincash_address: str = BitcoinCashAddress.encode(
+    public_key=public_key,
+    public_key_type=PUBLIC_KEY_TYPES.COMPRESSED
+)
+bitcoincash_address_hash: str = BitcoinCashAddress.decode(
+    address=bitcoincash_address
+)
+print("BitcoinCash Address:", bitcoincash_address, bitcoincash_address_hash)
 
 ethereum_address: str = EthereumAddress.encode(
     public_key=public_key, skip_checksum_encode=False

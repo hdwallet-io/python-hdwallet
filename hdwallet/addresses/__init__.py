@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-# Copyright © 2020-2024, Meheret Tesfaye Batu <meherett.batu@gmail.com>
+# Copyright © 2020-2026, Meheret Tesfaye Batu <meherett.batu@gmail.com>
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or https://opensource.org/license/mit
 
@@ -12,6 +12,7 @@ from ..exceptions import AddressError
 from .algorand import AlgorandAddress
 from .aptos import AptosAddress
 from .avalanche import AvalancheAddress
+from .bitcoincash import BitcoinCashAddress
 from .cardano import CardanoAddress
 from .cosmos import CosmosAddress
 from .eos import EOSAddress
@@ -62,6 +63,8 @@ class ADDRESSES:
     | Aptos           | :class:`hdwallet.addresses.aptos.AptosAddress`                   |
     +-----------------+------------------------------------------------------------------+
     | Avalanche       | :class:`hdwallet.addresses.avalanche.AvalancheAddress`           |
+    +-----------------+------------------------------------------------------------------+
+    | BitcoinCash     | :class:`hdwallet.addresses.bitcoincash.BitcoinCash`              |
     +-----------------+------------------------------------------------------------------+
     | Cardano         | :class:`hdwallet.addresses.cardano.CardanoAddress`               |
     +-----------------+------------------------------------------------------------------+
@@ -130,6 +133,7 @@ class ADDRESSES:
         AlgorandAddress.name(): AlgorandAddress,
         AptosAddress.name(): AptosAddress,
         AvalancheAddress.name(): AvalancheAddress,
+        BitcoinCashAddress.name(): BitcoinCashAddress,
         CardanoAddress.name(): CardanoAddress,
         CosmosAddress.name(): CosmosAddress,
         EOSAddress.name(): EOSAddress,
