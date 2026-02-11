@@ -90,7 +90,7 @@ def path_to_indexes(path: str) -> List[int]:
         return []
     elif path[0:2] != "m/":
         raise DerivationError(
-            f"Bad path format", expected="like this type of path \"m/0'/0\"", got=path
+            "Bad path format", expected="like this type of path \"m/0'/0\"", got=path
         )
 
     indexes: List[int] = []
@@ -139,17 +139,17 @@ def normalize_index(
     if isinstance(index, tuple):
         if len(index) != 2:
             raise DerivationError(
-                f"Bad index length", expected=2, got=len(index)
+                "Bad index length", expected=2, got=len(index)
             )
         elif not isinstance(index[0], int) or not isinstance(index[1], int):
             raise DerivationError(
-                f"Invalid index types",
+                "Invalid index types",
                 expected="both indexes must be integer instance",
                 got=f"{type(index[0])}-{type(index[0])}"
             )
         elif index[0] < 0 or index[1] < 0:
             raise DerivationError(
-                f"Bad index format", expected="both must be non-negative-numbers", got=index
+                "Bad index format", expected="both must be non-negative-numbers", got=index
             )
         elif index[0] > index[1]:
             raise DerivationError(
@@ -175,18 +175,18 @@ def normalize_index(
                 )
             return from_index, to_index, hardened
         raise DerivationError(
-            f"Bad index format", expected="{non-negative-number} | {number}-{number}", got=index
+            "Bad index format", expected="{non-negative-number} | {number}-{number}", got=index
         )
 
     elif isinstance(index, int):
         if index < 0:
             raise DerivationError(
-                f"Bad index format", expected="non-negative-number", got=index
+                "Bad index format", expected="non-negative-number", got=index
             )
         return index, hardened
 
     raise DerivationError(
-        f"Invalid index instance", expected=(str, int, tuple), got=type(index)
+        "Invalid index instance", expected=(str, int, tuple), got=type(index)
     )
 
 
@@ -223,7 +223,7 @@ def normalize_derivation(
             return f"{_path}/", _indexes, _derivations
         elif path[0:2] != "m/":
             raise DerivationError(
-                f"Bad path format", expected="like this type of path \"m/0'/0\"", got=path
+                "Bad path format", expected="like this type of path \"m/0'/0\"", got=path
             )
     elif not path:
         return f"{_path}/", _indexes, _derivations
@@ -499,7 +499,7 @@ def get_bytes(data: AnyStr, unhexlify: bool = True) -> bytes:
         else:
             return bytes(data, 'utf-8')
     else:
-        raise TypeError("Agreement must be either 'bytes' or 'string'!")
+        raise TypeError("Agreement must be either 'bytes' or 'str'!")
 
 
 def bytes_reverse(data: bytes) -> bytes:
@@ -518,27 +518,30 @@ def bytes_reverse(data: bytes) -> bytes:
     return bytes(tmp)
 
 
-def bytes_to_string(data: Union[bytes, str]) -> str:
-    """
-    Convert bytes or string data to a hexadecimal string representation.
+def bytes_to_string(data: AnyStr, unhexlify: Optional[bool] = None) -> str:
+    """Convert bytes or string (hexadecimal, or UTF-8 decoded) data to a hexadecimal string representation.
+
+    If the default unhexlify == None is provided, will attempt to auto-detect non-empty hex strings,
+    and thus reject hex strings of accidentally odd length instead of accepting them (surprisingly
+    and almost certainly incorrectly!) as UTF-8 encoded binary data (get_bytes is resilient to
+    surrounding whitespace, so we must be, too).
 
     :param data: The bytes or string data to convert to hexadecimal string.
     :type data: Union[bytes, str]
+    :param unhexlify: Flag indicating whether to interpret strings as hexadecimal (default None).
+    :type unhexlify: Optional[bool]
 
-    :return: The hexadecimal string representation of the input data.
+    :return: The hexadecimal string representation of the input data, empty if no data.
     :rtype: str
+
     """
 
     if not data:
         return ''
-    try:
-        bytes.fromhex(data)
-        return data
-    except (ValueError, TypeError):
-        pass
-    if not isinstance(data, bytes):
-        data = bytes(data, 'utf-8')
-    return data.hex()
+    if unhexlify is None:
+        unhexlify = isinstance(data, str) and all(c in string.hexdigits for c in data.strip())
+    binary = get_bytes(data, unhexlify=unhexlify)
+    return binary.hex()
 
 
 def bytes_to_integer(data: bytes, endianness: Literal["little", "big"] = "big", signed: bool = False) -> int:
@@ -775,7 +778,7 @@ def words_to_bytes_chunk(
         words_list[i]: i for i in range(len(words_list))
     }
 
-    word_1_index, word_2_index,  word_3_index = (
+    word_1_index, word_2_index, word_3_index = (
         words_list_with_index[word_1], words_list_with_index[word_2] % words_list_length, words_list_with_index[word_3] % words_list_length
     )
 

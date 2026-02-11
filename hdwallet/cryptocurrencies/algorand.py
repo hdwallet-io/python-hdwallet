@@ -51,7 +51,7 @@ class Algorand(ICryptocurrency):
         {"ALGORAND": "Algorand"}, "BIP39"
     ))
     SEEDS = Seeds((
-        {"ALGORAND": "Algorand"}, "BIP39"
+        {"ALGORAND": "Algorand"}, "BIP39", "SLIP39"
     ))
     HDS = HDs((
         {"ALGORAND": "Algorand"}, "BIP32", "BIP44"

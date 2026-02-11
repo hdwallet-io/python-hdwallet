@@ -31,4 +31,3 @@ class KholawEd25519PublicKey(SLIP10Ed25519PublicKey):
         """
 
         return KholawEd25519Point(bytes(self.verify_key))
-

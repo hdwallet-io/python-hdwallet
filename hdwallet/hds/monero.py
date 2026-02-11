@@ -119,7 +119,7 @@ class MoneroHD(IHD):
                 spend_private_key=scalar_reduce(spend_private_key)
             )
         except ValueError as error:
-            raise SeedError("Invalid seed data")
+            raise SeedError("Invalid seed data") from error
 
     def from_private_key(self, private_key: Union[bytes, str, IPrivateKey]) -> "MoneroHD":
         """
@@ -140,7 +140,7 @@ class MoneroHD(IHD):
                 spend_private_key=scalar_reduce(kekkak256(self._private_key))
             )
         except ValueError as error:
-            raise PrivateKeyError("Invalid private key data")
+            raise PrivateKeyError("Invalid private key data") from error
 
     def from_derivation(self, derivation: IDerivation) -> "MoneroHD":
         """
@@ -225,13 +225,13 @@ class MoneroHD(IHD):
             if isinstance(view_private_key, (bytes, str)):
                 view_private_key: IPrivateKey = SLIP10Ed25519MoneroPrivateKey.from_bytes(get_bytes(view_private_key))
         except ValueError as error:
-            raise PrivateKeyError("Invalid view private key data")
+            raise PrivateKeyError("Invalid view private key data") from error
 
         try:
             if isinstance(spend_public_key, (bytes, str)):
                 spend_public_key: IPublicKey = SLIP10Ed25519MoneroPublicKey.from_bytes(get_bytes(spend_public_key))
         except ValueError as error:
-            raise PublicKeyError("Invalid spend public key data")
+            raise PublicKeyError("Invalid spend public key data") from error
 
         self._spend_private_key = None
         self._view_private_key = view_private_key
@@ -255,11 +255,11 @@ class MoneroHD(IHD):
         maximum_index: int = 2 ** 32 - 1
         if minor_index < 0 or minor_index > maximum_index:
             raise DerivationError(
-                f"Invalid minor index range", expected=f"0-{maximum_index}", got=minor_index
+                "Invalid minor index range", expected=f"0-{maximum_index}", got=minor_index
             )
         if major_index < 0 or major_index > maximum_index:
             raise DerivationError(
-                f"Invalid major index range", expected=f"0-{maximum_index}", got=major_index
+                "Invalid major index range", expected=f"0-{maximum_index}", got=major_index
             )
 
         if minor_index == 0 and major_index == 0:

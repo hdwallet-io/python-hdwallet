@@ -57,7 +57,7 @@ class TronAddress(IAddress):
         public_key: IPublicKey = validate_and_get_public_key(
             public_key=public_key, public_key_cls=SLIP10Secp256k1PublicKey
         )
-        
+
         address: str = bytes_to_string(
             kekkak256(public_key.raw_uncompressed()[1:])
         )[24:]
@@ -81,7 +81,7 @@ class TronAddress(IAddress):
         :return: Decoded public key.
         :rtype: str
         """
-        
+
         address_decode: bytes = check_decode(
             address, alphabet=kwargs.get(
                 "alphabet", cls.alphabet

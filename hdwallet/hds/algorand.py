@@ -62,10 +62,10 @@ class AlgorandHD(BIP32HD):
                 seed.seed() if isinstance(seed, ISeed) else seed
             )
         except ValueError as error:
-            raise SeedError("Invalid seed data")
+            raise SeedError("Invalid seed data") from error
 
         if len(self._seed) < 16:
-            raise Error(f"Invalid seed length", expected="< 16", got=len(self._seed))
+            raise Error("Invalid seed length", expected="< 16", got=len(self._seed))
 
         def clamp_kL(kL: bytearray):
             kL[0] &= 0b11111000
@@ -235,7 +235,7 @@ class AlgorandHD(BIP32HD):
         :rtype: Optional[str]
         """
         return super(AlgorandHD, self).xprivate_key(version=version, encoded=encoded)
-    
+
     def address(self, **kwargs) -> str:
         """
         Generates a Algorand address using the AlgorandAddress encoding scheme.

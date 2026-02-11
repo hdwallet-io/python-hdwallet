@@ -19,7 +19,7 @@ from .point import SLIP10Nist256p1Point
 
 
 class SLIP10Nist256p1PublicKey(IPublicKey):
-    
+
     verify_key: VerifyingKey
 
     def __init__(self, verify_key: VerifyingKey) -> None:

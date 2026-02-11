@@ -12,6 +12,7 @@ from .iseed import ISeed
 from ..exceptions import SeedError
 from .algorand import AlgorandSeed
 from .bip39 import BIP39Seed
+from .slip39 import SLIP39Seed
 from .cardano import CardanoSeed
 from .electrum import (
     ElectrumV1Seed, ElectrumV2Seed
@@ -35,6 +36,8 @@ class SEEDS:
     +--------------+------------------------------------------------------+
     | BIP39        |  :class:`hdwallet.seeds.bip39.BIP39Seed`             |
     +--------------+------------------------------------------------------+
+    | SLIP39       |  :class:`hdwallet.seeds.sli39.SLIP39Seed`             |
+    +--------------+------------------------------------------------------+
     | Cardano      |  :class:`hdwallet.seeds.cardano.CardanoSeed`         |
     +--------------+------------------------------------------------------+
     | Electrum-V1  |  :class:`hdwallet.seeds.electrum.v1.ElectrumV1Seed`  |
@@ -48,6 +51,7 @@ class SEEDS:
     dictionary: Dict[str, Type[ISeed]] = {
         AlgorandSeed.name(): AlgorandSeed,
         BIP39Seed.name(): BIP39Seed,
+        SLIP39Seed.name(): SLIP39Seed,
         CardanoSeed.name(): CardanoSeed,
         ElectrumV1Seed.name(): ElectrumV1Seed,
         ElectrumV2Seed.name(): ElectrumV2Seed,

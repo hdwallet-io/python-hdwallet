@@ -4,8 +4,6 @@ from hashlib import sha256
 from Crypto.Hash import keccak
 from typing import List
 
-import six
-
 
 __base58_alphabet = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz"
 
@@ -27,7 +25,7 @@ def checksum_encode(address, crypto="eth"):
 def string_to_int(data):
     val = 0
 
-    if type(data) == str:
+    if isinstance(data, str):
         data = bytearray(data)
 
     for (i, c) in enumerate(data[::-1]):
@@ -36,9 +34,9 @@ def string_to_int(data):
 
 
 def ensure_string(data):
-    if isinstance(data, six.binary_type):
+    if isinstance(data, bytes):
         return data.decode("utf-8")
-    elif not isinstance(data, six.string_types):
+    elif not isinstance(data, str):
         raise ValueError("Invalid value for string")
     return data
 
@@ -62,8 +60,7 @@ def check_encode(raw, alphabet=__base58_alphabet):
 
 
 def decode(data, alphabet=__base58_alphabet):
-    if bytes != str:
-        data = bytes(data, "ascii")
+    data = bytes(data, "ascii")
 
     val = 0
     prefix = 0

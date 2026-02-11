@@ -9,13 +9,13 @@ from typing import (
 )
 
 from ..exceptions import DerivationError
-from .bip44 import (
+from .bip44 import (  # noqa: F401
     BIP44Derivation, CHANGES
 )
 from .bip49 import BIP49Derivation
 from .bip84 import BIP84Derivation
 from .bip86 import BIP86Derivation
-from .cip1852 import (
+from .cip1852 import (  # noqa: F401
     CIP1852Derivation, ROLES
 )
 from .custom import CustomDerivation

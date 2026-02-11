@@ -173,10 +173,10 @@ class MoneroAddress:
                     "Invalid length",
                     expected=(expected_length + cls.payment_id_length),
                     got=len(payload_without_prefix)
-                )
+                ) from ex
 
             if payment_id is None or len(payment_id) != cls.payment_id_length:
-                raise Error("Invalid payment ID")
+                raise Error("Invalid payment ID") from ex
 
             payment_id_got_bytes = payload_without_prefix[-cls.payment_id_length:]
             if payment_id != payment_id_got_bytes:
@@ -184,7 +184,7 @@ class MoneroAddress:
                     "Invalid payment ID",
                     expected=bytes_to_string(payment_id_got_bytes),
                     got=bytes_to_string(payment_id_got_bytes)
-                )
+                ) from ex
 
         length: int = SLIP10Ed25519MoneroPublicKey.compressed_length()
 

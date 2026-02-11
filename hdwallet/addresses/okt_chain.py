@@ -69,7 +69,7 @@ class OKTChainAddress(IAddress):
         :return: Decoded OKT-Chain address.
         :rtype: str
         """
-        
+
         return EthereumAddress.decode(
             EthereumAddress.address_prefix + bytes_to_string(
                 bech32_decode(cls.hrp, address)[1]

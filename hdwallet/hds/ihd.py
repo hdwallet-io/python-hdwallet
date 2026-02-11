@@ -453,7 +453,6 @@ class IHD:
         :rtype: str
         """
 
-
     def mode(self) -> str:
         """
         Get the mode of the ElectrumV2HD instance.
@@ -537,7 +536,7 @@ class IHD:
     def integrated_address(self, **kwargs) -> str:
         """
         Generates the integrated Monero address associated with the spend and view public keys.
-        
+
         :param kwargs: Additional keyword arguments.
 
         :return: Integrated Monero address.
@@ -547,7 +546,7 @@ class IHD:
     def primary_address(self, **kwargs) -> str:
         """
         Generates the primary Monero address associated with the spend and view public keys.
-        
+
         :param kwargs: Additional keyword arguments.
 
         :return: Primary Monero address.
@@ -559,7 +558,7 @@ class IHD:
         Generates a sub-address associated with the given minor and major indexes or uses the current derivation indexes.
 
         :param kwargs: Additional keyword arguments.
-        
+
         :return: Generated sub-address.
         :rtype: str
         """

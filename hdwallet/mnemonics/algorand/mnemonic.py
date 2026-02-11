@@ -5,17 +5,15 @@
 # file COPYING or https://opensource.org/license/mit
 
 from typing import (
-    Union, Dict, List, Optional
+    Union, Dict, List, Mapping, Optional
 )
-
-import unicodedata
 
 from ...entropies import (
     IEntropy, AlgorandEntropy, ALGORAND_ENTROPY_STRENGTHS
 )
 from ...crypto import sha512_256
 from ...exceptions import (
-    Error, EntropyError, MnemonicError, ChecksumError
+    EntropyError, MnemonicError, ChecksumError
 )
 from ...utils import (
     get_bytes, bytes_to_string, convert_bits
@@ -62,6 +60,7 @@ class AlgorandMnemonic(IMnemonic):
     """
 
     checksum_length: int = 2
+    words_list_number: int = 2048
     words_list: List[int] = [
         ALGORAND_MNEMONIC_WORDS.TWENTY_FIVE
     ]
@@ -158,12 +157,19 @@ class AlgorandMnemonic(IMnemonic):
         word_indexes: Optional[List[int]] = convert_bits(entropy, 8, 11)
         assert word_indexes is not None
 
-        words_list: list = cls.normalize(cls.get_words_list_by_language(language=language))
+        words_list: list = cls.get_words_list_by_language(language=language)
         indexes: list = word_indexes + [checksum_word_indexes[0]]
-        return " ".join(cls.normalize([words_list[index] for index in indexes]))
+        return " ".join( words_list[index] for index in indexes )
 
     @classmethod
-    def decode(cls, mnemonic: str, **kwargs) -> str:
+    def decode(
+        cls,
+        mnemonic: str,
+        language: Optional[str] = None,
+        words_list: Optional[List[str]] = None,
+        words_list_with_index: Optional[Mapping[str, int]] = None,
+        **kwargs
+    ) -> str:
         """
         Decodes a mnemonic phrase into entropy data.
 
@@ -179,36 +185,41 @@ class AlgorandMnemonic(IMnemonic):
         if len(words) not in cls.words_list:
             raise MnemonicError("Invalid mnemonic words count", expected=cls.words_list, got=len(words))
 
-        words_list, language = cls.find_language(mnemonic=words)
-        words_list_with_index: dict = {
-            words_list[i]: i for i in range(len(words_list))
-        }
-        word_indexes = [words_list_with_index[word] for word in words]
-        entropy_list: Optional[List[int]] = convert_bits(word_indexes[:-1], 11, 8)
-        assert entropy_list is not None
-        entropy: bytes = bytes(entropy_list)[:-1]
+        candidates: Mapping[str, Mapping[str, int]] = cls.word_indices_candidates(
+            words=words, language=language, words_list=words_list,
+            words_list_with_index=words_list_with_index
+        )
 
-        checksum: bytes = sha512_256(entropy)[:cls.checksum_length]
-        checksum_word_indexes: Optional[List[int]] = convert_bits(checksum, 8, 11)
-        assert checksum_word_indexes is not None
-        if checksum_word_indexes[0] != word_indexes[-1]:
-            raise ChecksumError(
-                "Invalid checksum", expected=words_list[checksum_word_indexes[0]], got=words_list[word_indexes[-1]]
-            )
+        exception = None
+        entropies: Mapping[Optional[str], str] = {}
+        for language, word_indices in candidates.items():
+            try:
+                word_indexes = [word_indices[word] for word in words]
+                entropy_list: Optional[List[int]] = convert_bits(word_indexes[:-1], 11, 8)
+                assert entropy_list is not None
+                entropy: bytes = bytes(entropy_list)[:-1]
+        
+                checksum: bytes = sha512_256(entropy)[:cls.checksum_length]
+                checksum_word_indexes: Optional[List[int]] = convert_bits(checksum, 8, 11)
+                assert checksum_word_indexes is not None
+                if checksum_word_indexes[0] != word_indexes[-1]:
+                    raise ChecksumError(
+                        "Invalid checksum", expected=words_list_with_index.keys()[checksum_word_indexes[0]], got=words_list_with_index.keys()[word_indexes[-1]]
+                    )
+        
+                entropies[language] = bytes_to_string(entropy)
 
-        return bytes_to_string(entropy)
+            except Exception as exc:
+                # Collect first Exception; highest quality languages are first.
+                if exception is None:
+                    exception = exc
 
-    @classmethod
-    def normalize(cls, mnemonic: Union[str, List[str]]) -> List[str]:
-        """
-        Normalizes the given mnemonic by splitting it into a list of words if it is a string.
-
-        :param mnemonic: The mnemonic value, which can be a single string of words or a list of words.
-        :type mnemonic: Union[str, List[str]]
-
-        :return: A list of words from the mnemonic.
-        :rtype: List[str]
-        """
-
-        mnemonic: list = mnemonic.split() if isinstance(mnemonic, str) else mnemonic
-        return list(map(lambda _: unicodedata.normalize("NFKD", _.lower()), mnemonic))
+        if entropies:
+            (candidate, entropy), *extras = entropies.items()
+            if extras:
+                exception = MnemonicError(
+                    f"Ambiguous languages {', '.join(c for c, _ in extras)} or {candidate} for mnemonic; specify a preferred language"
+                )
+            else:
+                return entropy
+        raise exception

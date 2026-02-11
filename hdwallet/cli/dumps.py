@@ -116,11 +116,20 @@ def dumps(**kwargs) -> None:
                     f"Wrong seed client, (expected={SEEDS.names()}, got='{kwargs.get('seed_client')}')"
                 ), err=True)
                 sys.exit()
-            hdwallet.from_seed(
-                seed=SEEDS.seed(name=kwargs.get("seed_client")).__call__(
-                    seed=kwargs.get("seed")
+            if kwargs.get("seed_client") == "Cardano" and kwargs.get("cardano_type"):
+                # If a specific cardano_type is specified, we must override the CardanoSeed default 
+                hdwallet.from_seed(
+                    seed=SEEDS.seed(name=kwargs.get("seed_client")).__call__(
+                        seed=kwargs.get("seed"),
+                        cardano_type=kwargs.get("cardano_type")
+                    )
                 )
-            )
+            else:
+                hdwallet.from_seed(
+                    seed=SEEDS.seed(name=kwargs.get("seed_client")).__call__(
+                        seed=kwargs.get("seed")
+                    )
+                )
         elif kwargs.get("xprivate_key"):
             hdwallet.from_xprivate_key(
                 xprivate_key=kwargs.get("xprivate_key"),
@@ -143,7 +152,7 @@ def dumps(**kwargs) -> None:
             if kwargs.get("bip38"):
 
                 bip38: BIP38 = BIP38(
-                  cryptocurrency=BIP38_CRYPTOCURRENCIES[cryptocurrency.NAME], network=kwargs.get("network")
+                    cryptocurrency=BIP38_CRYPTOCURRENCIES[cryptocurrency.NAME], network=kwargs.get("network")
                 )
                 _wif = bip38.decrypt(encrypted_wif=_wif, passphrase=kwargs.get("passphrase"))
 
@@ -226,7 +235,6 @@ def dumps(**kwargs) -> None:
                     )
                 )
 
-
         hd_name: str = hdwallet._hd.name()
         if kwargs.get("include"):
             _include: str = kwargs.get("include")
@@ -261,7 +269,6 @@ def dumps(**kwargs) -> None:
             _include: str = "at:path,addresses:p-chain,public_key,wif"
         elif hdwallet.cryptocurrency() == "Binance":
             _include: str = "at:path,addresses:chain,public_key,wif"
-
 
         hdwallet_csv = csv.DictWriter(
             sys.stdout, fieldnames=_include.split(","), extrasaction="ignore", delimiter=kwargs.get("delimiter")
@@ -374,7 +381,6 @@ def dumps(**kwargs) -> None:
                 click.echo(json.dumps(
                     hdwallet.dump(exclude={'derivation', *excludes}), indent=4, ensure_ascii=False
                 ))
-
 
             drive(*hdwallet._derivation.derivations())
         else:

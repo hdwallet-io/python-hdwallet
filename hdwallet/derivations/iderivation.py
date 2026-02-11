@@ -21,7 +21,8 @@ class IDerivation:
         self, path: Optional[str] = None, indexes: Optional[List[int]] = None, **kwargs
     ) -> None:
         """
-        Initializes an object for iderivation.
+        Initializes an object for iderivation.  Derived classes may support different
+        arguments, but should always support path and indexes.
 
         :param path: Optional derivation path string.
         :type path: Optional[str]

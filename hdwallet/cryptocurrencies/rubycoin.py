@@ -1,4 +1,4 @@
- #!/usr/bin/env python3
+#!/usr/bin/env python3
 
 # Copyright © 2020-2025, Meheret Tesfaye Batu <meherett.batu@gmail.com>
 # Distributed under the MIT software license, see the accompanying
@@ -54,9 +54,9 @@ class Rubycoin(ICryptocurrency):
     MNEMONICS = Mnemonics({
         "BIP39"
     })
-    SEEDS = Seeds({
-        "BIP39"
-    })
+    SEEDS = Seeds((
+        "BIP39", "SLIP39"
+    ))
     HDS = HDs({
         "BIP32", "BIP44"
     })

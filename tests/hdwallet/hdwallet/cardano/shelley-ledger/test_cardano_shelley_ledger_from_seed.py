@@ -27,7 +27,8 @@ def test_shelley_ledger_from_seed(data):
         address_type=cryptocurrency.ADDRESS_TYPES.STAKING
     ).from_seed(
         seed=CardanoSeed(
-            seed=data["hdwallet"]["Cardano"]["shelley-ledger"]["seed"]
+            seed=data["hdwallet"]["Cardano"]["shelley-ledger"]["seed"],
+            cardano_type=data["hdwallet"]["Cardano"]["shelley-ledger"]["cardano_type"],
         )
     ).from_derivation(
         derivation=DERIVATIONS.derivation(data["hdwallet"]["Cardano"]["derivation"]["name"])(

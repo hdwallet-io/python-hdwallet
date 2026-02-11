@@ -5,11 +5,11 @@
 # file COPYING or https://opensource.org/license/mit
 
 from typing import (
-    Optional, Union, List
+     List, Optional, Set, Union
 )
 
 import cbor2
-import re
+import string
 
 from ..mnemonics import (
     IMnemonic, BIP39Mnemonic
@@ -17,7 +17,7 @@ from ..mnemonics import (
 from ..cryptocurrencies import Cardano
 from ..crypto import blake2b_256
 from ..exceptions import (
-    Error, MnemonicError, SeedError
+    Error, SeedError
 )
 from ..utils import (
     get_bytes, bytes_to_string
@@ -38,15 +38,26 @@ class CardanoSeed(ISeed):
         This class inherits from the ``ISeed`` class, thereby ensuring that all functions are accessible.
     """
 
+    # According to https://cardano-c.readthedocs.io/en/stable/api/bip39.html#, Cardano supports
+    # english BIP-39 Mnemonics in lengths:
+    #
+    # - 16 bytes / 32 hex (128 bits) → 12 words
+    # - 20 bytes / 40 hex (160 bits) → 15 words
+    # - 24 bytes / 48 hex (192 bits) → 18 words
+    # - 28 bytes / 56 hex (224 bits) → 21 words
+    # - 32 bytes / 64 hex (256 bits) → 24 words
     _cardano_type: str
     lengths: List[int] = [
-        32,  # Byron-Icarus and Shelly-Icarus
-        128,  # Byron-Ledger and Shelly-Ledger
-        64  # Byron-Legacy
+        32,   # Byron-Icarus and Shelly-Icarus; any valid BIP-39 Entropy
+        40,
+        48,
+        56,
+        64,   # Byron-Legacy; special Blake2B 256-bit encoding only
+        128,  # Byron-Ledger and Shelly-Ledger 512-bit BIP-39 encoding
     ]
 
     def __init__(
-        self, seed: str, cardano_type: str = Cardano.TYPES.BYRON_ICARUS, passphrase: Optional[str] = None
+        self, seed: str, cardano_type: str = Cardano.TYPES.BYRON_ICARUS
     ) -> None:
         """
         Initialize a CardanoSeed object.
@@ -55,22 +66,21 @@ class CardanoSeed(ISeed):
         :type seed: str
         :param cardano_type: The type of Cardano seed. Defaults to Cardano.TYPES.BYRON_ICARUS.
         :type cardano_type: str, optional
-
-        :param passphrase: Optional passphrase for deriving the seed. Defaults to None.
-        :type passphrase: str, optional
         """
-
-        super(CardanoSeed, self).__init__(
-            seed=seed, cardano_type=cardano_type, passphrase=passphrase
-        )
-
-        if cardano_type not in Cardano.TYPES.get_cardano_types():
-            raise SeedError(
-                "Invalid Cardano type", expected=Cardano.TYPES.get_cardano_types(), got=cardano_type
+        try:
+            super().__init__(
+                seed=seed, cardano_type=cardano_type
             )
-
+        except Exception as exc:
+            raise SeedError(
+                f"Invalid {cardano_type} seed size",
+                expected=(
+                    ", ".join(f"{nibbles*4}-" for nibbles in sorted(self.cardano_type_lengths(cardano_type)))
+                    + "bit"
+                ),
+                got=f"{len(seed)*4}-bit"
+            ) from exc
         self._cardano_type = cardano_type
-        self._seed = seed
 
     @classmethod
     def name(cls) -> str:
@@ -94,6 +104,16 @@ class CardanoSeed(ISeed):
         return self._cardano_type
 
     @classmethod
+    def cardano_type_lengths(cls, cardano_type) -> Set[int]:
+        if cardano_type in [Cardano.TYPES.BYRON_ICARUS, Cardano.TYPES.SHELLEY_ICARUS]:
+            return set(cls.lengths[:-1])    # BIP-39 Entropy required
+        elif cardano_type == Cardano.TYPES.BYRON_LEGACY:
+            return set(cls.lengths[-2:-1])  # Blake2B 256-bit hash require
+        elif cardano_type in [Cardano.TYPES.BYRON_LEDGER, Cardano.TYPES.SHELLEY_LEDGER]:
+            return set(cls.lengths[-1:])    # Raw BIP-39 512-bit encoded seed required
+        return set()
+
+    @classmethod
     def is_valid(cls, seed: str, cardano_type: str = Cardano.TYPES.BYRON_ICARUS) -> bool:
         """
         Checks if the given seed is valid.
@@ -106,27 +126,19 @@ class CardanoSeed(ISeed):
         :return: True if is valid, False otherwise.
         :rtype: bool
         """
+        if super().is_valid(seed):
+            # But also, specific Cardano types must have a specific seed length
+            if len(seed) in cls.cardano_type_lengths(cardano_type):
+                return True
+        return False
 
-        if not isinstance(seed, str) or not bool(re.fullmatch(
-            r'^[0-9a-fA-F]+$', seed
-        )): return False
-
-        if cardano_type in [Cardano.TYPES.BYRON_ICARUS, Cardano.TYPES.SHELLEY_ICARUS]:
-            return len(seed) == cls.lengths[0]
-        elif cardano_type in [Cardano.TYPES.BYRON_LEDGER, Cardano.TYPES.SHELLEY_LEDGER]:
-            return len(seed) == cls.lengths[1]
-        elif cardano_type == Cardano.TYPES.BYRON_LEGACY:
-            return len(seed) == cls.lengths[2]
-        else:
-            raise SeedError(
-                "Invalid Cardano type", expected=Cardano.TYPES.get_cardano_types(), got=cardano_type
-            )
 
     @classmethod
     def from_mnemonic(
         cls,
         mnemonic: Union[str, IMnemonic],
         passphrase: Optional[str] = None,
+        language: Optional[str] = None,
         cardano_type: str = Cardano.TYPES.BYRON_ICARUS
     ) -> str:
         """
@@ -147,27 +159,26 @@ class CardanoSeed(ISeed):
         :return: The generated Cardano wallet seed as a string.
         :rtype: str
         """
-
         if cardano_type == Cardano.TYPES.BYRON_ICARUS:
-            return cls.generate_byron_icarus(mnemonic=mnemonic)
+            return cls.generate_byron_icarus(mnemonic=mnemonic, language=language)
         if cardano_type == Cardano.TYPES.BYRON_LEDGER:
             return cls.generate_byron_ledger(
-                mnemonic=mnemonic, passphrase=passphrase
+                mnemonic=mnemonic, passphrase=passphrase, language=language,
             )
         if cardano_type == Cardano.TYPES.BYRON_LEGACY:
-            return cls.generate_byron_legacy(mnemonic=mnemonic)
+            return cls.generate_byron_legacy(mnemonic=mnemonic, language=language)
         if cardano_type == Cardano.TYPES.SHELLEY_ICARUS:
-            return cls.generate_shelley_icarus(mnemonic=mnemonic)
-        elif cardano_type == Cardano.TYPES.SHELLEY_LEDGER:
+            return cls.generate_shelley_icarus(mnemonic=mnemonic, language=language)
+        if cardano_type == Cardano.TYPES.SHELLEY_LEDGER:
             return cls.generate_shelley_ledger(
-                mnemonic=mnemonic, passphrase=passphrase
+                mnemonic=mnemonic, passphrase=passphrase, language=language
             )
         raise Error(
             "Invalid Cardano type", expected=Cardano.TYPES.get_cardano_types(), got=cardano_type
         )
 
     @classmethod
-    def generate_byron_icarus(cls, mnemonic: Union[str, IMnemonic]) -> str:
+    def generate_byron_icarus(cls, mnemonic: Union[str, IMnemonic], language: Optional[str] = None) -> str:
         """
         Generates a Byron Icarus seed from a given mnemonic phrase.
 
@@ -177,19 +188,14 @@ class CardanoSeed(ISeed):
         :return: The derived Byron Icarus seed as a string.
         :rtype: str
         """
+        if not isinstance(mnemonic, IMnemonic):
+            mnemonic = BIP39Mnemonic(mnemonic=mnemonic, language=language)
+        assert isinstance(mnemonic, BIP39Mnemonic)
 
-        mnemonic = (
-            mnemonic.mnemonic()
-            if isinstance(mnemonic, IMnemonic) else
-            mnemonic
-        )
-        if not BIP39Mnemonic.is_valid(mnemonic=mnemonic):
-            raise MnemonicError(f"Invalid {BIP39Mnemonic.name()} mnemonic words")
-
-        return BIP39Mnemonic.decode(mnemonic=mnemonic)
+        return BIP39Mnemonic.decode(mnemonic=mnemonic.mnemonic(), language=mnemonic.language())
 
     @classmethod
-    def generate_byron_ledger(cls, mnemonic: Union[str, IMnemonic], passphrase: Optional[str] = None) -> str:
+    def generate_byron_ledger(cls, mnemonic: Union[str, IMnemonic], passphrase: Optional[str] = None, language: Optional[str] = None) -> str:
         """
         Generates a Byron Ledger seed from a given mnemonic phrase and optional passphrase.
 
@@ -202,16 +208,14 @@ class CardanoSeed(ISeed):
         :return: The derived Byron Ledger seed as a string.
         :rtype: str
         """
+        if not isinstance(mnemonic, IMnemonic):
+            mnemonic = BIP39Mnemonic(mnemonic=mnemonic, language=language)
+        assert isinstance(mnemonic, BIP39Mnemonic)
 
-        mnemonic = (
-            mnemonic.mnemonic()
-            if isinstance(mnemonic, IMnemonic) else
-            mnemonic
-        )
-        return BIP39Seed.from_mnemonic(mnemonic=mnemonic, passphrase=passphrase)
+        return BIP39Seed.from_mnemonic(mnemonic=mnemonic.mnemonic(), language=mnemonic.language(), passphrase=passphrase)
 
     @classmethod
-    def generate_byron_legacy(cls, mnemonic: Union[str, IMnemonic]) -> str:
+    def generate_byron_legacy(cls, mnemonic: Union[str, IMnemonic], language: Optional[str] = None) -> str:
         """
         Generates a Byron Legacy seed from a given mnemonic phrase.
 
@@ -221,21 +225,16 @@ class CardanoSeed(ISeed):
         :return: The derived Byron Legacy seed as a string.
         :rtype: str
         """
-
-        mnemonic = (
-            mnemonic.mnemonic()
-            if isinstance(mnemonic, IMnemonic) else
-            mnemonic
-        )
-        if not BIP39Mnemonic.is_valid(mnemonic=mnemonic):
-            raise MnemonicError(f"Invalid {BIP39Mnemonic.name()} mnemonic words")
+        if not isinstance(mnemonic, IMnemonic):
+            mnemonic = BIP39Mnemonic(mnemonic=mnemonic, language=language)
+        assert isinstance(mnemonic, BIP39Mnemonic)
 
         return bytes_to_string(blake2b_256(
-            cbor2.dumps(get_bytes(BIP39Mnemonic.decode(mnemonic=mnemonic)))
+            cbor2.dumps(get_bytes(BIP39Mnemonic.decode(mnemonic=mnemonic.mnemonic(), language=mnemonic.language())))
         ))
 
     @classmethod
-    def generate_shelley_icarus(cls, mnemonic: Union[str, IMnemonic]) -> str:
+    def generate_shelley_icarus(cls, mnemonic: Union[str, IMnemonic], language: Optional[str] = None) -> str:
         """
         Generates a Shelley Icarus seed from a given mnemonic phrase.
 
@@ -247,11 +246,11 @@ class CardanoSeed(ISeed):
         """
 
         return cls.generate_byron_icarus(
-            mnemonic=mnemonic
+            mnemonic=mnemonic, language=language
         )
 
     @classmethod
-    def generate_shelley_ledger(cls, mnemonic: str, passphrase: Optional[str] = None) -> str:
+    def generate_shelley_ledger(cls, mnemonic: str, passphrase: Optional[str] = None, language: Optional[str] = None) -> str:
         """
         Generates a Shelley ledger seed from a given mnemonic phrase and optional passphrase.
 
@@ -265,5 +264,5 @@ class CardanoSeed(ISeed):
         """
 
         return cls.generate_byron_ledger(
-            mnemonic=mnemonic, passphrase=passphrase
+            mnemonic=mnemonic, passphrase=passphrase, language=language
         )

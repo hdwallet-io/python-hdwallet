@@ -31,10 +31,3 @@ def test_cardano_seeds(data):
                         passphrase=passphrase,
                         cardano_type=cardano_type
                     ) == data["seeds"]["Cardano"][words][cardano_type][lang]["passphrases"][passphrase]
-
-                    assert CardanoSeed.from_mnemonic(
-                        mnemonic= data["seeds"]["Cardano"][words][cardano_type][lang]["mnemonic"], 
-                        passphrase=passphrase,
-                        cardano_type=cardano_type
-                    ) == data["seeds"]["Cardano"][words][cardano_type][lang]["passphrases"][passphrase]
-

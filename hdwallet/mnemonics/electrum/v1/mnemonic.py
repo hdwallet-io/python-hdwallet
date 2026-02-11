@@ -5,16 +5,14 @@
 # file COPYING or https://opensource.org/license/mit
 
 from typing import (
-    Dict, List, Union, Optional
+    Dict, List, Mapping, Union, Optional
 )
-
-import unicodedata
 
 from ....entropies import (
     IEntropy, ElectrumV1Entropy, ELECTRUM_V1_ENTROPY_STRENGTHS
 )
 from ....exceptions import (
-    EntropyError, MnemonicError
+    Error, EntropyError, MnemonicError
 )
 from ....utils import (
     get_bytes, integer_to_bytes, bytes_to_integer, bytes_to_string
@@ -179,7 +177,11 @@ class ElectrumV1Mnemonic(IMnemonic):
 
     @classmethod
     def decode(
-        cls, mnemonic: str, words_list: Optional[List[str]] = None, words_list_with_index: Optional[dict] = None
+        cls,
+        mnemonic: str,
+        language: Optional[str] = None,
+        words_list: Optional[List[str]] = None,
+        words_list_with_index: Optional[Mapping[str, int]] = None
     ) -> str:
         """
         Decodes a mnemonic phrase back into entropy data.
@@ -204,68 +206,43 @@ class ElectrumV1Mnemonic(IMnemonic):
         if len(words) not in cls.words_list:
             raise MnemonicError("Invalid mnemonic words count", expected=cls.words_list, got=len(words))
 
-        if not words_list or not words_list_with_index:
-            words_list, language = cls.find_language(mnemonic=words)
-            words_list_with_index: dict = {
-                words_list[i]: i for i in range(len(words_list))
-            }
+        candidates: Mapping[str, Mapping[str, int]] = cls.word_indices_candidates(
+            words=words, language=language, words_list=words_list,
+            words_list_with_index=words_list_with_index
+        )
 
-        entropy: bytes = b""
-        for index in range(len(words) // 3):
-            word_1, word_2, word_3 = words[index * 3:(index * 3) + 3]
+        exception = None
+        entropies: Mapping[Optional[str], str] = {}
+        for language, word_indices in candidates.items():
+            try:
+                entropy: bytes = b""
+                for index in range(len(words) // 3):
+                    word_1, word_2, word_3 = words[index * 3:(index * 3) + 3]
+        
+                    word_1_index: int = word_indices[word_1]
+                    word_2_index: int = word_indices[word_2] % cls.words_list_number
+                    word_3_index: int = word_indices[word_3] % cls.words_list_number
+        
+                    chunk: int = (
+                        word_1_index +
+                        (cls.words_list_number * ((word_2_index - word_1_index) % cls.words_list_number)) +
+                        (cls.words_list_number * cls.words_list_number * ((word_3_index - word_2_index) % cls.words_list_number))
+                    )
+                    entropy += integer_to_bytes(chunk, bytes_num=4, endianness="big")
+        
+                entropies[language] = bytes_to_string(entropy)
 
-            word_1_index: int = words_list_with_index[word_1]
-            word_2_index: int = words_list_with_index[word_2] % len(words_list)
-            word_3_index: int = words_list_with_index[word_3] % len(words_list)
+            except Exception as exc:
+                # Collect first Exception; highest quality languages are first.
+                if exception is None:
+                    exception = exc
 
-            chunk: int = (
-                word_1_index +
-                (len(words_list) * ((word_2_index - word_1_index) % len(words_list))) +
-                (len(words_list) * len(words_list) * ((word_3_index - word_2_index) % len(words_list)))
-            )
-            entropy += integer_to_bytes(chunk, bytes_num=4, endianness="big")
-
-        return bytes_to_string(entropy)
-
-    @classmethod
-    def is_valid(
-        cls, mnemonic: Union[str, List[str]], words_list: Optional[List[str]] = None, words_list_with_index: Optional[dict] = None
-    ) -> bool:
-        """
-        Checks if the given mnemonic phrase is valid.
-
-        This method decodes the mnemonic phrase and verifies its validity using the specified word lists and index mappings.
-
-        :param mnemonic: The mnemonic phrase to check, either as a space-separated string or a list of words.
-        :type mnemonic: Union[str, List[str]]
-        :param words_list: Optional list of valid words for the mnemonic phrase, normalized and in the correct order.
-                           If not provided, uses `cls.get_words_list_by_language` to fetch the list based on the default language.
-        :type words_list: Optional[List[str]], optional
-        :param words_list_with_index: Optional dictionary mapping words to their indices for quick lookup.
-                                      If not provided, constructs this mapping based on `words_list`.
-        :type words_list_with_index: Optional[dict], optional
-
-        :return: True if the mnemonic phrase is valid, False otherwise.
-        :rtype: bool
-        """
-
-        try:
-            cls.decode(mnemonic=mnemonic, words_list=words_list, words_list_with_index=words_list_with_index)
-            return True
-        except (ValueError, KeyError, MnemonicError):
-            return False
-
-    @classmethod
-    def normalize(cls, mnemonic: Union[str, List[str]]) -> List[str]:
-        """
-        Normalizes the given mnemonic by splitting it into a list of words if it is a string.
-
-        :param mnemonic: The mnemonic value, which can be a single string of words or a list of words.
-        :type mnemonic: Union[str, List[str]]
-
-        :return: A list of words from the mnemonic.
-        :rtype: List[str]
-        """
-
-        mnemonic: list = mnemonic.split() if isinstance(mnemonic, str) else mnemonic
-        return list(map(lambda _: unicodedata.normalize("NFKD", _.lower()), mnemonic))
+        if entropies:
+            (candidate, entropy), *extras = entropies.items()
+            if extras:
+                exception = MnemonicError(
+                    f"Ambiguous languages {', '.join(c for c, _ in extras)} or {candidate} for mnemonic; specify a preferred language"
+                )
+            else:
+                return entropy
+        raise exception

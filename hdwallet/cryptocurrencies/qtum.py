@@ -99,11 +99,11 @@ class Qtum(ICryptocurrency):
         "BIP39"
     })
     MNEMONICS = Mnemonics({
-        "BIP39"
+        "BIP39",
     })
-    SEEDS = Seeds({
-        "BIP39"
-    })
+    SEEDS = Seeds((
+        "BIP39", "SLIP39"
+    ))
     HDS = HDs({
         "BIP32", "BIP44", "BIP49", "BIP84", "BIP86", "BIP141"
     })

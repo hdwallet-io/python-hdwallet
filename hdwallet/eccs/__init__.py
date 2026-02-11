@@ -12,17 +12,17 @@ from ..exceptions import (
     ECCError, PublicKeyError
 )
 from ..utils import get_bytes
-from .kholaw import (
+from .kholaw import (  # noqa: F401
     KholawEd25519ECC, KholawEd25519Point, KholawEd25519PublicKey, KholawEd25519PrivateKey
 )
-from .slip10 import (
+from .slip10 import (  # noqa: F401
     SLIP10Ed25519ECC, SLIP10Ed25519Point, SLIP10Ed25519PublicKey, SLIP10Ed25519PrivateKey,
     SLIP10Ed25519Blake2bECC, SLIP10Ed25519Blake2bPoint, SLIP10Ed25519Blake2bPublicKey, SLIP10Ed25519Blake2bPrivateKey,
     SLIP10Ed25519MoneroECC, SLIP10Ed25519MoneroPoint, SLIP10Ed25519MoneroPublicKey, SLIP10Ed25519MoneroPrivateKey,
     SLIP10Nist256p1ECC, SLIP10Nist256p1Point, SLIP10Nist256p1PublicKey, SLIP10Nist256p1PrivateKey,
     SLIP10Secp256k1ECC, SLIP10Secp256k1Point, SLIP10Secp256k1PublicKey, SLIP10Secp256k1PrivateKey
 )
-from .iecc import (
+from .iecc import (  # noqa: F401
     IPoint, IPublicKey, IPrivateKey, IEllipticCurveCryptography
 )
 
@@ -132,7 +132,7 @@ def validate_and_get_public_key(
     :return: A valid IPublicKey instance.
     :rtype: IPublicKey
     """
-    
+
     try:
         if isinstance(public_key, bytes):
             public_key: IPublicKey = public_key_cls.from_bytes(public_key)
@@ -147,7 +147,8 @@ def validate_and_get_public_key(
             )
         return public_key
     except ValueError as error:
-        raise PublicKeyError("Invalid public key data")
+        raise PublicKeyError("Invalid public key data") from error
+
 
 __all__: List[str] = [
     "IPoint", "IPublicKey", "IPrivateKey", "IEllipticCurveCryptography",

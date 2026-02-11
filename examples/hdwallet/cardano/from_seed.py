@@ -20,7 +20,8 @@ hdwallet: HDWallet = HDWallet(
     passphrase="talonlab"
 ).from_seed(
     seed=CardanoSeed(
-        seed="fca87b68fdffa968895901c894f678f6"
+        seed="fca87b68fdffa968895901c894f678f6",
+        cardano_type=Cryptocurrency.TYPES.SHELLEY_ICARUS,
     )
 ).from_derivation(
     derivation=CIP1852Derivation(

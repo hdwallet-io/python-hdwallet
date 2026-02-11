@@ -114,7 +114,7 @@ class ElectrumV1HD(IHD):
             self.from_private_key(private_key=self._seed)
             return self
         except ValueError as error:
-            raise SeedError("Invalid seed data")
+            raise SeedError("Invalid seed data") from error
 
     def from_private_key(self, private_key: Union[bytes, str, IPrivateKey]) -> "ElectrumV1HD":
         """
@@ -139,7 +139,7 @@ class ElectrumV1HD(IHD):
             self.__update__()
             return self
         except ValueError as error:
-            raise PrivateKeyError("Invalid private key data")
+            raise PrivateKeyError("Invalid private key data") from error
 
     def from_wif(self, wif: str) -> "ElectrumV1HD":
         """
@@ -180,7 +180,7 @@ class ElectrumV1HD(IHD):
             self.__update__()
             return self
         except ValueError as error:
-            raise PublicKeyError("Invalid public key error")
+            raise PublicKeyError("Invalid public key error") from error
 
     def from_derivation(self, derivation: IDerivation) -> "ElectrumV1HD":
         """

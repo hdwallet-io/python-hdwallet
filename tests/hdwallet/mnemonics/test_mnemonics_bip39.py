@@ -8,6 +8,7 @@
 import json
 import os
 import pytest
+import unicodedata
 
 from hdwallet.mnemonics.bip39.mnemonic import (
     BIP39Mnemonic, BIP39_MNEMONIC_LANGUAGES, BIP39_MNEMONIC_WORDS
@@ -43,18 +44,30 @@ def test_bip39_mnemonics(data):
         assert BIP39Mnemonic.is_valid_words(words=__["words"])
 
         for language in __["languages"].keys():
-
             assert BIP39Mnemonic.is_valid_language(language=language)
-            assert BIP39Mnemonic.is_valid(mnemonic=__["languages"][language])
 
+            # A BIP-39 Mnemonic must have a preferred language, to be deterministically decoded as
+            # is_valid in all cases.
+            assert BIP39Mnemonic.is_valid(mnemonic=__["languages"][language], language=language)
+
+            # Create a random Mnemonic of the given strength in words, and the specified language,
+            # and ensure we can recover it
             mnemonic = BIP39Mnemonic.from_words(words=__["words"], language=language)
             assert len(mnemonic.split()) == __["words"]
-            assert BIP39Mnemonic(mnemonic=mnemonic).language().lower() == language
+            assert BIP39Mnemonic(mnemonic=mnemonic, language=language).language().lower() == language
 
-            assert BIP39Mnemonic.from_entropy(entropy=__["entropy"], language=language) == __["languages"][language]
-            assert BIP39Mnemonic.decode(mnemonic=__["languages"][language]) == __["entropy"]
+            # Load the provided mnemonic. We assume NF[K]C encoding for Mnemonics we
+            # generate/normalize, so ensure that the reference mnemonic is in the same form.
+            # Recovering a Mnemonic from entropy or from a mnemonic phrase should yield the same
+            # canonicalized mnemonic; full BIP-39 words with UTF-8 Marks such as accents, regardless
+            # of whether the original Mnemonic had them or not.
 
-            mnemonic = BIP39Mnemonic(mnemonic=__["languages"][language])
+            # If a Mnemonic is valid in multiple languages, a preferred language must be provided.
+            mnemonic = BIP39Mnemonic(mnemonic=__["languages"][language], language=language)
+            assert BIP39Mnemonic.from_entropy(entropy=__["entropy"], language=language) == mnemonic.mnemonic()
+
+            # We can of course recover the entropy from the Mnemonic
+            assert BIP39Mnemonic.decode(mnemonic=__["languages"][language], language=language) == __["entropy"]
 
             assert mnemonic.name() == __["name"]
             assert mnemonic.language().lower() == language

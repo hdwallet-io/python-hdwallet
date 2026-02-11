@@ -29,7 +29,7 @@ class Mainnet(INetwork):
     })
     MESSAGE_PREFIX = None
     WIF_PREFIX = 0x6e
-    
+
 
 class Scribe(ICryptocurrency):
 
@@ -54,9 +54,9 @@ class Scribe(ICryptocurrency):
     MNEMONICS = Mnemonics({
         "BIP39"
     })
-    SEEDS = Seeds({
-        "BIP39"
-    })
+    SEEDS = Seeds((
+        "BIP39", "SLIP39"
+    ))
     HDS = HDs({
         "BIP32", "BIP44"
     })

@@ -232,7 +232,7 @@ class S256Point(Point):
 
     def __init__(self, x, y, a=None, b=None):
         a, b = S256Field(A), S256Field(B)
-        if type(x) == int:
+        if type(x) == int:  # noqa: E721
             super().__init__(x=S256Field(x), y=S256Field(y), a=a, b=b)
         else:
             super().__init__(x=x, y=y, a=a, b=b)

@@ -18,7 +18,7 @@ from .public_key import SLIP10Nist256p1PublicKey
 
 
 class SLIP10Nist256p1PrivateKey(IPrivateKey):
-    
+
     signing_key: SigningKey
 
     def __init__(self, signing_key: SigningKey) -> None:

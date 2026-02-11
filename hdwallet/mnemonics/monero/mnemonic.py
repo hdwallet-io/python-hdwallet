@@ -3,12 +3,11 @@
 # Copyright © 2020-2024, Meheret Tesfaye Batu <meherett.batu@gmail.com>
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or https://opensource.org/license/mit
+import unicodedata
 
 from typing import (
-    Union, Dict, List
+    Union, Dict, List, Mapping, Optional
 )
-
-import unicodedata
 
 from ...entropies import (
     IEntropy, MoneroEntropy, MONERO_ENTROPY_STRENGTHS
@@ -116,40 +115,40 @@ class MoneroMnemonic(IMnemonic):
         MONERO_MNEMONIC_WORDS.TWENTY_FIVE: MONERO_ENTROPY_STRENGTHS.TWO_HUNDRED_FIFTY_SIX
     }
     languages: List[str] = [
-        MONERO_MNEMONIC_LANGUAGES.CHINESE_SIMPLIFIED,
-        MONERO_MNEMONIC_LANGUAGES.DUTCH,
         MONERO_MNEMONIC_LANGUAGES.ENGLISH,
         MONERO_MNEMONIC_LANGUAGES.FRENCH,
+        MONERO_MNEMONIC_LANGUAGES.SPANISH,
         MONERO_MNEMONIC_LANGUAGES.GERMAN,
+        MONERO_MNEMONIC_LANGUAGES.DUTCH,
         MONERO_MNEMONIC_LANGUAGES.ITALIAN,
-        MONERO_MNEMONIC_LANGUAGES.JAPANESE,
-        MONERO_MNEMONIC_LANGUAGES.PORTUGUESE,
         MONERO_MNEMONIC_LANGUAGES.RUSSIAN,
-        MONERO_MNEMONIC_LANGUAGES.SPANISH
+        MONERO_MNEMONIC_LANGUAGES.PORTUGUESE,
+        MONERO_MNEMONIC_LANGUAGES.JAPANESE,
+        MONERO_MNEMONIC_LANGUAGES.CHINESE_SIMPLIFIED,
     ]
     language_unique_prefix_lengths: Dict[str, int] = {
-        MONERO_MNEMONIC_LANGUAGES.CHINESE_SIMPLIFIED: 1,
-        MONERO_MNEMONIC_LANGUAGES.DUTCH: 4,
         MONERO_MNEMONIC_LANGUAGES.ENGLISH: 3,
         MONERO_MNEMONIC_LANGUAGES.FRENCH: 4,
-        MONERO_MNEMONIC_LANGUAGES.GERMAN: 4,
-        MONERO_MNEMONIC_LANGUAGES.ITALIAN: 4,
-        MONERO_MNEMONIC_LANGUAGES.JAPANESE: 4,
-        MONERO_MNEMONIC_LANGUAGES.PORTUGUESE: 4,
         MONERO_MNEMONIC_LANGUAGES.SPANISH: 4,
-        MONERO_MNEMONIC_LANGUAGES.RUSSIAN: 4
+        MONERO_MNEMONIC_LANGUAGES.GERMAN: 4,
+        MONERO_MNEMONIC_LANGUAGES.DUTCH: 4,
+        MONERO_MNEMONIC_LANGUAGES.ITALIAN: 4,
+        MONERO_MNEMONIC_LANGUAGES.RUSSIAN: 4,
+        MONERO_MNEMONIC_LANGUAGES.PORTUGUESE: 4,
+        MONERO_MNEMONIC_LANGUAGES.JAPANESE: 4,
+        MONERO_MNEMONIC_LANGUAGES.CHINESE_SIMPLIFIED: 1,
     }
     wordlist_path: Dict[str, str] = {
-        MONERO_MNEMONIC_LANGUAGES.CHINESE_SIMPLIFIED: "monero/wordlist/chinese_simplified.txt",
-        MONERO_MNEMONIC_LANGUAGES.DUTCH: "monero/wordlist/dutch.txt",
         MONERO_MNEMONIC_LANGUAGES.ENGLISH: "monero/wordlist/english.txt",
         MONERO_MNEMONIC_LANGUAGES.FRENCH: "monero/wordlist/french.txt",
+        MONERO_MNEMONIC_LANGUAGES.SPANISH: "monero/wordlist/spanish.txt",
         MONERO_MNEMONIC_LANGUAGES.GERMAN: "monero/wordlist/german.txt",
+        MONERO_MNEMONIC_LANGUAGES.DUTCH: "monero/wordlist/dutch.txt",
         MONERO_MNEMONIC_LANGUAGES.ITALIAN: "monero/wordlist/italian.txt",
-        MONERO_MNEMONIC_LANGUAGES.JAPANESE: "monero/wordlist/japanese.txt",
-        MONERO_MNEMONIC_LANGUAGES.PORTUGUESE: "monero/wordlist/portuguese.txt",
         MONERO_MNEMONIC_LANGUAGES.RUSSIAN: "monero/wordlist/russian.txt",
-        MONERO_MNEMONIC_LANGUAGES.SPANISH: "monero/wordlist/spanish.txt"
+        MONERO_MNEMONIC_LANGUAGES.PORTUGUESE: "monero/wordlist/portuguese.txt",
+        MONERO_MNEMONIC_LANGUAGES.JAPANESE: "monero/wordlist/japanese.txt",
+        MONERO_MNEMONIC_LANGUAGES.CHINESE_SIMPLIFIED: "monero/wordlist/chinese_simplified.txt",
     }
 
     @classmethod
@@ -237,7 +236,7 @@ class MoneroMnemonic(IMnemonic):
             )
 
         mnemonic: List[str] = []
-        words_list: List[str] = cls.normalize(cls.get_words_list_by_language(language=language))
+        words_list: List[str] = cls.get_words_list_by_language(language=language)  # NFKC normalized
         if len(words_list) != cls.words_list_number:
             raise Error(
                 "Invalid number of loaded words list", expected=cls.words_list_number, got=len(words_list)
@@ -250,7 +249,7 @@ class MoneroMnemonic(IMnemonic):
 
         if checksum:
             unique_prefix_length = cls.language_unique_prefix_lengths[language]
-            prefixes = "".join(word[:unique_prefix_length] for word in mnemonic)
+            prefixes = "".join(unicodedata.normalize("NFD", word)[:unique_prefix_length] for word in mnemonic)
             checksum_word = mnemonic[
                 bytes_to_integer(crc32(prefixes)) % len(mnemonic)
             ]
@@ -259,13 +258,22 @@ class MoneroMnemonic(IMnemonic):
         return " ".join(cls.normalize(mnemonic))
 
     @classmethod
-    def decode(cls, mnemonic: str, **kwargs) -> str:
+    def decode(
+        cls,
+        mnemonic: str,
+        language: Optional[str] = None,
+        words_list: Optional[List[str]] = None,
+        words_list_with_index: Optional[Mapping[str, int]] = None,
+        **kwargs
+    ) -> str:
         """
         Decodes a mnemonic phrase into entropy data.
 
         :param mnemonic: The mnemonic phrase to decode.
         :type mnemonic: str
-        :param kwargs: Additional keyword arguments (language, checksum).
+        :param language: The preferred mnemonic language.
+        :type language: str
+        :param kwargs: Additional keyword arguments (checksum).
 
         :return: The decoded entropy data.
         :rtype: str
@@ -275,43 +283,45 @@ class MoneroMnemonic(IMnemonic):
         if len(words) not in cls.words_list:
             raise MnemonicError("Invalid mnemonic words count", expected=cls.words_list, got=len(words))
 
-        words_list, language = cls.find_language(mnemonic=words)
-        if len(words_list) != cls.words_list_number:
-            raise Error(
-                "Invalid number of loaded words list", expected=cls.words_list_number, got=len(words_list)
-            )
+        candidates: Mapping[str, Mapping[str, int]] = cls.word_indices_candidates(
+            words=words, language=language, words_list=words_list,
+            words_list_with_index=words_list_with_index
+        )
 
-        if len(words) in cls.words_checksum:
-            mnemonic: list = words[:-1]
-            unique_prefix_length = cls.language_unique_prefix_lengths[language]
-            prefixes = "".join(word[:unique_prefix_length] for word in mnemonic)
-            checksum_word = mnemonic[
-                bytes_to_integer(crc32(prefixes)) % len(mnemonic)
-            ]
-            if words[-1] != checksum_word:
-                raise ChecksumError(
-                    "Invalid checksum", expected=checksum_word, got=words[-1]
+        exception = None
+        entropies: Mapping[Optional[str], str] = {}
+        for language, word_indices in candidates.items():
+            try:
+                if len(words) in cls.words_checksum:
+                    mnemonic: list = words[:-1]
+                    unique_prefix_length = cls.language_unique_prefix_lengths[language]
+                    prefixes = "".join(unicodedata.normalize("NFD", word)[:unique_prefix_length] for word in mnemonic)
+                    checksum_word = mnemonic[
+                        bytes_to_integer(crc32(prefixes)) % len(mnemonic)
+                    ]
+                    if words[-1] != checksum_word:
+                        raise ChecksumError(
+                            "Invalid checksum", expected=checksum_word, got=words[-1]
+                        )
+                
+                entropy: bytes = b""
+                for index in range(len(words) // 3):
+                    word_1, word_2, word_3 = words[index * 3:(index * 3) + 3]
+                    entropy += words_to_bytes_chunk(
+                        word_1, word_2, word_3, word_indices.keys(), "little"
+                    )
+                entropies[language] = bytes_to_string(entropy)
+            except Exception as exc:
+                # Collect first Exception; highest quality languages are first.
+                if exception is None:
+                    exception = exc
+
+        if entropies:
+            (candidate, entropy), *extras = entropies.items()
+            if extras:
+                exception = MnemonicError(
+                    f"Ambiguous languages {', '.join(c for c, _ in extras)} or {candidate} for mnemonic; specify a preferred language"
                 )
-
-        entropy: bytes = b""
-        for index in range(len(words) // 3):
-            word_1, word_2, word_3 = words[index * 3:(index * 3) + 3]
-            entropy += words_to_bytes_chunk(
-                word_1, word_2, word_3, words_list, "little"
-            )
-        return bytes_to_string(entropy)
-
-    @classmethod
-    def normalize(cls, mnemonic: Union[str, List[str]]) -> List[str]:
-        """
-        Normalizes the given mnemonic by splitting it into a list of words if it is a string.
-
-        :param mnemonic: The mnemonic value, which can be a single string of words or a list of words.
-        :type mnemonic: Union[str, List[str]]
-
-        :return: A list of words from the mnemonic.
-        :rtype: List[str]
-        """
-
-        mnemonic: list = mnemonic.split() if isinstance(mnemonic, str) else mnemonic
-        return list(map(lambda _: unicodedata.normalize("NFKD", _.lower()), mnemonic))
+            else:
+                return entropy
+        raise exception

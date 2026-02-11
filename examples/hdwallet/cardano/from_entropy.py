@@ -24,7 +24,7 @@ hdwallet: HDWallet = HDWallet(
 ).from_entropy(
     entropy=BIP39Entropy(
         entropy=BIP39Entropy.generate(
-            strength=BIP39_ENTROPY_STRENGTHS.TWO_HUNDRED_TWENTY_FOUR
+            strength=BIP39_ENTROPY_STRENGTHS.ONE_HUNDRED_TWENTY_EIGHT
         )
     )
 ).from_derivation(

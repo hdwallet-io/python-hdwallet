@@ -14,7 +14,7 @@ hdwallet: HDWallet = HDWallet(
     hd=AlgorandHD
 ).from_seed(
     seed=AlgorandSeed(
-        seed="fca87b68fdffa968895901c894f678f6"
+        seed="a27436e742dafe27428b84925d4be6a1c40856d14dc73d54431a94bd6b95264b"
     )
 ).from_derivation(
     derivation=CustomDerivation(

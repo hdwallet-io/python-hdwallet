@@ -7,6 +7,6 @@ import inspect
 from bip38 import cryptocurrencies
 
 BIP38_CRYPTOCURRENCIES = {
-	name: cls for name, cls in inspect.getmembers(cryptocurrencies, inspect.isclass)
+    name: cls for name, cls in inspect.getmembers(cryptocurrencies, inspect.isclass)
     if issubclass(cls, cryptocurrencies.ICryptocurrency)
 }

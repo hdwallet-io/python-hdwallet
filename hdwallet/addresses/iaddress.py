@@ -10,7 +10,7 @@ from abc import (
     ABC, abstractmethod
 )
 from typing import (
-    Union, Optional
+    Union
 )
 
 from ..eccs import IPublicKey

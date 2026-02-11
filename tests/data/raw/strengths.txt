@@ -12,6 +12,13 @@ BIP39 Strengths
 256
 
 
+SLIP39 Strengths
+------------------
+128
+256
+512
+
+
 Electrum-V1 Strengths
 -----------------------
 128

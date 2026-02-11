@@ -63,7 +63,7 @@ class Monero(ICryptocurrency):
         {"MONERO": "Monero"}, "BIP39"
     ))
     SEEDS = Seeds((
-        {"MONERO": "Monero"}, "BIP39"
+        {"MONERO": "Monero"}, "BIP39", "SLIP39"
     ))
     HDS = HDs({
         "MONERO": "Monero"

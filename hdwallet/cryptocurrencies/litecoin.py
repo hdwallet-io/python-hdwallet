@@ -97,11 +97,11 @@ class Litecoin(ICryptocurrency):
     MNEMONICS = Mnemonics({
         "BIP39"
     })
-    SEEDS = Seeds({
-        "BIP39"
-    })
+    SEEDS = Seeds((
+        "BIP39", "SLIP39"
+    ))
     HDS = HDs({
-        "BIP32", "BIP44", "BIP84"
+        "BIP32", "BIP44", "BIP49", "BIP84"
     })
     DEFAULT_HD = HDS.BIP44
     DEFAULT_PATH = f"m/44'/{COIN_TYPE}'/0'/0/0"

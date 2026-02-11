@@ -8,6 +8,7 @@
 import json
 import os
 import pytest
+import unicodedata
 
 from hdwallet.mnemonics.monero.mnemonic import (
     MoneroMnemonic, MONERO_MNEMONIC_LANGUAGES, MONERO_MNEMONIC_WORDS
@@ -39,23 +40,21 @@ def test_monero_mnemonics(data):
         assert MoneroMnemonic.is_valid_words(words=__["words"])
 
         for language in __["languages"].keys():
-
-            assert MoneroMnemonic.is_valid_language(language=language)
-            assert MoneroMnemonic.is_valid(mnemonic=__["languages"][language])
+            assert MoneroMnemonic.is_valid(mnemonic=__["languages"][language], language=language)
 
             mnemonic = MoneroMnemonic.from_words(words=__["words"], language=language)
             assert len(mnemonic.split()) == __["words"]
-            assert MoneroMnemonic(mnemonic=mnemonic).language().lower() == language
+            assert MoneroMnemonic(mnemonic=mnemonic, language=language).language().lower() == language
 
-            assert MoneroMnemonic.from_entropy(entropy=__["entropy"], checksum=__["checksum"], language=language) == __["languages"][language]
-            assert MoneroMnemonic.decode(mnemonic=__["languages"][language]) == __["entropy"]
+            assert MoneroMnemonic.from_entropy(entropy=__["entropy"], checksum=__["checksum"], language=language) == unicodedata.normalize("NFC", __["languages"][language])
+            assert MoneroMnemonic.decode(mnemonic=__["languages"][language], language=language) == __["entropy"]
 
-            mnemonic = MoneroMnemonic(mnemonic=__["languages"][language])
+            mnemonic = MoneroMnemonic(mnemonic=__["languages"][language], language=language)
 
             assert mnemonic.name() == __["name"]
             assert mnemonic.language().lower() == language
 
-    with pytest.raises(MnemonicError, match="Invalid mnemonic words"): 
+    with pytest.raises(MnemonicError, match="Invalid Monero mnemonic words"): 
         MoneroMnemonic(
             mnemonic="flower letter world foil coin poverty romance tongue taste hip cradle follow proud pluck ten improve"
         )

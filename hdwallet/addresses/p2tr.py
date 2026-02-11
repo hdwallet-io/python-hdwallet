@@ -23,7 +23,7 @@ from .iaddress import IAddress
 
 
 class P2TRAddress(IAddress):
-    
+
     hrp: str = Bitcoin.NETWORKS.MAINNET.HRP
     field_size: int = Bitcoin.PARAMS.FIELD_SIZE
     tap_tweak_sha256: bytes = get_bytes(Bitcoin.PARAMS.TAP_TWEAK_SHA256)

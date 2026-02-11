@@ -66,7 +66,7 @@ class CustomDerivation(IDerivation):
             raise DerivationError("Bad path instance", expected=str, got=type(path))
         elif path[0:2] != "m/":
             raise DerivationError(
-                f"Bad path format", expected="like this type of path \"m/0'/0\"", got=path
+                "Bad path format", expected="like this type of path \"m/0'/0\"", got=path
             )
 
         self._path, self._indexes, self._derivations = normalize_derivation(path=path)

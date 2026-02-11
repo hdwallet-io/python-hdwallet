@@ -14,14 +14,14 @@ from ..consts import PUBLIC_KEY_TYPES
 from ..addresses import P2WPKHAddress
 from ..exceptions import DerivationError
 from ..derivations import (
-    IDerivation, BIP84Derivation
+    IDerivation, BIP84Derivation, CustomDerivation
 )
 from .bip44 import BIP44HD
 
 
 class BIP84HD(BIP44HD):
 
-    _derivation: BIP84Derivation
+    _derivation: Union[BIP84Derivation, CustomDerivation]
 
     def __init__(
         self, ecc: Type[IEllipticCurveCryptography], public_key_type: str = PUBLIC_KEY_TYPES.COMPRESSED, **kwargs
@@ -68,9 +68,9 @@ class BIP84HD(BIP44HD):
         :rtype: BIP84HD
         """
 
-        if not isinstance(derivation, BIP84Derivation):
+        if not isinstance(derivation, (BIP84Derivation, CustomDerivation)):
             raise DerivationError(
-                "Invalid derivation instance", expected=BIP84Derivation, got=type(derivation)
+                "Invalid derivation instance", expected=(BIP84Derivation, CustomDerivation), got=type(derivation)
             )
 
         self.clean_derivation()
