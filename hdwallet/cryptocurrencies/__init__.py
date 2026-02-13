@@ -32,6 +32,7 @@ from .bata import Bata
 from .beetlecoin import BeetleCoin
 from .belacoin import BelaCoin
 from .binance import Binance
+from .bismuth import Bismuth
 from .bitcloud import BitCloud
 from .bitcoin import Bitcoin
 from .bitcoinatom import BitcoinAtom
@@ -249,6 +250,7 @@ class CRYPTOCURRENCIES:
         BeetleCoin.NAME: BeetleCoin,
         BelaCoin.NAME: BelaCoin,
         Binance.NAME: Binance,
+        Bismuth.NAME: Bismuth,
         BitCloud.NAME: BitCloud,
         Bitcoin.NAME: Bitcoin,
         BitcoinAtom.NAME: BitcoinAtom,
