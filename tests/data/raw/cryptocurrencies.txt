@@ -188,6 +188,7 @@ Tezos                   XTZ        1729               mainnet                SLI
 Theta                  THETA        500               mainnet               SLIP10-Secp256k1
 Thought-AI              THT         502               mainnet               SLIP10-Secp256k1
 TOA-Coin                TOA         159               mainnet               SLIP10-Secp256k1
+Ton                     TON         607               mainnet                SLIP10-Ed25519
 Tron                    TRX         195               mainnet               SLIP10-Secp256k1
 TWINS                  TWINS        970           mainnet, testnet          SLIP10-Secp256k1
 Ultimate-Secure-Cash    USC         112               mainnet               SLIP10-Secp256k1

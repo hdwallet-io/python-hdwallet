@@ -17,6 +17,7 @@ from hdwallet.addresses.solana import SolanaAddress
 from hdwallet.addresses.stellar import StellarAddress
 from hdwallet.addresses.tezos import TezosAddress
 from hdwallet.addresses.sui import SuiAddress
+from hdwallet.addresses.ton import TonAddress
 
 
 def test_algorand_address(data):
@@ -113,3 +114,15 @@ def test_near_address(data):
     assert NearAddress.decode(
         address=data["addresses"]["SLIP10-Ed25519"]["addresses"]["Near"]["encode"]
     ) == data["addresses"]["SLIP10-Ed25519"]["addresses"]["Near"]["decode"]
+
+
+def test_ton_address(data):
+
+    assert TonAddress.name() == data["addresses"]["SLIP10-Ed25519"]["addresses"]["Ton"]["name"]
+    assert TonAddress.encode(
+        public_key=data["addresses"]["SLIP10-Ed25519"]["public-key"]
+    ) == data["addresses"]["SLIP10-Ed25519"]["addresses"]["Ton"]["encode"]
+
+    assert TonAddress.decode(
+        address=data["addresses"]["SLIP10-Ed25519"]["addresses"]["Ton"]["encode"]
+    ) == data["addresses"]["SLIP10-Ed25519"]["addresses"]["Ton"]["decode"]

@@ -9,7 +9,7 @@ Addresses
 
 >>> from hdwallet.addresses import ADDRESSES
 >>> ADDRESSES.names()
-['Algorand', 'Aptos', 'Avalanche', 'Cardano', 'Cosmos', 'EOS', 'Ergo', 'Ethereum', 'Filecoin', 'Harmony', 'Icon', 'Injective', 'Monero', 'MultiversX', 'Nano', 'Near', 'Neo', 'OKT-Chain', 'P2PKH', 'P2SH', 'P2TR', 'P2WPKH', 'P2WPKH-In-P2SH', 'P2WSH', 'P2WSH-In-P2SH', 'Ripple', 'Solana', 'Stellar', 'Sui', 'Tezos', 'Tron', 'XinFin', 'Zilliqa']
+['Algorand', 'Aptos', 'Avalanche', 'Cardano', 'Cosmos', 'EOS', 'Ergo', 'Ethereum', 'Filecoin', 'Harmony', 'Icon', 'Injective', 'Monero', 'MultiversX', 'Nano', 'Near', 'Neo', 'OKT-Chain', 'P2PKH', 'P2SH', 'P2TR', 'P2WPKH', 'P2WPKH-In-P2SH', 'P2WSH', 'P2WSH-In-P2SH', 'Ripple', 'Solana', 'Stellar', 'Sui', 'Tezos', 'Ton', 'Tron', 'XinFin', 'Zilliqa']
 >>> ADDRESSES.classes()
 [<class 'hdwallet.addresses.algorand.AlgorandAddress'>, <class 'hdwallet.addresses.aptos.AptosAddress'>, <class 'hdwallet.addresses.avalanche.AvalancheAddress'>, <class 'hdwallet.addresses.cardano.CardanoAddress'>, <class 'hdwallet.addresses.cosmos.CosmosAddress'>, <class 'hdwallet.addresses.eos.EOSAddress'>, <class 'hdwallet.addresses.ergo.ErgoAddress'>, <class 'hdwallet.addresses.ethereum.EthereumAddress'>, <class 'hdwallet.addresses.filecoin.FilecoinAddress'>, <class 'hdwallet.addresses.harmony.HarmonyAddress'>, <class 'hdwallet.addresses.icon.IconAddress'>, <class 'hdwallet.addresses.injective.InjectiveAddress'>, <class 'hdwallet.addresses.monero.MoneroAddress'>, <class 'hdwallet.addresses.multiversx.MultiversXAddress'>, <class 'hdwallet.addresses.nano.NanoAddress'>, <class 'hdwallet.addresses.near.NearAddress'>, <class 'hdwallet.addresses.neo.NeoAddress'>, <class 'hdwallet.addresses.okt_chain.OKTChainAddress'>, <class 'hdwallet.addresses.p2pkh.P2PKHAddress'>, <class 'hdwallet.addresses.p2sh.P2SHAddress'>, <class 'hdwallet.addresses.p2tr.P2TRAddress'>, <class 'hdwallet.addresses.p2wpkh.P2WPKHAddress'>, <class 'hdwallet.addresses.p2wpkh_in_p2sh.P2WPKHInP2SHAddress'>, <class 'hdwallet.addresses.p2wsh.P2WSHAddress'>, <class 'hdwallet.addresses.p2wsh_in_p2sh.P2WSHInP2SHAddress'>, <class 'hdwallet.addresses.ripple.RippleAddress'>, <class 'hdwallet.addresses.solana.SolanaAddress'>, <class 'hdwallet.addresses.stellar.StellarAddress'>, <class 'hdwallet.addresses.sui.SuiAddress'>, <class 'hdwallet.addresses.tezos.TezosAddress'>, <class 'hdwallet.addresses.tron.TronAddress'>, <class 'hdwallet.addresses.xinfin.XinFinAddress'>, <class 'hdwallet.addresses.zilliqa.ZilliqaAddress'>]
 >>> from hdwallet.addresses.p2wsh import P2WSHAddress
@@ -430,6 +430,18 @@ True
 'tz1PBvuXpgELdV3JuNYwbd5DXHWvrj9gS5JJ'
 >>> TezosAddress.decode(address=address)
 '26f0dbb538759db4e8256a6f11ba88ec9c214f11'
+
+.. autoclass:: hdwallet.addresses.ton.TonAddress
+    :members:
+
+>>> from hdwallet.addresses.ton import TonAddress
+>>> TonAddress.name()
+'Ton'
+>>> address: str = TonAddress.encode(public_key="00d14696583ee9144878635b557d515a502b04366818dfe7765737746b4f57978d")
+>>> address
+'UQAdGH9zh3uTnsckECChKLGOEmHbOqBJM6P3d2GPHhAtuzS2'
+>>> TonAddress.decode(address=address)
+'1d187f73877b939ec7241020a128b18e1261db3aa04933a3f777618f1e102dbb'
 
 .. autoclass:: hdwallet.addresses.tron.TronAddress
     :members:

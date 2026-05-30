@@ -1522,6 +1522,14 @@ This library simplifies the process of generating a new HDWallet's for:
     - ``BIP44`` ``BIP32``
     - ✅
     - ``P2PKH`` ``P2SH``
+  * - `Ton <https://github.com/ton-blockchain>`_
+    - TON
+    - 607
+    - ``mainnet``
+    - SLIP10-Ed25519
+    - ``BIP32`` ``BIP44``
+    - ❌
+    - ``Ton``
   * - `Tron <https://github.com/tronprotocol/java-tron>`_
     - TRX
     - 195
