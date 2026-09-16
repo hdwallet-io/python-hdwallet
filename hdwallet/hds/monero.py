@@ -13,7 +13,7 @@ from ..eccs import (
     SLIP10Ed25519MoneroECC, IPoint, IPublicKey, IPrivateKey, SLIP10Ed25519MoneroPublicKey, SLIP10Ed25519MoneroPrivateKey
 )
 from ..seeds import ISeed
-from ..crypto import kekkak256
+from ..crypto import keccak256
 from ..cryptocurrencies.icryptocurrency import INetwork
 from ..cryptocurrencies import Monero
 from ..derivations import (
@@ -113,7 +113,7 @@ class MoneroHD(IHD):
                 seed.seed() if isinstance(seed, ISeed) else seed
             )
             spend_private_key: bytes = (
-                self._seed if len(self._seed) == SLIP10Ed25519MoneroPrivateKey.length() else kekkak256(self._seed)
+                self._seed if len(self._seed) == SLIP10Ed25519MoneroPrivateKey.length() else keccak256(self._seed)
             )
             return self.from_spend_private_key(
                 spend_private_key=scalar_reduce(spend_private_key)
@@ -137,7 +137,7 @@ class MoneroHD(IHD):
                 private_key.raw() if isinstance(private_key, SLIP10Ed25519MoneroPrivateKey) else get_bytes(private_key)
             )
             return self.from_spend_private_key(
-                spend_private_key=scalar_reduce(kekkak256(self._private_key))
+                spend_private_key=scalar_reduce(keccak256(self._private_key))
             )
         except ValueError as error:
             raise PrivateKeyError("Invalid private key data")
@@ -200,7 +200,7 @@ class MoneroHD(IHD):
 
         self._spend_private_key = spend_private_key
         self._view_private_key = SLIP10Ed25519MoneroPrivateKey.from_bytes(
-            scalar_reduce(kekkak256(spend_private_key.raw()))
+            scalar_reduce(keccak256(spend_private_key.raw()))
         )
         self._spend_public_key = self._spend_private_key.public_key()
         self._view_public_key = self._view_private_key.public_key()
@@ -266,7 +266,7 @@ class MoneroHD(IHD):
             return self._spend_public_key, self._view_public_key
 
         m: int = int_decode(scalar_reduce(
-            kekkak256(
+            keccak256(
                 b"SubAddr\x00" +
                 self._view_private_key.raw() +
                 integer_to_bytes(

@@ -15,7 +15,7 @@ from ..eccs import (
     IPublicKey, SLIP10Ed25519MoneroPublicKey, validate_and_get_public_key
 )
 from ..cryptocurrencies import Monero
-from ..crypto import kekkak256
+from ..crypto import keccak256
 from ..exceptions import (
     Error, AddressError
 )
@@ -65,7 +65,7 @@ class MoneroAddress:
 
     @classmethod
     def compute_checksum(cls, public_key: bytes) -> bytes:
-        return kekkak256(public_key)[:cls.checksum_length]
+        return keccak256(public_key)[:cls.checksum_length]
 
     @classmethod
     def encode(

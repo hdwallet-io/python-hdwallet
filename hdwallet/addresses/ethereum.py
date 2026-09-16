@@ -12,7 +12,7 @@ from ..eccs import (
     IPublicKey, SLIP10Secp256k1PublicKey, validate_and_get_public_key
 )
 from ..cryptocurrencies import Ethereum
-from ..crypto import kekkak256
+from ..crypto import keccak256
 from ..utils import bytes_to_string
 from .iaddress import IAddress
 
@@ -36,7 +36,7 @@ class EthereumAddress(IAddress):
     def checksum_encode(address: str) -> str:
         output: str = ""
         address_hash: str = bytes_to_string(
-            kekkak256(address.lower())
+            keccak256(address.lower())
         )
         for i, c in enumerate(address):
             if int(address_hash[i], 16) >= 8:
@@ -63,7 +63,7 @@ class EthereumAddress(IAddress):
             public_key=public_key, public_key_cls=SLIP10Secp256k1PublicKey
         )
         address: str = bytes_to_string(
-            kekkak256(public_key.raw_uncompressed()[1:])
+            keccak256(public_key.raw_uncompressed()[1:])
         )[24:]
         return cls.address_prefix + (
             address if kwargs.get("skip_checksum_encode", False) else cls.checksum_encode(address)

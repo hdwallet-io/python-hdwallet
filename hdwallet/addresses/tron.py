@@ -15,7 +15,7 @@ from ..eccs import (
     IPublicKey, SLIP10Secp256k1PublicKey, validate_and_get_public_key
 )
 from ..cryptocurrencies import Tron
-from ..crypto import kekkak256
+from ..crypto import keccak256
 from ..utils import (
     integer_to_bytes, bytes_to_string
 )
@@ -59,7 +59,7 @@ class TronAddress(IAddress):
         )
         
         address: str = bytes_to_string(
-            kekkak256(public_key.raw_uncompressed()[1:])
+            keccak256(public_key.raw_uncompressed()[1:])
         )[24:]
 
         return ensure_string(check_encode(

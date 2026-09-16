@@ -353,7 +353,7 @@ def pbkdf2_hmac_sha512(
     )
 
 
-def kekkak256(data: Union[str, bytes]) -> bytes:
+def keccak256(data: Union[str, bytes]) -> bytes:
     """
     Calculate the Keccak-256 hash of the given data.
 
@@ -365,6 +365,10 @@ def kekkak256(data: Union[str, bytes]) -> bytes:
     """
 
     return keccak.new(data=encode(data), digest_bits=256).digest()
+
+
+# Backward compatibility alias of the previously misspelled name
+kekkak256 = keccak256
 
 
 def ripemd160(data: Union[str, bytes]) -> bytes:

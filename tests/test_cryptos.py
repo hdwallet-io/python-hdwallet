@@ -9,7 +9,7 @@ import pytest
 from hdwallet.crypto import (
     hmac_sha256, hmac_sha512, blake2b, blake2b_32, blake2b_40, blake2b_160, blake2b_224, blake2b_256, blake2b_512,
     chacha20_poly1305_encrypt, chacha20_poly1305_decrypt, sha256, double_sha256, hash160, crc32, xmodem_crc, 
-    pbkdf2_hmac_sha512, kekkak256, ripemd160, sha512, sha512_256, sha3_256
+    pbkdf2_hmac_sha512, keccak256, ripemd160, sha512, sha512_256, sha3_256
 )
 
 # def test_hmac_sha256():
@@ -68,8 +68,8 @@ from hdwallet.crypto import (
 # def test_pbkdf2_hmac_sha512():
 #     assert pbkdf2_hmac_sha512("password", "salt", 1000) == b'todo_mock'
 
-# def test_kekkak256():
-#     assert kekkak256("data") == b'todo_mock'
+# def test_keccak256():
+#     assert keccak256("data") == b'todo_mock'
 
 # def test_ripemd160():
 #     assert ripemd160("data") == b'todo_mock'
