@@ -1463,11 +1463,11 @@ class HDWallet:
                     "staking_public_key", self._kwargs.get("staking_public_key")
                 )
             )
-        elif self._hd.name() in "Electrum-V1":
+        elif self._hd.name() == "Electrum-V1":
             return self._hd.address(
                 public_key_address_prefix=self._network.PUBLIC_KEY_ADDRESS_PREFIX
             )
-        elif self._hd.name() in "Electrum-V2":
+        elif self._hd.name() == "Electrum-V2":
             return self._hd.address(
                 public_key_address_prefix=self._network.PUBLIC_KEY_ADDRESS_PREFIX,
                 hrp=self._network.HRP,
