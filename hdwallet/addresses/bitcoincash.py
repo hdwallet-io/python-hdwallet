@@ -22,6 +22,24 @@ from ..utils import bytes_to_string
 from .iaddress import IAddress
 
 
+from enum import IntEnum
+
+class BitcoinCashAddressType(IntEnum):
+    P2PKH = 0b0000
+    P2SH = 0b0001
+    P2PKH_WITH_TOKENS = 0b0010
+    P2SH_WITH_TOKENS = 0b0011
+
+    @property
+    def label(self):
+        mapping = {
+            BitcoinCashAddressType.P2PKH: "P2PKH",
+            BitcoinCashAddressType.P2SH: "P2SH",
+            BitcoinCashAddressType.P2PKH_WITH_TOKENS: "P2PKH_WITH_TOKENS",
+            BitcoinCashAddressType.P2SH_WITH_TOKENS: "P2SH_WITH_TOKENS"
+        }
+        return mapping.get(self, "Unknown Type")
+
 class BitcoinCashAddress(IAddress):
 
     hrp: str = BitcoinCash.NETWORKS.MAINNET.HRP
@@ -55,7 +73,7 @@ class BitcoinCashAddress(IAddress):
         :return: The encoded CashAddr address.
         :rtype: str
         """
-        hrp = kwargs.get("hrp", cls.hrp)
+        hrp = kwargs.get("prefix") or kwargs.get("hrp", cls.hrp)
         public_key_address_prefix = kwargs.get("public_key_address_prefix", cls.public_key_address_prefix)
 
         public_key: IPublicKey = validate_and_get_public_key(
@@ -69,7 +87,8 @@ class BitcoinCashAddress(IAddress):
 
         # CashAddr version byte: 0 for P2PKH, 1 for P2SH
         version_byte = 0x00  # P2PKH with 160-bit hash
-
+        if kwargs.get('token_support'):
+            version_byte = 0x10
         # Pack version and hash
         payload = bytes([version_byte]) + public_key_hash
 
@@ -97,7 +116,7 @@ class BitcoinCashAddress(IAddress):
         return ensure_string(hrp + ':' + ''.join([CHARSET[d] for d in combined]))
 
     @classmethod
-    def decode(cls, address: str, **kwargs: Any) -> str:
+    def decode(cls, address: str, **kwargs: Any) -> str or dict:
         """
         Decode a Bitcoin Cash CashAddr address.
 
@@ -110,7 +129,7 @@ class BitcoinCashAddress(IAddress):
         :return: The decoded address as a string.
         :rtype: str
         """
-        hrp_expected = kwargs.get("hrp", cls.hrp)
+        hrp_expected = [BitcoinCash.NETWORKS.MAINNET.HRP, BitcoinCash.NETWORKS.TESTNET.HRP, BitcoinCash.NETWORKS.REGTEST.HRP]
 
         # Parse address
         if ':' in address:
@@ -142,7 +161,7 @@ class BitcoinCashAddress(IAddress):
             if polymod != 0:
                 raise ValueError("Invalid CashAddr checksum")
 
-        if hrp and hrp != hrp_expected:
+        if hrp and hrp not in hrp_expected:
             raise ValueError(f"Invalid HRP (expected: {hrp_expected}, got: {hrp})")
 
         # Remove 8-byte checksum
@@ -156,5 +175,11 @@ class BitcoinCashAddress(IAddress):
         # First byte is version, rest is hash
         version = decoded[0]
         address_hash = bytes(decoded[1:])
-
+        if kwargs.get('decode_type'):
+            type_bits = (version & 0b01111000) >> 3
+            address_type = BitcoinCashAddressType(type_bits)
+            return {
+                'payload': bytes_to_string(address_hash),
+                'type': address_type.label
+            }
         return bytes_to_string(address_hash)
