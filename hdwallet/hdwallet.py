@@ -76,7 +76,6 @@ class HDWallet:
 
     _public_key_type: Optional[str] = None  # "uncompressed" or "compressed"
     _cardano_type: Optional[str] = None
-    _use_default_path: bool = True
     # Monero entropy
     _checksum: bool = True
     _kwargs: Any
@@ -244,8 +243,6 @@ class HDWallet:
 
         self._language = kwargs.get("language", "english")
         self._passphrase = kwargs.get("passphrase", None)
-        self._use_default_path = kwargs.get("use_default_path", False)
-        # self._cryptocurrency.get_default_path(network=self._network.name())
         self._kwargs = {
             "staking_public_key": kwargs.get("staking_public_key", None),
             "payment_id": kwargs.get("payment_id", None)
