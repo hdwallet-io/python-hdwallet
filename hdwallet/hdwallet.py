@@ -34,7 +34,7 @@ from .keys import (
     deserialize, is_valid_key
 )
 from .exceptions import (
-    Error, NetworkError, AddressError, CryptocurrencyError, XPrivateKeyError, PrivateKeyError
+    Error, NetworkError, AddressError, CryptocurrencyError, XPrivateKeyError, XPublicKeyError, PrivateKeyError
 )
 from .utils import (
     get_bytes, exclude_keys
@@ -543,7 +543,7 @@ class HDWallet:
             )
 
         if not is_valid_key(key=xpublic_key, encoded=encoded):
-            raise XPrivateKeyError("Invalid xpublic key data")
+            raise XPublicKeyError("Invalid xpublic key data")
 
         version, depth, parent_fingerprint, index, chain_code, key = deserialize(
             key=xpublic_key, encoded=encoded
