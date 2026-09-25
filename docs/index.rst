@@ -51,6 +51,6 @@ Python-based library implementing a Hierarchical Deterministic (HD) Wallet gener
    * - Derivations
      - ``BIP44``, ``BIP49``, ``BIP84``, ``BIP86``, ``CIP1852``, ``Custom``, ``Electrum``, ``Monero``, ``HDW (Our own custom derivation)``
    * - Addresses
-     - ``Algorand``, ``Aptos``, ``Avalanche``, ``Cardano``, ``Cosmos``, ``EOS``, ``Ergo``, ``Ethereum``, ``Filecoin``, ``Harmony``, ``Icon``, ``Injective``, ``Monero``, ``MultiversX``, ``Nano``, ``Near``, ``Neo``, ``OKT-Chain``, ``P2PKH``, ``P2SH``, ``P2TR``, ``P2WPKH``, ``P2WPKH-In-P2SH``, ``P2WSH``, ``P2WSH-In-P2SH``, ``Ripple``, ``Solana``, ``Stellar``, ``Sui``, ``Tezos``, ``Tron``, ``XinFin``, ``Zilliqa``
+     - ``Algorand``, ``Aptos``, ``Avalanche``, ``Cardano``, ``Cosmos``, ``EOS``, ``Ergo``, ``Ethereum``, ``Filecoin``, ``Harmony``, ``Icon``, ``Injective``, ``Monero``, ``MultiversX``, ``Nano``, ``Near``, ``Neo``, ``OKT-Chain``, ``P2PKH``, ``P2SH``, ``P2TR``, ``P2WPKH``, ``P2WPKH-In-P2SH``, ``P2WSH``, ``P2WSH-In-P2SH``, ``Ripple``, ``Solana``, ``Stellar``, ``Sui``, ``Tezos``, ``Ton``,``Tron``, ``XinFin``, ``Zilliqa``
    * - Others
      - ``BIP38``, ``Wallet Import Format``, ``Serialization``

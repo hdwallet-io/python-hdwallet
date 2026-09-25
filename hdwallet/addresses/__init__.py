@@ -40,6 +40,7 @@ from .solana import SolanaAddress
 from .stellar import StellarAddress
 from .sui import SuiAddress
 from .tezos import TezosAddress
+from .ton import TonAddress
 from .tron import TronAddress
 from .xinfin import XinFinAddress
 from .zilliqa import ZilliqaAddress
@@ -120,6 +121,8 @@ class ADDRESSES:
     +-----------------+------------------------------------------------------------------+
     | Tezos           | :class:`hdwallet.addresses.tezos.TezosAddress`                   |
     +-----------------+------------------------------------------------------------------+
+    | Ton             | :class:`hdwallet.addresses.ton.TonAddress`                       |
+    +-----------------+------------------------------------------------------------------+
     | Tron            | :class:`hdwallet.addresses.tron.TronAddress`                     |
     +-----------------+------------------------------------------------------------------+
     | XinFin          | :class:`hdwallet.addresses.xinfin.XinFinAddress`                 |
@@ -161,6 +164,7 @@ class ADDRESSES:
         StellarAddress.name(): StellarAddress,
         SuiAddress.name(): SuiAddress,
         TezosAddress.name(): TezosAddress,
+        TonAddress.name(): TonAddress,
         TronAddress.name(): TronAddress,
         XinFinAddress.name(): XinFinAddress,
         ZilliqaAddress.name(): ZilliqaAddress

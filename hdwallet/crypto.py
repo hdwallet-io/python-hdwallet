@@ -311,6 +311,35 @@ def crc32(data: Union[bytes, str]) -> bytes:
     )
 
 
+def crc16_ccitt(data: Union[bytes, str]) -> bytes:
+    """
+    Calculate the CRC-16-CCITT checksum of the given data.
+
+    :param data: The data to calculate the CRC-16-CCITT checksum for, as bytes or a string.
+    :type data: Union[bytes, str]
+
+    :return: The CRC-16-CCITT checksum as a 2-byte bytes object.
+    :rtype: bytes
+    """
+
+    poly = 0x1021
+    reg = 0
+    message = encode(data) + b"\x00\x00"
+
+    for byte in message:
+        mask = 0x80
+        while mask > 0:
+            reg <<= 1
+            if byte & mask:
+                reg += 1
+            mask >>= 1
+            if reg > 0xFFFF:
+                reg &= 0xFFFF
+                reg ^= poly
+
+    return bytes([(reg >> 8) & 0xFF, reg & 0xFF])
+
+
 def xmodem_crc(data: Union[bytes, str]) -> bytes:
     """
     Calculate the XMODEM CRC checksum of the given data.

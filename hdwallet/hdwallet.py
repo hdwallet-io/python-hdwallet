@@ -40,7 +40,7 @@ from .utils import (
     get_bytes, exclude_keys
 )
 from .derivations import (
-    IDerivation, DERIVATIONS
+    IDerivation, DERIVATIONS, CustomDerivation
 )
 from .addresses import (
     IAddress, ADDRESSES
@@ -455,6 +455,10 @@ class HDWallet:
         self._hd.from_seed(
             seed=seed.seed(), passphrase=self.passphrase()
         )
+        if self._cryptocurrency.NAME == "Ton":
+            return self.from_derivation(
+                derivation=CustomDerivation(path=self._cryptocurrency.DEFAULT_PATH)
+            )
         self._derivation = self._hd.derivation()
         return self
 
@@ -1495,6 +1499,10 @@ class HDWallet:
                     public_key_type=self.public_key_type(),
                     hrp=self._network.HRP
                 )
+            encode_kwargs = (
+                exclude_keys(kwargs, {"address_type", "address_prefix"})
+                if self._cryptocurrency.NAME == "Ton" else {}
+            )
             return ADDRESSES.address(name=address).encode(
                 public_key=self.public_key(),
                 public_key_address_prefix=self._network.PUBLIC_KEY_ADDRESS_PREFIX,
@@ -1507,7 +1515,8 @@ class HDWallet:
                 ),
                 address_prefix=kwargs.get(
                     "address_prefix", self._address_prefix  # Tezos
-                )
+                ),
+                **encode_kwargs
             )
 
     def dump(self, exclude: Optional[set] = None) -> dict:

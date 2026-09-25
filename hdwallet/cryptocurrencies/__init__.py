@@ -199,6 +199,7 @@ from .tezos import Tezos
 from .theta import Theta
 from .thoughtai import ThoughtAI
 from .toacoin import TOACoin
+from .ton import Ton
 from .tron import Tron
 from .twins import TWINS
 from .ultimatesecurecash import UltimateSecureCash
@@ -416,6 +417,7 @@ class CRYPTOCURRENCIES:
         Theta.NAME: Theta,
         ThoughtAI.NAME: ThoughtAI,
         TOACoin.NAME: TOACoin,
+        Ton.NAME: Ton,
         Tron.NAME: Tron,
         TWINS.NAME: TWINS,
         UltimateSecureCash.NAME: UltimateSecureCash,

@@ -14,7 +14,7 @@ from ..consts import PUBLIC_KEY_TYPES
 from ..addresses import P2PKHAddress
 from ..exceptions import DerivationError
 from ..derivations import (
-    IDerivation, BIP44Derivation
+    IDerivation, BIP44Derivation, CustomDerivation
 )
 from .bip32 import BIP32HD
 
@@ -141,6 +141,12 @@ class BIP44HD(BIP32HD):
         :rtype: BIP44HD
         """
 
+        if isinstance(derivation, CustomDerivation):
+            self.clean_derivation()
+            self._derivation = derivation
+            for index in self._derivation.indexes():
+                self.drive(index)
+            return self
         if not isinstance(derivation, BIP44Derivation):
             raise DerivationError(
                 "Invalid derivation instance", expected=BIP44Derivation, got=type(derivation)

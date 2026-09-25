@@ -41,7 +41,12 @@
                 "name": "Near",
                 "encode": "d14696583ee9144878635b557d515a502b04366818dfe7765737746b4f57978d",
                 "decode": "d14696583ee9144878635b557d515a502b04366818dfe7765737746b4f57978d"
-            }           
+            },
+            "Ton": {
+                "name": "Ton",
+                "encode": "UQCZg4OctGv75Ptul9SXbSOpNTefD-Gr_K08996YRvu02udK",
+                "decode": "9983839cb46bfbe4fb6e97d4976d23a935379f0fe1abfcad3cf7de9846fbb4da"
+            }
         }
     },
     "SLIP10-Secp256k1": {

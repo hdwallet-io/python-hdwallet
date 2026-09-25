@@ -195,6 +195,7 @@ class CoinTypes:  # https://github.com/satoshilabs/slips/blob/master/slip-0044.m
     Theta: int = 500
     ThoughtAI: int = 502
     TOACoin: int = 159
+    Ton: int = 607
     Tron: int = 195
     TWINS: int = 970
     UltimateSecureCash: int = 112

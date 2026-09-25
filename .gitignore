@@ -5,6 +5,7 @@
 # Folders stuff
 experiment/
 .venv/
+venv/
 .idea/
 .tox/
 .vs/
