@@ -10,3 +10,5 @@ recursive-include hdwallet/mnemonics/monero/wordlist *.txt
 
 recursive-exclude * __pycache__
 recursive-exclude * *.py[co]
+include hdwallet/py.typed
+include requirements/cli.txt requirements/docs.txt requirements/tests.txt
