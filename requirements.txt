@@ -1,6 +1,6 @@
 ecdsa>=0.18.0,<1
 crcmod>=1.7,<2
-pycryptodome>=3.20,<4
+pycryptodome>=3.20,<5
 ed25519-blake2b>=1.4.1,<2
 coincurve>=20.0.0,<21
 pynacl>=1.6.2,<2
